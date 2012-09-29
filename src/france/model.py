@@ -37,9 +37,7 @@ import france.lgtm as lg
 import france.common as cm
 import france.calage as cl
 
-
-
-class ModelFrance(ModelDescription):
+class ModelSF(ModelDescription):
     
     mhsup = Prestation(cs._mhsup)
     alv   = Prestation(ir._alv)
@@ -48,11 +46,20 @@ class ModelFrance(ModelDescription):
     ############################################################
     
     # Salaires
+    type_sal = EnumPresta(cs._type_sal)
     salbrut = Prestation(cs._salbrut)
     sal_h_b = Prestation(cs._sal_h_b)
+    
+    cotpat_contrib = Prestation(cs._cotpat_contrib)
+    cotpat_noncontrib = Prestation(cs._cotpat_noncontrib)
     cotpat  = Prestation(cs._cotpat)
+    
     alleg_fillon = Prestation(cs._alleg_fillon)
+
+    cotsal_contrib = Prestation(cs._cotsal_contrib)
+    cotsal_noncontrib = Prestation(cs._cotsal_noncontrib)
     cotsal  = Prestation(cs._cotsal)
+
     csgsald = Prestation(cs._csgsald)
     csgsali = Prestation(cs._csgsali)
     crdssal = Prestation(cs._crdssal)
@@ -425,11 +432,35 @@ class ModelFrance(ModelDescription):
     
     typ_men = IntPresta(cm._typ_men, unit = 'men', label = u"Type de ménage")
     nb_ageq0 = IntPresta(cl._nb_ageq0, unit = 'men', label = u"Effectifs des tranches d'âge quiquennal")
-    nbinde2 = IntPresta(cl._nbinde2, unit = 'men', label = u"Nombre d'individus dans le ménage")
+    nbindebis = IntPresta(cl._nbinde, unit = 'men', label = u"Nombre d'individus dans le ménage")
+    cplx = BoolPresta(cl._cplx, unit = 'men', label = u"Indicatrice de ménage complexe")
+    
+    act_cpl = IntPresta(cl._act_cpl, unit = 'men', label = u"Nombre d'actifs parmi la personne de référence du méange et son conjoint")
+    cohab   = BoolPresta(cl._cohab, unit = 'men', label = u"Vie en couple")
+    act_enf = IntPresta(cl._act_enf, unit = 'men', label = u"Nombre d'enfants actifs")
+
+    typmen15bis = EnumPresta(cl._typmen15, label = u"Type de ménage",
+                          unit = 'men',
+                          enum = Enum([u"Personne seule active",
+                                       u"Personne seule inactive",
+                                       u"Familles monoparentales, parent actif",
+                                       u"Familles monoparentales, parent inactif et au moins un enfant actif",
+                                        u"Familles monoparentales, tous inactifs",
+                                        u"Couples sans enfant, 1 actif",
+                                        u"Couples sans enfant, 2 actifs",
+                                        u"Couples sans enfant, tous inactifs",
+                                        u"Couples avec enfant, 1 membre du couple actif",
+                                        u"Couples avec enfant, 2 membres du couple actif",
+                                        u"Couples avec enfant, couple inactif et au moins un enfant actif",
+                                        u"Couples avec enfant, tous inactifs",
+                                        u"Autres ménages, 1 actif",
+                                        u"Autres ménages, 2 actifs ou plus",
+                                        u"Autres ménages, tous inactifs"],start=1))
 
     decile = EnumPresta(cm._decile, unit = 'men',
-                        label = u"Décile de niveau de vie",
-                        enum = Enum([u"1er décile",
+                        label = u"Décile de niveau de vie disponible",
+                        enum = Enum([u"Hors champ"
+                                     u"1er décile",
                                      u"2nd décile",
                                      u"3e décile",
                                      u"4e décile",
@@ -439,6 +470,33 @@ class ModelFrance(ModelDescription):
                                      u"8e décile",
                                      u"9e décile",
                                      u"10e décile"]))
+    
+    decile_net = EnumPresta(cm._decile_net, unit = 'men',
+                        label = u"Décile de niveau de vie net",
+                        enum = Enum([u"Hors champ"
+                                     u"1er décile",
+                                     u"2nd décile",
+                                     u"3e décile",
+                                     u"4e décile",
+                                     u"5e décile",
+                                     u"6e décile",
+                                     u"7e décile",
+                                     u"8e décile",
+                                     u"9e décile",
+                                     u"10e décile"]))
+    
+    
+    pauvre50 = EnumPresta(cm._pauvre50, unit = 'men',
+                        label = u"Pauvreté monétaire au seuil de 50%",
+                        enum = Enum([u"Ménage au dessus du seuil de pauvreté à 50%",
+                                     u"Ménage en dessous du seuil de pauvreté à 50%"]))
+
+    pauvre60 = EnumPresta(cm._pauvre60, unit = 'men',
+                        label = u"Pauvreté monétaire au seuil de 60%",
+                        enum = Enum([u"Ménage au dessus du seuil de pauvreté à 50%",
+                                     u"Ménage en dessous du seuil de pauvreté à 50%"]))
+
+
 
     ############################################################
     # Totaux
@@ -447,7 +505,16 @@ class ModelFrance(ModelDescription):
     revdisp_i = Prestation(cm._revdisp_i, label = u"Revenu disponible individuel")
     revdisp = Prestation(cm._revdisp, 'men', label = u"Revenu disponible du ménage")
     nivvie = Prestation(cm._nivvie, 'men', label = u"Niveau de vie du ménage")
-    rev_trav = Prestation(cm._rev_trav)
+        
+    revnet_i = Prestation(cm._revnet_i, label = u"Revenu net individuel")
+    revnet   = Prestation(cm._revnet, 'men', label = u"Revenu net du ménage")
+    nivvie_net = Prestation(cm._nivvie_net, 'men', label = u"Niveau de vie net du ménage")
+
+    revini_i = Prestation(cm._revini_i, label = u"Revenu initial individuel")
+    revini   = Prestation(cm._revini, 'men', label = u"Revenu initial du ménage")
+    nivvie_ini = Prestation(cm._nivvie_ini, 'men', label = u"Niveau de vie initial du ménage")
+
+    rev_trav = Prestation(cm._rev_trav)    
     pen = Prestation(cm._pen)
     chonet = Prestation(cm._chonet)
     rstnet = Prestation(cm._rstnet)
@@ -455,8 +522,10 @@ class ModelFrance(ModelDescription):
     cotsoc_lib = Prestation(cm._cotsoc_lib)
     rev_cap = Prestation(cm._rev_cap)
     psoc = Prestation(cm._psoc)
-    pfam = Prestation(cm._pfam)
+    pfam = Prestation(cm._pfam, label=u"Prestations familiales")
     mini = Prestation(cm._mini)
-    logt = Prestation(cm._logt)
-    impo = Prestation(cm._impo)
-
+    logt = Prestation(cm._logt, label=u"Allocation logment")
+    impo = Prestation(cm._impo, label=u"Impôt sur le revenu")
+    crds = Prestation(cm._crds, label=u"Contribution au remboursement de la dette sociale")
+    csg  = Prestation(cm._csg, label=u"Contribution sociale généraisée")
+    cotsoc_noncontrib = Prestation(cm._cotsoc_noncontrib, label=u"Cotisations sociales non contributives")

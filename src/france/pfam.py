@@ -716,7 +716,7 @@ def age_aine(ages, ag1, ag2):
 
 def age_en_mois_benjamin(agems):
     '''
-    renvoi un vecteur (une entree pour chaque famille) avec l'age du benjamin.  
+    renvoi un vecteur (une entree pour chaque famille) avec l'age du benjamin.  # TODO check agem > 0
     '''
     agem_benjamin = 12 * 9999
     for agem in agems.itervalues():

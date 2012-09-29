@@ -21,6 +21,7 @@ This file is part of openFisca.
     along with openFisca.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+
 from core.description import ModelDescription
 from core.columns import IntCol, EnumCol, BoolCol, AgesCol, FloatCol
 from core.utils import Enum
@@ -28,14 +29,14 @@ from core.utils import Enum
 QUIFOY = Enum(['vous', 'conj', 'pac1','pac2','pac3','pac4','pac5','pac6','pac7','pac8','pac9'])
 QUIFAM = Enum(['chef', 'part', 'enf1','enf2','enf3','enf4','enf5','enf6','enf7','enf8','enf9'])
 QUIMEN = Enum(['pref', 'cref', 'enf1','enf2','enf3','enf4','enf5','enf6','enf7','enf8','enf9'])
-CAT    = Enum(['noncadre', 'cadre', 'fonc'])
+CAT    = Enum(['noncadre', 'cadre', 'etat_t', 'colloc_t', 'contract']) 
 
 
 class InputTable(ModelDescription):
     '''
     Socio-economic data
-    Donnée d'entrée de la simulation à fournir à partir d'une enquète ou 
-    à générer avec un générateur de cas type
+    Données d'entrée de la simulation à fournir à partir d'une enquête ou 
+    générée par le  générateur de cas type
     '''
     noi = IntCol()
 
@@ -46,8 +47,6 @@ class InputTable(ModelDescription):
     quimen  = EnumCol(QUIMEN)
     quifoy  = EnumCol(QUIFOY)
     quifam  = EnumCol(QUIFAM)
-    
-    type_sal = EnumCol(CAT)
     
     sali = IntCol() #(f1aj, f1bj, f1cj, f1dj, f1ej)
     choi = IntCol() # (f1ap, f1bp, f1cp, f1dp, f1ep)
@@ -69,8 +68,8 @@ class InputTable(ModelDescription):
     agem = AgesCol(label = u"âge (en mois)")
     
     zone_apl = EnumCol(label = u"zone apl", default = 2, unit= 'menage')
-    loyer = IntCol(unit='menage') # Loyer mensuel
-    so = EnumCol(label = u"statut d'occupation",
+    loyer = IntCol(unit='men') # Loyer mensuel
+    so = EnumCol(label = u"Statut d'occupation",
                  unit='men',
                  enum = Enum([u"Non renseigné",
                               u"Accédant à la propriété",
@@ -79,11 +78,81 @@ class InputTable(ModelDescription):
                               u"Locataire ou sous-locataire d'un logement loué vide non-HLM",
                               u"Locataire ou sous-locataire d'un logement loué meublé ou d'une chambre d'hôtel",
                               u"Logé gratuitement par des parents, des amis ou l'employeur"]))
-    activite = IntCol()
+    
+    activite = EnumCol(label = u'Actvité',
+                       enum = Enum([u'Actif occupé',
+                                    u'Chômeur',
+                                    u'Étudiant, élève', 
+                                    u'Retraité', 
+                                    u'Autre inactif']), default = 4) 
+    
+    titc = EnumCol(label = u"Statut, pour les agents de l'Etat des collectivités locales, ou des hôpitaux",
+                    enum = Enum([u"Sans objet ou non renseigné",
+                                u"Elève fonctionnaire ou stagiaire",
+                                u"Agent titulaire",
+                                u"Contractuel"]))
+    statut = EnumCol(label = u"Statut détaillé mis en cohérence avec la profession",
+                    enum = Enum([u"Sans objet",
+                                u"Indépendants",
+                                u"Employeurs",
+                                u"Aides familiaux",
+                                u"Intérimaires",
+                                u"Apprentis",
+                                u"CDD (hors Etat, coll.loc.), hors contrats aides",
+                                u"Stagiaires et contrats aides (hors Etat, coll.loc.)",
+                                u"Autres contrats (hors Etat, coll.loc.)",
+                                u"CDD (Etat, coll.loc.), hors contrats aides",
+                                u"Stagiaires et contrats aides (Etat, coll.loc.)",
+                                u"Autres contrats (Etat, coll.loc.)",
+                                ]))
+
+    txtppb = EnumCol(label = u"Taux du temps partiel",
+                enum = Enum([u"Sans objet",
+                            u"Moins d'un mi-temps (50%)",
+                            u"Mi-temps (50%)",
+                            u"Entre 50 et 80%",
+                            u"80%",
+                            u"Plus de 80%"]))
+
+
+    nbsala = EnumCol(label = u"Nombre de salariés dans l'établissement de l'emploi actuel",
+                    enum = Enum([u"Sans objet",
+                                u"Aucun salarié",
+                                u"1 à 4 salariés",
+                                u"5 à 9 salariés",
+                                u"10 à 19 salariés",
+                                u"20 à 49 salariés",
+                                u"50 à 199 salariés",
+                                u"200 à 499 salariés",
+                                u"500 à 999 salariés",
+                                u"1000 salariés ou plus",
+                                u"Ne sait pas",
+                                ]))
+
+    chpub = EnumCol(label = u"Nature de l'employeur principal",
+                enum = Enum([u"Sans objet",
+                            u"Etat",
+                            u"Collectivités locales, HLM",
+                            u"Hôpitaux publics",
+                            u"Particulier",
+                            u"Entreprise publique (La Poste, EDF-GDF, etc.)",
+                            u"Entreprise privée, association"
+                            ]))
+    
+    cadre = BoolCol(label = u"Cadre")
+    
+    
     boursier = BoolCol()
     code_postal = IntCol(unit='men')
     
-    statmarit = IntCol(default = 2)
+    statmarit = EnumCol(label = u"Statut marital",
+                          default = 2,
+                          enum = Enum([u"Marié",
+                                    u"Célibataire",
+                                    u"Divorcé",
+                                    u"Veuf",
+                                    u"Pacsé",
+                                    u"Jeune veuf"],start=1))
     
     nbR = IntCol(unit= 'foy')
     nbJ = IntCol(unit= 'foy')
@@ -661,8 +730,31 @@ class InputTable(ModelDescription):
                                    u"Services aux particuliers",
                                    u"Education, santé, action sociale",
                                    u"Administrations"],start=-1)) # 17 postes + 1 (-1: sans objet, 0: nonrenseigné) 
+
+    nafg17npr = EnumCol(label = u"activité économique de l'établissement de l'emploi principal actuel de la personne de référence ",
+                      unit = 'men',
+                      enum = Enum([u"Sans objet",
+                                   u"Non renseigné",
+                                   u"Agriculture, sylviculture et pêche",
+                                   u"Industries extractives, énergie, eau, gestion des déchets et dépollution",
+                                   u"Fabrication de denrées alimentaires, de boissons et de produits à base de tabac",
+                                   u"Cokéfaction et raffinage",
+                                   u"Fabrication d'équipements électriques, électroniques, informatiques ; fabrication de machines",
+                                   u"Fabrication de matériels de transport",
+                                   u"Fabrication d'autres produits industriels",
+                                   u"Construction",
+                                   u"Commerce ; réparation d'automobiles et de motocycles",
+                                   u"Transports et entreposage",
+                                   u"Hébergement et restauration",
+                                   u"Information et communication",
+                                   u"Activités financières et d'assurance",
+                                   u"Activités immobilières",
+                                   u"Activités scientifiques et techniques ; services administratifs et de soutien",
+                                   u"Administration publique, enseignement, santé humaine et action sociale",
+                                   u"Autres activités de services"],start=-1)) # 17 postes + 1 (-1: sans objet, 0: nonrenseigné)
     
-    typmen15 = EnumCol(label = u"type de ménage",
+    
+    typmen15 = EnumCol(label = u"Type de ménage",
                        unit = 'men',
                        enum = Enum([u"Personne seule active",
                                     u"Personne seule inactive",
@@ -722,6 +814,7 @@ class InputTable(ModelDescription):
                                   u"Retraité",
                                   u"Inactif"],start=1)) # 5 postes normalement TODO; check=0
     wprm_init = FloatCol()
+
 
 ## ISF ##
     
