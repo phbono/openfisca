@@ -143,7 +143,6 @@ def _salbrut(sali, hsup, type_sal, _defaultP):
 
     sal = scaleBaremes(BaremeDict('sal', _defaultP.cotsoc.sal), plaf_ss)
     csg = scaleBaremes(BaremeDict('csg', _defaultP.csg), plaf_ss)
-    
 
     sal['noncadre'].update(sal['commun'])
     sal['cadre'].update(sal['commun'])
@@ -375,6 +374,7 @@ def _csgsald(salbrut, hsup, _P):
     '''
     plaf_ss = 12*_P.cotsoc.gen.plaf_ss
     csg = scaleBaremes(_P.csg.act.deduc, plaf_ss)
+
     return - csg.calc(salbrut - hsup) 
 
 def _csgsali(salbrut, hsup, _P):
