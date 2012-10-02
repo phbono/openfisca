@@ -364,7 +364,7 @@ class Logement(QDialog, Ui_Logement):
         self.spinLoyer.setValue(scenario.menage[0]['loyer'])
         self.comboSo.setCurrentIndex(scenario.menage[0]['so']-1)
                         
-        code_file = open('data/code_apl', 'r')
+        code_file = open('france/data/code_apl', 'r')
         code_dict = pickle.load(code_file)
         code_file.close()
 
