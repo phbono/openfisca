@@ -999,8 +999,8 @@
           </CODE>
           <CODE description="Indice majoré de référence" code="ind_maj_ref" format="integer">
             <VALUE valeur="302" deb="2012-01-01" fin="2012-12-31" />
-            <VALUE valeur="295" deb="2009-10-01" fin="2010-06-30" />
-            <VALUE valeur="292" deb="2009-07-01" fin="2009-09-30" />
+            <VALUE valeur="295" deb="2011-01-01" fin="2011-12-31" />
+            <VALUE valeur="292" deb="2009-07-01" fin="2010-12-31" />
     	    <VALUE valeur="290" deb="2008-10-01" fin="2009-06-30" />
       	    <VALUE valeur="289" deb="2008-03-01" fin="2008-09-30" />
        	    <VALUE valeur="288" deb="2007-02-01" fin="2008-02-28" />
@@ -2209,7 +2209,7 @@
 	<VALUE valeur="838" deb="2007-01-01" fin="2007-12-31"/>
 	<VALUE valeur="862" deb="2008-01-01" fin="2008-12-31"/>
 	<VALUE valeur="866" deb="2009-01-01" fin="2009-12-31"/>
-	<VALUE valeur="878" deb="2010-01-01" fin="2010-12-31"/>
+	<VALUE valeur="878" deb="2010-01-01" fin="2011-12-31"/>
       </CODE>
     </NODE>
     <NODE code = "reductions_impots" description="Réduction d'impôt">
@@ -2217,7 +2217,7 @@
 	<CODE description="Taux de la réduction d'impôt" code="taux" format = 'percent'>
 	  <VALUE valeur="0.60" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="0.66" deb="2003-01-01" fin="2004-12-31"/>
-	  <VALUE valeur="0.75" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.75" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond des dépenses" code="max" format = 'integer'>
 	  <VALUE valeur="407" deb="2002-01-01" fin="2002-12-31"/>
@@ -2229,56 +2229,66 @@
 	  <VALUE valeur="495" deb="2008-01-01" fin="2008-12-31"/>
 	  <VALUE valeur="510" deb="2009-01-01" fin="2009-12-31"/>
 	  <VALUE valeur="513" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="521" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "dfppce" description="Dons aux autres oeuvres et donc effectués pour le financement des partis politiques et des campagnes électorales">
 	<CODE description="Taux" code="taux" format = 'percent'>
 	  <VALUE valeur="0.50" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="0.60" deb="2003-01-01" fin="2004-12-31"/>
-	  <VALUE valeur="0.66" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.66" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'percent'>
 	  <VALUE valeur="0.10" deb="2002-01-01" fin="2002-12-31"/>
-	  <VALUE valeur="0.20" deb="2003-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.20" deb="2003-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "cotsyn" description="Cotisations syndicales">
 	<CODE description="Cotisations syndicales" code="taux" format = 'percent'>
 	  <VALUE valeur="0.50" deb="2002-01-01" fin="2004-12-31"/>
-	  <VALUE valeur="0.66" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.66" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil" code="seuil" format = 'percent'>
-	  <VALUE valeur="0.01" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.01" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "resimm" description="Travaux de restauration immobilière">
 	<CODE description="Taux_RA" code="taux_ra" format = 'percent'>
 	  <VALUE valeur="0.3" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.27" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux_RB" code="taux_rb" format = 'percent'>
 	  <VALUE valeur="0.4" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.36" deb="2011-01-01" fin="2011-12-31"/>
+	</CODE>
+	<CODE description="Taux_RC" code="taux_rc" format = 'percent'>
+	  <VALUE valeur="0.30" deb="2011-01-01" fin="2011-12-31"/>
+	</CODE>
+	<CODE description="Taux_RD" code="taux_rd" format = 'percent'>
+	  <VALUE valeur="0.4" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code ="max" format = 'integer'>
-	  <VALUE valeur="100000" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="100000" deb="2009-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>	    	
       <NODE code = "patnat" description="Dépenses de protection du patrimoine naturel">
 	<CODE description="Taux" code="taux" format = 'percent'>
 	  <VALUE valeur="0.25" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.22" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="10000" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="10000" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "sofipe" description="Souscription au capital d'une SOFIPECHE">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.4" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.4" deb="2009-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="base" code="base" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2009-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="19000" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="19000" deb="2009-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "ecodev" description="Sommes versées sur un compte épargne codéveloppement (case 7UH)">
@@ -2294,89 +2304,97 @@
       </NODE>	
       <NODE code = "saldom" description="Sommes versées pour l'emploi d'un salariés à domicile (à compléter)">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.5" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.5" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond cas général" code="max1" format = 'integer'>
 	  <VALUE valeur= "7400" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="10000" deb="2003-01-01" fin="2004-12-31"/>
-	  <VALUE valeur="12000" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="12000" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond 1ère année" code="max1_1ereAnnee" format = 'integer'>
-	  <VALUE valeur="15000" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="15000" deb="2009-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond du plafond" code="max2" format = 'integer'>
-	  <VALUE valeur="15000" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="15000" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond du plafond 1ère année" code="max2_1ereAnnee" format = 'integer'>
-	  <VALUE valeur="18000" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="18000" deb="2009-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond si présence d'un invalide" code="max3" format = 'integer'>
 	  <VALUE valeur="13800" deb="2002-01-01" fin="2004-12-31"/>
-	  <VALUE valeur="20000" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="20000" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Par enfant mineur à charge" code="pac" format = 'integer'>
-	  <VALUE valeur="1500" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="1500" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "intagr" description="Intérêts pour paiement différé accordé aux agriculteurs">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.5" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.5" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="5000" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="5000" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "prcomp" description="Prestations compensatoires">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil" code="seuil" format = 'integer'>
-	  <VALUE valeur="30500" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="30500" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "spfcpi" description="Souscription de parts de fonds communs de placement dans l'innovation ou de fonds d'investissement de proximité">
 	<CODE description="Premier taux" code="taux1" format = 'percent'>
 	  <VALUE valeur="0.25" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.22" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Second taux" code="taux2" format = 'percent'>
 	  <VALUE valeur="0.50" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.45" deb="2011-01-01" fin="2011-12-31"/>
+	</CODE>
+	<CODE description="Troisième taux" code="taux3" format = 'percent'>
+	  <VALUE valeur="0.50" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="12000" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="12000" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "mohist" description="Travaux de conservation et de restauration d'objets classées monuments historiques">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2008-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2008-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="20000" deb="2008-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="20000" deb="2008-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "sofica" description="Souscription au capital de SOFICA">
 	<CODE description="Plafond (en % du RNG)" code="taux1" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="18000" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="18000" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux2" code="taux2" format = 'percent'>
 	  <VALUE valeur="0.48" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.43" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux3" code="taux3" format = 'percent'>
 	  <VALUE valeur="0.40" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.36" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "cappme" description="Souscriptions au capital des PME">
 	<CODE description="Taux" code="taux" format = 'percent'>
 	  <VALUE valeur="0.25" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.22" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil" code="seuil" format = 'integer'>
 	  <VALUE valeur= "6000" deb="2002-01-01" fin="2002-12-31"/>
-	  <VALUE valeur="20000" deb="2003-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="20000" deb="2003-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil TPE" code="seuil_tpe" format = 'integer'>
-	  <VALUE valeur="50000" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="50000" deb="2009-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "intcon" description="Intérêts des prêts à la consommation (UH)">
@@ -2400,16 +2418,17 @@
       </NODE>
       <NODE code = "repsoc" description="Intérêts d'emprunts pour reprises de société">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2003-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2003-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil" code="seuil" format = 'integer'>
 	  <VALUE valeur="10000" deb="2003-01-01" fin="2007-12-31"/>
-	  <VALUE valeur="20000" deb="2008-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="20000" deb="2008-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "invfor" description="Investissements forestiers (UN, à compléter) ">
 	<CODE description="Taux" code="taux" format = 'percent'>
 	  <VALUE valeur="0.25" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.22" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil" code="seuil" format = 'integer'>
 	  <VALUE valeur="5700" deb="2002-01-01" fin="2005-12-31"/>
@@ -2432,51 +2451,51 @@
       </NODE>	
       <NODE code = "deffor" description="Défense des forêts contre l'incendie">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.5" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.5" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="1000" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="1000" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "daepad" description="Dépenses d'accueil dans un établissement pour personnes âgées dépendantes">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format = 'integer'>
 	  <VALUE valeur="2300" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="3000" deb="2003-01-01" fin="2005-12-31"/>
-	  <VALUE valeur="10000" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="10000" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "rsceha" description="Rentes de survie et contrats d'épargne handicap">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Premier seuil" code="seuil1" format = 'integer'>
 	  <VALUE valeur="1070" deb="2002-01-01" fin="2003-12-31"/>
-	  <VALUE valeur="1525" deb="2004-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="1525" deb="2004-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Second seuil" code="seuil2" format = 'integer'>
 	  <VALUE valeur="230" deb="2002-01-01" fin="2003-12-31"/>
-	  <VALUE valeur="300" deb="2004-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="300" deb="2004-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "invlst" description="Investissements locatifs dans le secteur touristique">
 	<CODE description="Taux (XC)" code="taux_xc" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2004-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2004-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (XD)" code="taux_xd" format = 'percent'>
 	  <VALUE valeur="0.15" deb="2004-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="0.00" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.00" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (XE)" code="taux_xe" format = 'percent'>
 	  <VALUE valeur="0.00" deb="2004-01-01" fin="2008-12-31"/>
 	  <VALUE valeur="0.20" deb="2009-01-01" fin="2009-12-31"/>
-	  <VALUE valeur="0.00" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.00" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (XF)" code="taux_xf" format = 'percent'>
 	  <VALUE valeur="0.00" deb="2004-01-01" fin="2004-12-31"/>
-	  <VALUE valeur="0.25" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (XG)" code="taux_xg" format = 'percent'>
 	  <VALUE valeur="0.10" deb="2004-01-01" fin="2004-12-31"/>
@@ -2503,7 +2522,7 @@
 	  <VALUE valeur="0.25" deb="2010-01-01" fin="2010-12-31"/>
 	</CODE>
 	<CODE description="Taux (XL)" code="taux_xl" format = 'percent'>
-	  <VALUE valeur="0.20" deb="2004-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.20" deb="2004-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (XM)" code="taux_xm" format = 'percent'>
 	  <VALUE valeur="0.00" deb="2004-01-01" fin="2004-12-31"/>
@@ -2519,17 +2538,17 @@
 	</CODE>
 	<CODE description="Seuil1" code="seuil1" format = 'integer'>
 	  <VALUE valeur="50000" deb="2004-01-01" fin="2009-12-31"/>
-	  <VALUE valeur="00000" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="00000" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil2" code="seuil2" format = 'integer'>
 	  <VALUE valeur="38120" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="50000" deb="2005-01-01" fin="2009-12-31"/>
-	  <VALUE valeur="00000" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="00000" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil3" code="seuil3" format = 'integer'>
 	  <VALUE valeur="45760" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="50000" deb="2005-01-01" fin="2009-12-31"/>
-	  <VALUE valeur="00000" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="00000" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "assvie" description="Assurance-vie">
@@ -2579,26 +2598,26 @@
       </NODE>
       <NODE code = "adhcga" description="Frais de comptabilité et d'adhésion CGA">
         <CODE description="Plafond par exploitation" code="max" format = 'integer'>
-          <VALUE valeur="915" deb="2002-01-01" fin="2010-12-31"/>
+          <VALUE valeur="915" deb="2002-01-01" fin="2011-12-31"/>
         </CODE>
       </NODE>
       <NODE code = "creaen" description="Aides aux créateurs d'entreprises (à compléter)">
 	<CODE description="Aides aux créateurs d'entreprises" code="base" format = 'integer'>
-	  <VALUE valeur="1000" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="1000" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Par personne handicapée" code="hand" format = 'integer'>
-	  <VALUE valeur="400" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="400" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "ecpess" description="Enfants à charge poursuivant leurs études secondaires ou supérieures">
 	<CODE description="Collège" code="col" format = 'integer'>
-	  <VALUE valeur="61" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="61" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Lycée" code="lyc" format = 'integer'>
-	  <VALUE valeur="153" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="153" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Supérieur" code="sup" format = 'integer'>
-	  <VALUE valeur="183" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="183" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "doment" description="Investissements dans les DOM-TOM dans le cadre d'une entreprise (à compléter)">
@@ -2661,16 +2680,16 @@
       </NODE>
       <NODE code = "accult" description="Acquisition de biens culturels">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.40" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.40" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "aidper" description="Dépenses en faveur de l'aide aux personnes">
 	<CODE description="Plafond" code="max" format = 'integer'>
 	  <VALUE valeur="4000" deb="2002-01-01" fin="2004-12-31"/>
-	  <VALUE valeur="5000" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="5000" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Majoration du plafond pour le 1er enfant" code="pac1" format = 'integer'>
-	  <VALUE valeur="400" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="400" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Majoration du plafond pour le 2eme enfant" code="pac2" format = 'integer'>
 	  <VALUE valeur="500" deb="2002-01-01" fin="2007-12-31"/>
@@ -2679,24 +2698,24 @@
 	  <VALUE valeur="600" deb="2002-01-01" fin="2007-12-31"/>
 	</CODE>
 	<CODE description="Taux (WI)" code="taux_wi" format = 'percent'>
-	  <VALUE valeur="0.15" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.15" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (WJ)" code="taux_wj" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2004-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2004-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (WL)" code="taux_wl" format = 'percent'>
-	  <VALUE valeur="0.30" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.30" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (SF)" code="taux_sf" format = 'percent'>
-	  <VALUE valeur="0.30" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.30" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "quaenv" description="Dépenses en faveur des économies d'énergies">
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="8000" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="8000" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Majoration du plafond pour le 1er enfant" code="pac1" format='integer'>
-	  <VALUE valeur="400" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="400" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Majoration du  plafond pour le 2nd enfant" code="pac2" format='integer'>
 	  <VALUE valeur="500" deb="2002-01-01" fin="2007-12-31"/>
@@ -2707,6 +2726,7 @@
 	<CODE description="Taux (WF)" code="taux_wf" format = 'percent'>
 	  <VALUE valeur="0.40" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="0.50" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.45" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (WG)" code="taux_wg" format = 'percent'>
 	  <VALUE valeur="0.25" deb="2005-01-01" fin="2005-12-31"/>
@@ -2715,28 +2735,35 @@
 	<CODE description="Taux (WH)" code="taux_wh" format = 'percent'>
 	  <VALUE valeur="0.15" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="0.25" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.22" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (WK)" code="taux_wk" format = 'percent'>
 	  <VALUE valeur="0.40" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.36" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (WQ)" code="taux_wq" format = 'percent'>
 	  <VALUE valeur="0.15" deb="2006-01-01" fin="2008-12-31"/>
 	  <VALUE valeur="0.15" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.13" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (SB)" code="taux_sb" format = 'percent'>
 	  <VALUE valeur="0.25" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.22" deb="2011-01-01" fin="2011-12-31"/>	  
 	</CODE>
 	<CODE description="Taux (SC)" code="taux_sc" format = 'percent'>
 	  <VALUE valeur="0.40" deb="2009-01-01" fin="2009-12-31"/>
 	</CODE>
 	<CODE description="Taux (SD)" code="taux_sd" format = 'percent'>
 	  <VALUE valeur="0.40" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.36" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (SE)" code="taux_se" format = 'percent'>
 	  <VALUE valeur="0.50" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.45" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux (SH)" code="taux_sh" format = 'percent'>
 	  <VALUE valeur="0.15" deb="2009-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.13" deb="2011-01-01" fin="2011-12-31"/>	  
 	</CODE>
       </NODE>
       <NODE code = "acqgpl" description="Dépenses d'acquisition ou de transformation d'un véhicule GPL ou mixte">
@@ -2751,29 +2778,30 @@
       </NODE>
       <NODE code = "drbail" description="taxe additionnelle de droit au bail">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.025" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.025" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "garext" description="Frais de garde des enfants à l'extérieur du domicile">
 	<CODE description="Taux" code="taux" format = 'percent'>
 	  <VALUE valeur="0.25" deb="2005-01-01" fin="2005-12-31"/>
-	  <VALUE valeur="0.50" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.50" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format='integer'>
-	  <VALUE valeur="2300" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="2300" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>	    
       </NODE>
       <NODE code = "preetu" description="Souscription de prêts étudiants">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.25" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.25" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Plafond" code="max" format='integer'>
-	  <VALUE valeur="1000" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="1000" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "assloy" description="Primes d'assurances pour loyers impayés">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.50" deb="2005-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.50" deb="2005-01-01" fin="2011-12-31"/>
+	  <VALUE valeur="0.45" deb="2005-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "aidmob" description="Crédit d'impôt aide à la mobilité">
@@ -2784,19 +2812,26 @@
       </NODE>
       <NODE code = "inthab" description="Intérêts des emprunts pour l'habitation principale">
 	<CODE description="Taux 1" code="taux1" format = 'percent'>
-	  <VALUE valeur="0.4" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.4" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux 2" code="taux2" format = 'percent'> 
-	  <VALUE valeur="0.3" deb="2010-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.3" deb="2010-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux 3" code="taux3" format = 'percent'>
 	  <VALUE valeur="0.2" deb="2007-01-01" fin="2010-12-31"/>
+ 	  <VALUE valeur="0.25" deb="2011-01-01" fin="2011-12-31"/>
 	</CODE>
+	<CODE description="Taux 4" code="taux4" format = 'percent'>
+	  <VALUE valeur="0.2" deb="2011-01-01" fin="2011-12-31"/>
+	</CODE>
+	<CODE description="Taux 5" code="taux5" format = 'percent'>
+	  <VALUE valeur="0.15" deb="2011-01-01" fin="2011-12-31"/>
+	</CODE>	
 	<CODE description="Plafond" code="max" format = 'integer'>
-	  <VALUE valeur="3750" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="3750" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Par enfant à charge" code="add" format = 'integer'>
-	  <VALUE valeur="500" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="500" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "percvm" description="Crédit d’impôt pertes sur cessions de valeurs mobilières">
@@ -2806,7 +2841,7 @@
       </NODE>
       <NODE code = "prlire" description="Prélèvement libératoire à restituer">
 	<CODE description="Taux" code="taux" format = 'percent'>
-	  <VALUE valeur="0.075" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.075" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
       </NODE>
       <NODE code = "jeunes" description="Crédit jeunes actifs">
@@ -2844,10 +2879,10 @@
       </NODE>
       <NODE description="Prime pour l'emploi" code="ppe">
 	<CODE description="Nombre d'heure du temps plein" code="TP_nbh" format='integer'>
-	  <VALUE valeur="1820" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="1820" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Nombre de jour du temps plein" code="TP_nbj" format='integer'>
-	  <VALUE valeur="360" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="360" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil d'éligibilité - célibataire" code="eligi1" format='integer'>
 	  <VALUE valeur="11972" deb="2002-01-01" fin="2002-12-31"/>
@@ -2855,7 +2890,7 @@
 	  <VALUE valeur="12383" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="12606" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="16042" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="16251" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="16251" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil d'éligibilité - couple" code="eligi2" >
 	  <VALUE valeur="23944" deb="2002-01-01" fin="2002-12-31"/>
@@ -2863,7 +2898,7 @@
 	  <VALUE valeur="24765" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="25211" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="32081" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="32498" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="32498" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil d'éligibilité - majoration par demi-part" code="eligi3" >
 	  <VALUE valeur="3308" deb="2002-01-01" fin="2002-12-31"/>
@@ -2871,7 +2906,7 @@
 	  <VALUE valeur="3421" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="3483" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="4432" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="4490" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="4490" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil première tranche" code="seuil1">
 	  <VALUE valeur="3265" deb="2002-01-01" fin="2002-12-31"/>
@@ -2879,7 +2914,7 @@
 	  <VALUE valeur="3507" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="3570" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="3695" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="3743" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="3743" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil deuxième tranche" code="seuil2">
 	  <VALUE valeur="10882" deb="2002-01-01" fin="2002-12-31"/>
@@ -2887,7 +2922,7 @@
 	  <VALUE valeur="11689" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="11899" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="12315" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="12475" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="12475" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil troisième tranche" code="seuil3">
 	  <VALUE valeur="15235" deb="2002-01-01" fin="2002-12-31"/>
@@ -2895,7 +2930,7 @@
 	  <VALUE valeur="16364" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="16659" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="17227" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="17451" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="17451" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Seuil quatrième tranche" code="seuil4">
 	  <VALUE valeur="21764" deb="2002-01-01" fin="2002-12-31"/>
@@ -2903,7 +2938,7 @@
 	  <VALUE valeur="23377" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="23798" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="24630" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="24950" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="24950" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Point de sortie pour les couples monoactifs" code="seuil5">
 	  <VALUE valeur="23207" deb="2002-01-01" fin="2002-12-31"/>
@@ -2911,67 +2946,68 @@
 	  <VALUE valeur="24927" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="25376" deb="2005-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="26231" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="26572" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="26572" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux première tranche" code="taux1" format = 'percent'>
 	  <VALUE valeur="0.044" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="0.046" deb="2003-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="0.060" deb="2005-01-01" fin="2005-12-31"/>
-	  <VALUE valeur="0.077" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.077" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux deuxième tranche" code="taux2" format = 'percent'>
 	  <VALUE valeur="0.110" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="0.115" deb="2003-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="0.150" deb="2005-01-01" fin="2005-12-31"/>
-	  <VALUE valeur="0.193" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.193" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Taux troisième tranche" code="taux3" format = 'percent'>
 	  <VALUE valeur="0.055" deb="2002-01-01" fin="2005-12-31"/>
-	  <VALUE valeur="0.051" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="0.051" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Abatement non salarié" code="abatns" format = 'percent'>
-	  <VALUE valeur="1.1111" deb="2002-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="1.1111" deb="2002-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Prime monoactivité" code="monact">
 	  <VALUE valeur="79" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="80" deb="2003-01-01" fin="2003-12-31"/>
 	  <VALUE valeur="81" deb="2004-01-01" fin="2005-12-31"/>
 	  <VALUE valeur="82" deb="2006-01-01" fin="2006-12-31"/>
-	  <VALUE valeur="83" deb="2007-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="83" deb="2007-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Prime personne à charge" code="pac">
 	  <VALUE valeur="32" deb="2002-01-01" fin="2002-12-31"/>
 	  <VALUE valeur="33" deb="2003-01-01" fin="2003-12-31"/>
 	  <VALUE valeur="34" deb="2004-01-01" fin="2004-12-31"/>
 	  <VALUE valeur="35" deb="2005-01-01" fin="2005-12-31"/>
-	  <VALUE valeur="36" deb="2006-01-01" fin="2010-12-31"/>
+	  <VALUE valeur="36" deb="2006-01-01" fin="2011-12-31"/>
 	</CODE>
 	<CODE description="Versement minimum" code="versmin">
 	  <VALUE valeur="25" deb="2002-01-01" fin="2004-12-31" code="versmin" />
-	  <VALUE valeur="30" deb="2005-01-01" fin="2010-12-31" code="versmin" />
+	  <VALUE valeur="30" deb="2005-01-01" fin="2011-12-31" code="versmin" />
 	</CODE>
       </NODE>
     </NODE>
     <NODE code = "plus_values" description= "Impôt sur les plus values à taux forfaitaires" >
       <CODE description="Plus value de cession (RPNS) 16%" code="pvce" format = 'percent'>
-	<VALUE valeur="0.16" deb="2002-01-01" fin="2010-12-31"/>
+	<VALUE valeur="0.16" deb="2002-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Capital risque (VL)" code="caprisque" format = 'percent'>
 	<VALUE valeur="0.16" deb="2002-01-01" fin="2007-12-31"/>
-	<VALUE valeur="0.18" deb="2008-01-01" fin="2010-12-31"/>
+	<VALUE valeur="0.18" deb="2008-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="16% puis 18%" code="taux1" format = 'percent'>
 	<VALUE valeur="0.16" deb="2002-01-01" fin="2007-12-31"/>
 	<VALUE valeur="0.18" deb="2008-01-01" fin="2010-12-31"/>
+    <VALUE valeur="0.19" deb="2008-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Clôture PEA avant 2 ans (3VM)" code="pea" format = 'percent'>
-	<VALUE valeur="0.225" deb="2002-01-01" fin="2010-12-31"/>
+	<VALUE valeur="0.225" deb="2002-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Actions gratuites 30%" code="taux3" format = 'percent'>
-	<VALUE valeur="0.30" deb="2002-01-01" fin="2010-12-31"/>
+	<VALUE valeur="0.30" deb="2002-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Actions gratuites 40%" code="taux4" format = 'percent'>
-	<VALUE valeur="0.40" deb="2002-01-01" fin="2010-12-31"/>
+	<VALUE valeur="0.40" deb="2002-01-01" fin="2011-12-31"/>
       </CODE>
     </NODE>
     <NODE code = "autre" description="Variables pour scénario de réforme">
@@ -2986,13 +3022,31 @@
 	    <VALUE valeur="1" deb="2007-01-01" fin="2012-12-31"/>
       </CODE>
     </NODE>
-    <BAREME description="Taxe exceptionnelle sur les hauts revenus" code = "tehr">
+    <BAREME description="Contribution exceptionnelle sur les hauts revenus" code = "cehr">
       <TRANCHE>
         <SEUIL>
-	  <VALUE valeur="0" deb="2010-01-01" fin="2012-12-31"/>
+          <VALUE valeur="0" deb="2010-01-01" fin="2012-12-31"/>
         </SEUIL>
         <TAUX>
-	  <VALUE valeur="0" deb="2010-01-01" fin="2012-12-31"/>
+		  <VALUE valeur="0.0" deb="2011-01-01" fin="2012-12-31"/>
+        </TAUX>
+      </TRANCHE>
+      <TRANCHE>
+        <SEUIL>
+          <VALUE valeur="250000" deb="2010-01-01" fin="2012-12-31"/>
+        </SEUIL>
+        <TAUX>
+	      <VALUE valeur="0.0" deb="2010-01-01" fin="2011-12-31"/>
+		  <VALUE valeur="0.03" deb="2011-01-01" fin="2012-12-31"/>
+        </TAUX>
+      </TRANCHE>
+      <TRANCHE>
+        <SEUIL>
+          <VALUE valeur="500000" deb="2010-01-01" fin="2012-12-31"/>
+        </SEUIL>
+        <TAUX>
+          <VALUE valeur="0.0" deb="2010-01-01" fin="2011-12-31"/>
+          <VALUE valeur="0.04" deb="2011-01-01" fin="2012-12-31"/>
         </TAUX>
       </TRANCHE>
     </BAREME>
@@ -3550,11 +3604,13 @@
       <VALUE valeur="433.06" deb="2008-01-01" fin="2008-12-31"/>
       <VALUE valeur="440.86" deb="2009-01-01" fin="2009-12-31"/>
       <VALUE valeur="447.91" deb="2010-01-01" fin="2010-12-31"/>
-    </CODE>
+	  <VALUE valeur="454.63" deb="2011-01-01" fin="2011-12-31"/>
+	  <VALUE valeur="460.09" deb="2012-01-01" fin="2012-12-31"/>
+     </CODE>
     <NODE code = "ressources" description= "Dispositions applicables aux ressources">
       <CODE description="Abattement R. 351-6 (double activité)" code="dar_1">
 	<VALUE valeur="76" deb="2002-01-01" fin="2007-06-30"/>
-	<VALUE valeur="95" deb="2007-07-01" fin="2010-12-31"/>
+	<VALUE valeur="95" deb="2007-07-01" fin="2012-12-31"/>
       </CODE>
       <CODE description="Évaluation forfaitaire des ressources R. 351-7-1" code="dar_2">
 	<VALUE valeur="6173.82" deb="2002-01-01" fin="2002-06-30"/>
@@ -3571,6 +3627,8 @@
 	<VALUE valeur="5500" deb="2002-07-01" fin="2007-06-30"/>
 	<VALUE valeur="6900" deb="2007-07-01" fin="2008-12-31"/>
 	<VALUE valeur="7100" deb="2009-01-01" fin="2010-12-31"/>
+	<VALUE valeur="7200" deb="2011-01-01" fin="2011-12-31"/>
+	<VALUE valeur="7300" deb="2012-01-01" fin="2012-12-31"/>
       </CODE>
       <CODE description="Minoration si titulaire d'une bourse de l'enseignement supérieur" code="dar_5">
 	<VALUE valeur="990.86" deb="2002-01-01" fin="2002-11-30"/>
@@ -3578,7 +3636,7 @@
 	<VALUE valeur="1400" deb="2007-07-01" fin="2010-12-31"/>
 	<VALUE valeur="1400" deb="2008-01-01" fin="2008-12-31"/>
 	<VALUE valeur="1400" deb="2009-01-01" fin="2009-12-31"/>
-	<VALUE valeur="1400" deb="2010-01-01" fin="2010-12-31"/>
+	<VALUE valeur="1400" deb="2010-01-01" fin="2012-12-31"/>
       </CODE>
       <CODE description="Demandes antérieures au 1er juillet" code="dar_6">
 	<VALUE valeur="4420.76" deb="2002-01-01" fin="2002-06-30"/>
@@ -3590,24 +3648,21 @@
       <CODE description="Majoration si 2 étudiants" code="dar_7">
 	<VALUE valeur="0" deb="2002-01-01" fin="2002-06-30"/>
 	<VALUE valeur="2000" deb="2002-07-01" fin="2005-08-31"/>
-	<VALUE valeur="0" deb="2005-09-01" fin="2006-12-31"/>
-	<VALUE valeur="0" deb="2007-01-01" fin="2007-06-30"/>
-	<VALUE valeur="0" deb="2007-07-01" fin="2007-12-31"/>
-	<VALUE valeur="0" deb="2008-01-01" fin="2008-12-31"/>
-	<VALUE valeur="0" deb="2009-01-01" fin="2009-12-31"/>
-	<VALUE valeur="0" deb="2010-01-01" fin="2010-12-31"/>
+	<VALUE valeur="0" deb="2005-09-01" fin="2012-12-31"/>
       </CODE>
       <CODE description="Montant 2ème alinéa du III de R. 351-7" code="dar_8">
 	<VALUE valeur="0" deb="2002-01-01" fin="2002-06-30"/>
 	<VALUE valeur="1085" deb="2002-07-01" fin="2008-12-31"/>
 	<VALUE valeur="1200" deb="2009-01-01" fin="2009-12-31"/>
 	<VALUE valeur="1204.8" deb="2010-01-01" fin="2010-12-31"/>
+	<VALUE valeur="1222.87" deb="2011-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Montant 3ème alinéa du III de R. 351-7" code="dar_9">
 	<VALUE valeur="0" deb="2002-01-01" fin="2002-06-30"/>
 	<VALUE valeur="1627" deb="2002-07-01" fin="2008-12-31"/>
 	<VALUE valeur="1800" deb="2009-01-01" fin="2009-12-31"/>
 	<VALUE valeur="1807.2" deb="2010-01-01" fin="2010-12-31"/>
+	<VALUE valeur="1834.31" deb="2011-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Abattement forfaitaire R351-11" code="dar_10">
 	<VALUE valeur="0" deb="2002-01-01" fin="2002-06-30"/>
@@ -4123,25 +4178,25 @@
     </NODE>
     <NODE description="Aide exceptionnelle de fin d'année" code="aefa">
       <CODE description="Montant de l'aide pour une personne seule" code="mon_seul">
-	<VALUE valeur="152.45" deb="2000-01-01" fin="2010-12-31"/>
+	<VALUE valeur="152.45" deb="2000-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Montant de l'aide forfaitaire exceptionnelle de 2008" code="forf2008">
 	<VALUE valeur="67.55" deb="2008-01-01" fin="2008-12-31"/>
       </CODE>
       <CODE description="Taux pour la seconde personne" code="tx_2p" format = 'percent'>
-	<VALUE valeur=".50" deb="1998-01-01" fin="2010-12-31" code="tx_2p" />
+	<VALUE valeur=".50" deb="1998-01-01" fin="2011-12-31" code="tx_2p" />
       </CODE>
       <CODE description="Taux personne supplémentaire" code="tx_supp" format = 'percent'>
-	<VALUE valeur=".30" deb="1998-01-01" fin="2010-12-31"/>
+	<VALUE valeur=".30" deb="1998-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Taux au delà de la troisème personne à charge incluse" code="tx_3pac" format = 'percent'>
-	<VALUE valeur=".40" deb="1998-01-01" fin="2010-12-31"/>
+	<VALUE valeur=".40" deb="1998-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Taux au delà de la troisème personne à charge" code="tx_3pac" format = 'percent'>
-	<VALUE valeur=".40" deb="1998-01-01" fin="2010-12-31"/>
+	<VALUE valeur=".40" deb="1998-01-01" fin="2011-12-31"/>
       </CODE>
       <CODE description="Montant majoré" code="mon_maj" >
-	<VALUE valeur="219.53" deb="2005-01-01" fin="2010-12-31"/>
+	<VALUE valeur="219.53" deb="2005-01-01" fin="2011-12-31"/>
       </CODE>        
     </NODE>
     <NODE description="Allocation pour adulte handicapé (AAH)" code="aah" >
@@ -4170,12 +4225,12 @@
       </CODE>
       <CODE description="Âge légal de départ à la retraite" code="age_legal_retraite">
 	<VALUE valeur = "60"     deb="1983-07-01" fin="2011-06-30"/>
-	<VALUE valeur = "60.33"  deb="2O11-07-01" fin="2012-06-30"/> 	            
+	<VALUE valeur = "60.33"  deb="2011-07-01" fin="2012-06-30"/> 	            
 	<VALUE valeur = "60.66"  deb="2012-07-01" fin="2013-06-30"/> 	      
 	<VALUE valeur = "61"     deb="2013-07-01" fin="2014-06-30"/> 	      
 	<VALUE valeur = "61.33"  deb="2014-07-01" fin="2015-06-30"/> 
 	<VALUE valeur = "61.66"  deb="2015-07-01" fin="2016-06-30"/> 
-	<VALUE valeur = "62"     deb="2016-07-01" fin="2050-06-30"/> 
+	<VALUE valeur = "62"     deb="2016-07-01" fin="2050-06-30"/>
       </CODE>
     </NODE>
     <NODE description="Complément de l'allocation pour adulte handicapé (CAAH)" code="caah" >
@@ -4304,7 +4359,7 @@
   <NODE description="Immeubles bâtis" code="res_princ" >
   		<CODE description="Taux d'abattement résidence principale" code="taux" format = 'percent'>
 	  	  <VALUE valeur="0.20" deb="2002-01-01" fin="2007-12-31"/>
-	  	  <VALUE valeur="0.30" deb="2008-01-01" fin="2010-12-31"/>
+	  	  <VALUE valeur="0.30" deb="2008-01-01" fin="2011-12-31"/>
 	     </CODE>
   </NODE>  
   <NODE description="Immeubles non bâtis" code="nonbat" >

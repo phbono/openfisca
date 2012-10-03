@@ -54,6 +54,12 @@ def _credits_impot(creimp, accult, percvm, direpa, mecena, prlire, aidper,
         niches = (creimp + accult + percvm + direpa + mecena + prlire + aidper +
                   quaenv + drbail + ci_garext + preetu + saldom2 + inthab + assloy + 
                   autent)
+    elif _P.datesim.year == 2011:
+        niches = (creimp + accult + percvm + direpa + mecena + prlire + aidper +
+                  quaenv + drbail + ci_garext + preetu + saldom2 + inthab + assloy + 
+                  autent)    # TODO check because totally unchecked
+    
+        
     return niches
 
 def _nb_pac2(nbF, nbJ, nbR, nbH):
@@ -96,6 +102,9 @@ def _creimp(f2ab, f8ta, f8tb, f8tf, f8tg, f8th, f8tc, f8td, f8te, f8to, f8tp, f8
     elif _P.datesim.year == 2010:
         return (f2ab + f8ta + f8tb + f8tc - f8tf + f8tg + f8th + f8to - f8tp + f8uz + f8tz + f8wa + f8wb + f8wd + f8we + f8wr + f8wt + f8wu + f8wv)
 
+    elif _P.datesim.year == 2011: # TODO check because totally unchecked
+        return (f2ab + f8ta + f8tb + f8tc - f8tf + f8tg + f8th + f8to - f8tp + f8uz + f8tz + f8wa + f8wb + f8wd + f8we + f8wr + f8wt + f8wu + f8wv)
+
 def _divide(marpac, f2dc, f2gr, _P):
     '''
     Crédit d'impôt dividendes
@@ -111,6 +120,9 @@ def _percvm(f3vv, _P):
     Crédit d’impôt pertes sur cessions de valeurs mobilières (3VV)
     2010-
     '''
+    # TODO check 2011
+    if _P.datesim.year == 2011:
+        return 0*f3vv
     return _P.ir.credits_impot.percvm.taux*f3vv
 
 def _direpa(f2bg):
@@ -138,7 +150,7 @@ def _prlire(f2dh, _P):
     '''
     Prélèvement libératoire à restituer (case 2DH)
     2002-
-    TODO check 
+    TODO check formula and parameters 
     '''
     return _P.ir.credits_impot.prlire.taux*f2dh
 
@@ -190,7 +202,7 @@ def _quaenv(marpac, nb_pac2, f7wf, f7wh, f7wk, f7wq, f7sb, f7sd, f7se, f7sh, f7w
                 P.taux_wh*min_(f7wh, max6) +
                 P.taux_sb*min_(f7sb, max7) )
 
-    elif _P.datesim.year == 2010:
+    elif _P.datesim.year >= 2010:  # TODO Check 2011 formula and plaf in param 
         max1 = max_(0, max0 - f7wf)
         max2 = max_(0, max1 - f7se)
         max3 = max_(0, max2 - f7wk)
@@ -228,7 +240,7 @@ def _aidper(marpac, nb_pac2, f7wf, f7wi, f7wj, f7wl, f7sf, f7si, _P):
         max1 = max_(0, max0 - f7wj)
         return (P.taux_wj*min_(f7wj, max0) +
                 P.taux_wi*min_(f7wi, max1) )
-    elif _P.datesim.year == 2010:
+    elif _P.datesim.year >= 2010:
         max1 = max_(0, max0 - f7wl)
         max2 = max_(0, max1 - f7sf)
         max3 = max_(0, max2 - f7wj)
@@ -236,6 +248,8 @@ def _aidper(marpac, nb_pac2, f7wf, f7wi, f7wj, f7wl, f7sf, f7si, _P):
                 P.taux_sf*min_(f7sf, max1) +
                 P.taux_wj*min_(f7wj, max2) +
                 P.taux_wi*min_(f7si, max3) )
+    
+        
 
 def _acqgpl(f7up, f7uq, _P):
     '''
@@ -277,11 +291,11 @@ def _preetu(f7uk, f7vo, f7td, _P):
     P = _P.ir.credits_impot.preetu
     
     if   _P.datesim.year == 2005:  max1 = P.max
-    elif _P.datesim.year >= 2006:  max1 = P.max*(1+f7vo)
+    elif _P.datesim.year >= 2006:  max1 = P.max*(1+f7vo)  # TODO check if it is not (f7vo) instead for ALL OR SOME YEARS (2011 for example) 
     if _P.datesim.year in (2005,2006,2007):
         return P.taux*min_(f7uk, max1)
     elif _P.datesim.year >=2008:
-        return P.taux*min_(f7uk, P.max) + P.taux*min_(f7td, max1)
+        return P.taux*min_(f7uk, P.max) + P.taux*min_(f7td, max1) 
 
 def _saldom2(nb_pac2, f7db, f7dg, f7dl, f7dq, _P):
     '''
@@ -306,7 +320,11 @@ def _saldom2(nb_pac2, f7db, f7dg, f7dl, f7dq, _P):
         maxDuMaxNonInv = P.max2*not_(annee1) + P.max2_1ereAnnee*annee1
         maxNonInv = min_(maxBase + P.pac*nbpacmin, maxDuMaxNonInv)
         maxEffectif = maxNonInv*not_(isinvalid) + P.max3*isinvalid
-            
+
+    elif _P.datesim.year == 2011:
+        # TODO
+        maxEffectif = 0
+        
     return P.taux*min_(f7db, maxEffectif)
 
 def _inthab(marpac, nb_pac2, caseP, caseF, nbG, nbR, f7vw, f7vx, f7vy, f7vz, _P):
@@ -340,6 +358,15 @@ def _inthab(marpac, nb_pac2, caseP, caseF, nbG, nbR, f7vw, f7vx, f7vy, f7vz, _P)
                 P.taux1*min_(f7vy, max1) + 
                 P.taux2*min_(f7vw, max2) + 
                 P.taux3*min_(f7vz, max3) )
+    if _P.datesim.year == 2011:  # TODO formula parmaters are set
+        max1 = min_(max0 - f7vx, 0)
+        max2 = min_(max1 - f7vy, 0)
+        max3 = min_(max2 - f7vw, 0)
+        return (P.taux1*min_(f7vx, max0) + 
+                P.taux1*min_(f7vy, max1) + 
+                P.taux2*min_(f7vw, max2) + 
+                P.taux3*min_(f7vz, max3) )
+        
 
 def _assloy(f4bf, _P):
     '''

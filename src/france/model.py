@@ -201,7 +201,7 @@ class ModelSF(ModelDescription):
     teicaa      = Prestation(ir._teicaa, 'foy')
     cont_rev_loc = Prestation(ir._cont_rev_loc, 'foy')
     iai = Prestation(ir._iai, 'foy')
-    tehr = Prestation(ir._tehr, 'foy')
+    cehr = Prestation(ir._cehr, 'foy')
     imp_lib = Prestation(ir._imp_lib, 'foy')
     
     

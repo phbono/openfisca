@@ -43,7 +43,7 @@ def _cd1(cd_penali, cd_acc75a, cd_percap, cd_deddiv, cd_doment, cd_eparet, cd_gr
         niches1 = cd_penali + cd_acc75a + cd_percap + cd_deddiv + cd_eparet
     elif _P.datesim.year in (2007, 2008):
         niches1 = cd_penali + cd_acc75a + cd_deddiv + cd_eparet
-    elif _P.datesim.year in (2009, 2010):
+    elif _P.datesim.year in (2009, 2010, 2011):
         niches1 = cd_penali + cd_acc75a + cd_deddiv + cd_eparet + cd_grorep
     return niches1
 

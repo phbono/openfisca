@@ -451,6 +451,7 @@ class InputTable(ModelDescription):
     f7gq = IntCol(unit= 'foy')
     f7fq = IntCol(unit= 'foy')
     f7fm = IntCol(unit= 'foy')
+    f7fl = IntCol(unit= 'foy')
     
     # Souscriptions au capital de SOFICA
     f7gn = IntCol(unit= 'foy')

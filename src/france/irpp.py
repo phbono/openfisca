@@ -435,19 +435,19 @@ def _iai(iaidrdi, plus_values, cont_rev_loc, teicaa):
     '''
     return iaidrdi + plus_values + cont_rev_loc + teicaa
 
-def _tehr(rfr, nb_adult, _P):
+def _cehr(rfr, nb_adult, _P):
     '''
-    Taxe exceptionnelle sur les hauts revenus
+    Contribution exceptionnelle sur les hauts revenus
     'foy'
     '''
-    bar = _P.ir.tehr
+    bar = _P.ir.cehr
     return bar.calc(rfr/nb_adult)*nb_adult
 
-def _irpp(iai, credits_impot, tehr):
+def _irpp(iai, credits_impot, cehr):
     '''
     Montant avant seuil de recouvrement (hors ppe)
     '''
-    return  -(iai - credits_impot + tehr)
+    return  -(iai - credits_impot + cehr)
 
 ###############################################################################
 ## Autres totaux utiles pour la suite
