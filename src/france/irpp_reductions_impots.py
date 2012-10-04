@@ -79,7 +79,13 @@ def _reductions(ip_net, donapd, dfppce, cotsyn, resimm, patnat, sofipe, saldom, 
         total = (donapd + dfppce + cotsyn + resimm + patnat + sofipe + saldom + intagr + 
                 prcomp + spfcpi + mohist + sofica + cappme + repsoc + invfor + deffor + 
                 daepad + rsceha + invlst + domlog + adhcga + creaen + ecpess + scelli + 
-                locmeu + doment + domsoc)
+                locmeu + doment + domsoc) # TODO check (sees checked) and report in Niches.xls         
+    elif _P.datesim.year == 2011:
+        total = (donapd + dfppce + cotsyn + resimm + patnat + sofipe + saldom + intagr + 
+                prcomp + spfcpi + mohist + sofica + cappme + repsoc + invfor + deffor + 
+                daepad + rsceha + invlst + domlog + adhcga + creaen + ecpess + scelli + 
+                locmeu + doment + domsoc)   # TODO Check because totally uncecked
+        
     return min_(ip_net,total)    
 
 def _donapd(f7ud, _P):
@@ -199,7 +205,7 @@ def _saldom(nb_pac2, f7db, f7df, f7dg, f7dl, f7dq, _P):
         maxEffectif = maxNonInv*not_(isinvalid) + P.max3*isinvalid
         max1 = maxEffectif - min_(f7db, maxEffectif)
             
-    elif _P.datesim.year in (2009, 2010):
+    elif _P.datesim.year in (2009, 2010, 2011):  # TODO Check 2011
         annee1 = f7dq
         nbpacmin = nb_pac2 + f7dl
         maxBase = P.max1*not_(annee1) + P.max1_1ereAnnee*annee1
@@ -237,7 +243,7 @@ def _prcomp(f7wm, f7wn, f7wo, f7wp, _P):
                               max_(0,(f7wn>f7wm)*(f7wo>=P.seuil)*P.taux*f7wn/div)) +
              P.taux*f7wp)
 
-def _spfcpi(marpac, f7gq, f7fq, f7fm, _P):
+def _spfcpi(marpac, f7gq, f7fq, f7fm, f7fl, _P):
     '''
     Souscription de parts de fonds communs de placement dans l'innovation, 
     de fonds d'investissement de proximité
@@ -256,6 +262,13 @@ def _spfcpi(marpac, f7gq, f7fq, f7fm, _P):
                 P.taux1*min_(f7fq, max1) +
                 P.taux2*min_(f7fm, max1) )
 
+    elif _P.datesim.year <= 2011:
+        return (P.taux1*min_(f7gq, max1) + 
+                P.taux1*min_(f7fq, max1) +
+                P.taux2*min_(f7fm, max1) +
+                P.taux3*min_(f7fl, max1))
+
+
 def _mohist(f7nz, _P):
     '''
     Travaux de conservation et de restauration d’objets classés monuments historiques (case NZ)
@@ -273,8 +286,7 @@ def _sofica(f7gn, f7fn, rng, _P):
     
     max0 = min_(P.taux1*max_(rng,0), P.max)
     max1 = min_(0, max0 - f7gn)
-    return P.taux2*min_(f7gn, max0) + \
-           P.taux3*min_(f7fn, max1)
+    return P.taux2*min_(f7gn, max0) + P.taux3*min_(f7fn, max1)
 
 def _cappme(marpac, f7cf, f7cl, f7cm, f7cn, f7cu, _P):
     '''
@@ -293,6 +305,10 @@ def _cappme(marpac, f7cf, f7cl, f7cm, f7cn, f7cu, _P):
     elif _P.datesim.year <= 2010:
         seuil_tpe = P.seuil_tpe*(marpac + 1)
         return P.taux*(min_(base,seuil)+min_(f7cu, seuil_tpe))
+    elif _P.datesim.year <= 2011:
+        seuil_tpe = P.seuil_tpe*(marpac + 1)
+        return P.taux*(min_(base,seuil)+min_(f7cu, seuil_tpe))  # TODO Modify and add f7cq
+    
 
 def _intemp(nb_pac, f7wg, _P):
     '''
@@ -413,6 +429,10 @@ def _invlst(marpac, f7xc, f7xd, f7xe, f7xf, f7xg, f7xh, f7xi, f7xj, f7xk, f7xl, 
     seuil1 = P.seuil1*(1+marpac)
     seuil2 = P.seuil2*(1+marpac)
     seuil3 = P.seuil3*(1+marpac)
+ 
+    if _P.datesim.year == 2011:  # TODO formula and params !!
+        return 0*f7xc
+ 
     
     if _P.datesim.year == 2004: xc = P.taux_xc*min_(f7xc,seuil1/4)
     else: xc = P.taux_xc*min_(f7xc, seuil1/6)
@@ -428,6 +448,7 @@ def _invlst(marpac, f7xc, f7xd, f7xe, f7xf, f7xg, f7xh, f7xi, f7xj, f7xk, f7xl, 
     xm = P.taux_xm*f7xm
     xn = P.taux_xn*min_(f7xn,seuil1/6)
     xo = P.taux_xo*f7xo
+    
     return xc + xd + xe + xf + xg + xh + xi + xj + xk + xl + xm + xn + xo
     
 def _domlog(f7ua, f7ub, f7uc, f7ui, f7uj, f7qb, f7qc, f7qd, f7ql, f7qt, f7qm, _P):
@@ -471,10 +492,11 @@ def _creaen(f7fy, f7gy, f7jy, f7hy, f7ky, f7iy, f7ly, f7my, _P):
     elif _P.datesim.year == 2009:
         return (P.base*((f7jy + f7fy) + f7hy/2) +
                 P.hand*((f7ky + f7gy) + f7iy/2) )
-    elif _P.datesim.year == 2010:
+    elif _P.datesim.year >= 2010:
         return (P.base*((f7jy + f7fy) + (f7hy + f7ly)/2) +
                 P.hand*((f7ky + f7gy) + (f7iy + f7my)/2) )
-      
+
+        
 def _ecpess(f7ea, f7eb, f7ec, f7ed, f7ef, f7eg, _P):
     '''
     Enfants à charge poursuivant leurs études secondaires ou supérieures

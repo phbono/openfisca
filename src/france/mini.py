@@ -491,7 +491,12 @@ def _aefa(age, smic55, af_nbenf, nb_par, ass ,aer, api, rsa, _P, _option = {'age
     # spécifique à taux majoré servie aux allocataires âgés de cinquante-cinq ans ou plus justifiant de vingt années
     # d’activité salariée, aux allocataires âgés de cinquante-sept ans et demi ou plus justifiant de dix années d’activité
     # salariée ainsi qu’aux allocataires justifiant d’au moins 160 trimestres validés dans les régimes d’assurance
-    # vieillesse ou de périodes reconnues équivalentes est égal à        
+    # vieillesse ou de périodes reconnues équivalentes est égal à
+    
+    
+    # Pour bénéficier de la Prime de Noël 2011, vous devez être éligible pour le compte du mois de novembre 2011 ou au plus de décembre 2011, soit d’une allocation de solidarité spécifique (ASS), de la prime forfaitaire mensuelle de reprise d'activité, de l'allocation équivalent retraite (allocataire AER), du revenu de solidarité active (Bénéficiaires RSA), de l'allocation de parent isolé (API), du revenu minimum d'insertion (RMI), de l’Allocation pour la Création ou la Reprise d'Entreprise (ACCRE-ASS) ou encore allocation chômage. 
+    
+            
     maj = 0  # TODO
     
     condition = (dummy_ass+dummy_aer+dummy_api+dummy_rmi > 0)

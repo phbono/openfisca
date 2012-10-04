@@ -371,23 +371,24 @@ def _decote(ir_plaf_qf, _P):
     P = _P.ir.decote
     return (ir_plaf_qf < P.seuil)*(P.seuil - ir_plaf_qf)*0.5
 
-def _nat_imp(rni, nbptr, _P):
+def _nat_imp(irpp):
     '''
     Renvoie True si le foyer est imposable, False sinon
     '''
-    P = _P.ir.non_imposable
-    seuil = P.seuil + (nbptr - 1)*P.supp
-    return rni >= seuil
+    #def _nat_imp(rni, nbptr, _P):
+    #P = _P.ir.non_imposable
+    #seuil = P.seuil + (nbptr - 1)*P.supp
+    return irpp > 0 
 
-def _ip_net(ir_plaf_qf, nat_imp, decote):
+def _ip_net(ir_plaf_qf, decote):
     '''
-    irpp après décote et prise en compte de la non imposabilité
+    irpp après décote
     '''
-    return nat_imp*max_(0, ir_plaf_qf - decote)
+    return max_(0, ir_plaf_qf - decote)
 
 def _iaidrdi(ip_net, reductions):
     '''
-    impot après imputation des réductions d'impôt
+    Impôt après imputation des réductions d'impôt
     '''
     return ip_net - reductions
 
@@ -435,19 +436,19 @@ def _iai(iaidrdi, plus_values, cont_rev_loc, teicaa):
     '''
     return iaidrdi + plus_values + cont_rev_loc + teicaa
 
-def _tehr(rfr, nb_adult, _P):
+def _cehr(rfr, nb_adult, _P):
     '''
-    Taxe exceptionnelle sur les hauts revenus
+    Contribution exceptionnelle sur les hauts revenus
     'foy'
     '''
-    bar = _P.ir.tehr
+    bar = _P.ir.cehr
     return bar.calc(rfr/nb_adult)*nb_adult
 
-def _irpp(iai, credits_impot, tehr):
+def _irpp(iai, credits_impot, cehr):
     '''
     Montant avant seuil de recouvrement (hors ppe)
     '''
-    return  -(iai - credits_impot + tehr)
+    return  -(iai - credits_impot + cehr)
 
 ###############################################################################
 ## Autres totaux utiles pour la suite
