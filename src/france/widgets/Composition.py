@@ -32,7 +32,10 @@ from datetime import date
 import pickle
 from Config import CONF
 import os
-from core.utils import Scenario
+from core.utils import of_class_import
+
+country = CONF.get('simulation', 'country')
+Scenario = of_class_import(country, 'utils', 'Scenario')
 
 class S:
     name = 0

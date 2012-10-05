@@ -444,11 +444,23 @@ def _cehr(rfr, nb_adult, _P):
     bar = _P.ir.cehr
     return bar.calc(rfr/nb_adult)*nb_adult
 
-def _irpp(iai, credits_impot, cehr):
+def _cesthra(sal, _P, _option = {'sal': ALL}):
+    '''
+    Contribution exceptionnelle de solidarité sur les très hauts revenus d'activité
+    'foy'
+    '''
+    cesthra = 0
+    bar = _P.ir.cesthra
+    for rev in sal.itervalues():
+        cesthra += bar.calc(rev)
+    return cesthra
+
+
+def _irpp(iai, credits_impot, cehr, cesthra):
     '''
     Montant avant seuil de recouvrement (hors ppe)
     '''
-    return  -(iai - credits_impot + cehr)
+    return  -(iai - credits_impot + cehr + cesthra)
 
 ###############################################################################
 ## Autres totaux utiles pour la suite
@@ -483,8 +495,12 @@ def _rev_cap_lib(f2da, f2dh, f2ee, _P):
     '''
     Revenu du capital imposé au prélèvement libératoire
     '''
-    if _P.datesim.year <=2007: out = f2dh + f2ee
-    else: out = f2da + f2dh + f2ee
+    if _P.datesim.year <=2007: 
+        out = f2dh + f2ee
+    elif _P.datesim.year <= 2011:
+        out = f2da + f2dh + f2ee
+    elif _P.datesim.year > 2011:
+        out = f2dh*0
     return out
 
 def _avf(f2ab):
@@ -500,8 +516,10 @@ def _imp_lib(f2da, f2dh, f2ee, _P):
     P = _P.ir.rvcm.prelevement_liberatoire
     if _P.datesim.year <=2007: 
         out = - (P.assvie*f2dh + P.autre*f2ee )
-    else:
+    elif _P.datesim.year <= 2011:
         out = - (P.action*f2da + P.assvie*f2dh + P.autre*f2ee )
+    elif _P.datesim.year > 2011:
+        out = P.assvie*f2dh  # TODO check
     return out
 
 def _fon(f4ba, f4bb, f4bc, f4bd, f4be, _P):

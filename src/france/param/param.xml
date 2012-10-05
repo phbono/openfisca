@@ -3057,6 +3057,24 @@
         </TAUX>
       </TRANCHE>
     </BAREME>
+    <BAREME description="Contribution exceptionnelle de solidarité sur les très hauts revenus d'activité" code = "cesthra">
+      <TRANCHE>
+        <SEUIL>
+          <VALUE valeur="0" deb="2010-01-01" fin="2012-12-31"/>
+        </SEUIL>
+        <TAUX>
+		  <VALUE valeur="0.0" deb="2011-01-01" fin="2012-12-31"/>
+        </TAUX>
+      </TRANCHE>
+      <TRANCHE>
+        <SEUIL>
+          <VALUE valeur="1000000" deb="2010-01-01" fin="2012-12-31"/>
+        </SEUIL>
+        <TAUX>
+	      <VALUE valeur="0.0" deb="2010-01-01" fin="2012-12-31"/>
+        </TAUX>
+      </TRANCHE>
+    </BAREME>
   </NODE>
   <NODE description="Prestations familiales" code="fam" >
     <NODE description="Allocations familiales" code="af" >
