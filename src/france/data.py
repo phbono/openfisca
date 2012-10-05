@@ -51,13 +51,13 @@ class InputTable(ModelDescription):
     sali = IntCol() #(f1aj, f1bj, f1cj, f1dj, f1ej)
     choi = IntCol() # (f1ap, f1bp, f1cp, f1dp, f1ep)
     rsti = IntCol() # (f1as, f1bs, f1cs, f1ds, f1es)
-    fra = IntCol() # (f1ak, f1bk, f1ck, f1dk, f1ek)
+    fra  = IntCol() # (f1ak, f1bk, f1ck, f1dk, f1ek)
 
-    alr = IntCol() # (f1ao, f1bo, f1co, f1do, f1eo)
+    alr  = IntCol() # (f1ao, f1bo, f1co, f1do, f1eo)
     
     hsup = IntCol()  # f1au
-    inv = BoolCol(label = u'invalide')
-    alt = BoolCol(label = u'garde alternée')
+    inv  = BoolCol(label = u'invalide')
+    alt  = BoolCol(label = u'garde alternée')
     cho_ld = BoolCol(label = 'chômeur de longue durée') # (f1ai, f1bi, f1ci, f1di, f1ei)
     ppe_tp_sa = BoolCol() # (f1ax, f1bx, f1cx, f1dx, f1qx)
     ppe_tp_ns = BoolCol() # (f5nw, f5ow, f5pw)

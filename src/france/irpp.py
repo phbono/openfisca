@@ -194,7 +194,9 @@ def _deficit_rcm(f2aa, f2al, f2am, f2an):
     return f2aa + f2al + f2am + f2an
 
 def _rev_cat_rvcm(marpac, deficit_rcm, f2ch, f2dc, f2ts, f2ca, f2fu, f2go, f2gr, f2tr, _P):
-    ''' REVENUS DES VALEURS ET CAPITAUX MOBILIERS '''
+    ''' 
+    REVENUS DES VALEURS ET CAPITAUX MOBILIERS 
+    '''
     P = _P.ir.rvcm
     if _P.datesim.year > 2004: f2gr = 0
 
