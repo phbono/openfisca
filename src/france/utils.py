@@ -398,10 +398,77 @@ def populate_from_scenario(datatable, scenario):
 
     datatable._isPopulated = True
 
+XAXES = {}
+XAXES['sal'] = ( [u'Salaire super brut',
+                  u'Salaire brut',
+                  u'Salaire imposable',
+                  u'Salaire net'],  2 , 'sali')
+XAXES['cho'] = ( [u'Chômage brut',
+                  u'Chômage imposable',
+                  u'Chômage net'], 1, 'choi')
+XAXES['rst'] = ([u'Retraite brut',
+                 u'Retraite imposable',
+                 u'Retraite nette'], 0, 'rsti')
+XAXES['divpfl'] = ([u'Dividendes bruts (PFL)',
+                 u'Dividendes nets (PFL)'], 0 , 'f2da')
+XAXES['intpfl'] = ([u'Intérêts bruts (PFL)',
+                 u'Intérêts nets (PFL)'], 0 , 'f2ee')
+XAXES['divb'] = ([u'Dividendes bruts (barème)',
+                 u'Dividendes nets (barème)'], 0 , 'f2dc')
+XAXES['intb'] = ([u'Intérêts bruts (barème)',
+                 u'Intérêts nets (barème)'], 0 , 'f2tr')
 
+XAXES2 = {}
+XAXES2['sal'] = ( ['salsuperbrut',
+                   'salbrut',
+                   'sal',
+                   'salnet'],  2 , 'sali')
+XAXES['cho'] = ( ['chobrut',
+                  'cho',
+                  'chonet'], 1, 'choi')
+XAXES['rst'] = (['rstbrut',
+                 'rst',
+                 'rstnet'], 0, 'rsti')
+
+XAXES['divpfl'] = (['divpflbrut',
+                    'divpflnet'], 0 , 'f2da')
+
+XAXES['intpfl'] = (['intpflbrut',
+                    'intpflnet'], 0 , 'f2ee')
+
+XAXES['divb'] = (['divbbrut',
+                  'divbnet'], 0 , 'f2dc')
+
+XAXES['intb'] = (['intbbrut',
+                  'intbnet'], 0 , 'f2tr')
 
 
  
+
+REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
+                       'rev_cap_bar', 'rev_cap_lib', 'fon'],
+       'brut': ['salbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
+                 'rev_cap_bar', 'rev_cap_lib', 'fon'],
+       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_bar',
+                      'rev_cap_lib', 'fon', 'cotsoc_bar', 'cotsoc_lib'],
+       'net'      : ['salnet', 'chonet', 'rstnet', 'alr', 'alv', 'rev_cap_bar', 'rev_cap_lib', 'fon',
+                      'cotsoc_bar', 'cotsoc_lib']}        
+#        alim = data['alr'].vals + data['alv'].vals
+#        penbrut = data['chobrut'].vals + data['rstbrut'].vals + alim
+#        penimp  = data['cho'].vals + data['rst'].vals + alim
+#        pennet  = data['chonet'].vals + data['rstnet'].vals + alim
+#        capbrut = data['rev_cap_bar'].vals + data['rev_cap_lib'].vals + data['fon'].vals
+#        capnet = capbrut + data['cotsoc_bar'].vals + data['cotsoc_lib'].vals
+
+#        if   typrev == 'superbrut': 
+#            out = data['salsuperbrut'].vals + penbrut + capbrut
+#        elif typrev == 'brut':      
+#            out = data['salbrut'].vals + penbrut + capbrut
+#        elif typrev == 'imposable':
+#            out = data['sali'].vals + penimp + capnet
+#        elif typrev == 'net':       
+#            out = data['salnet'].vals + pennet + capnet
+
 
 
 

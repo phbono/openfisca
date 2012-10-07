@@ -48,9 +48,9 @@ class InputTable(ModelDescription):
     quifoy  = EnumCol(QUIFOY)
     quifam  = EnumCol(QUIFAM)
     
-    sali = IntCol() #(f1aj, f1bj, f1cj, f1dj, f1ej)
-    choi = IntCol() # (f1ap, f1bp, f1cp, f1dp, f1ep)
-    rsti = IntCol() # (f1as, f1bs, f1cs, f1ds, f1es)
+    sali = IntCol(label="Salaire imposable") #(f1aj, f1bj, f1cj, f1dj, f1ej)
+    choi = IntCol(label=u"Chômage imposable") # (f1ap, f1bp, f1cp, f1dp, f1ep)
+    rsti = IntCol(label="Retraite imposable") # (f1as, f1bs, f1cs, f1ds, f1es)
     fra  = IntCol() # (f1ak, f1bk, f1ck, f1dk, f1ek)
 
     alr  = IntCol() # (f1ao, f1bo, f1co, f1do, f1eo)
