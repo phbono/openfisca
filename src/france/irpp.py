@@ -237,7 +237,9 @@ def _rev_cat_rvcm(marpac, deficit_rcm, f2ch, f2dc, f2ts, f2ca, f2fu, f2go, f2gr,
     return max_(TOT1 + TOT2 + TOT3 - DEF, 0)
 
 def _rfr_rvcm(f2dc, f2fu, f2da, _P):
-    ''' Abattements sur rvcm à réintégrer dans le revenu fiscal de référence '''
+    '''
+    Abattements sur rvcm à réintégrer dans le revenu fiscal de référence
+    '''
     P = _P.ir.rvcm
     if _P.ir.autre.finpfl:
         f2dc_bis = f2dc + f2da
@@ -248,7 +250,9 @@ def _rfr_rvcm(f2dc, f2fu, f2da, _P):
     return max_((1-P.abatmob_taux)*(f2dc_bis + f2fu) - i121, 0)
 
 def _rev_cat_rfon(f4ba, f4bb, f4bc, f4bd, f4be, _P):
-    ''' REVENUS FONCIERS '''    
+    '''
+    REVENUS FONCIERS
+    '''    
     P = _P.ir.microfoncier
     ## Calcul du revenu catégoriel
     a13 = f4ba + f4be - P.taux*f4be*(f4be <= P.max)
