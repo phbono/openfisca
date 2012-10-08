@@ -219,7 +219,7 @@ def _bouclier_rev(rbg, maj_cga, csg_deduc, rvcm_plus_abat, rev_cap_lib, rev_exo,
     ## pour le calcul de droit à restitution : prendre 0.7*montant_brut_rev_dist_soumis_au_barème
     rev_bar = rbg - maj_cga - csg_deduc - deficit_ante
 
-## AJOUTER : indemnités de fonction percus par les élus- revenus soumis à régimes spéciaux
+## TODO AJOUTER : indemnités de fonction percus par les élus- revenus soumis à régimes spéciaux
 
     # Revenu soumis à l'impôt sur le revenu forfaitaire
     rev_lib = rev_cap_lib 

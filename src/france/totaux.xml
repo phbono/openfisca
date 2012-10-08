@@ -40,23 +40,26 @@
     <NODE desc= "Pensions alimentaires versée" shortname="P. alim. vers." code = "alv" color = "136,120,178"/>
     <NODE desc= "Rentes viagères" shortname="Rentes viag." code= "rto" color = "125,185,86"/>
   </NODE>
-  <NODE desc= "Revenus du capital" shortname="Rev. capital" code = "rev_cap" color= "255,222,48">
-    <NODE desc= "Revenus fonciers" shortname="Rev. fonciers" code='fon' color = "255,245,155"/>
-    <NODE desc= "Revenus des actions et parts" shortname="Rev. actions" code='rev_act' color = "255,239,103">
-      <NODE desc= "Revenus des actions et parts soumis au barème" shortname="Rev act bar" code='rev_act_bar' color = "255,239,103"/>
-      <NODE desc= "Cotisations sociales sur les actions et parts soumis au barème" shortname="Cotsoc act bar" code= "cotsoc_act" color = "243,166,171">
-      <NODE desc= "CSG (revenus du capital au barème)" shortname="CSG act. bar." code= "csg_act_bar" color = "243,166,171"/>
-      <NODE desc= "Prélèvement social sur les revenus du capital au barème" shortname="Pr. s. act. bar." code= "prelsoc_act_bar" color = "243,166,171"/>
-      <NODE desc= "CRDS (revenus du capital au barème)" shortname="CRDS act. bar." code= "crds_act_bar" color ="229,48,56"/>
+  <NODE desc= "Revenus du capital net" shortname="Rev. cap. net" code = "rev_cap_net" color= "255,222,48">
+    <NODE desc= "Revenus du capital brut" shortname="Rev. cap. brut" code = "rev_cap_brut" color= "255,222,48">
+      <NODE desc= "Revenus fonciers" shortname="Rev. fonciers" code='fon' color = "255,245,155"/>
+      <NODE desc= "Revenus du capital soumis au barème" shortname="Rev cap bar" code='rev_cap_bar' color = "255,239,103"/>
+      <NODE desc= "Revenus du capital soumis au prélèvement libératoire" shortname="Rev cap lib" code='rev_cap_lib' color = "255,233,28"/>
+	  <NODE desc= "Revenus accessoires" shortname="Rev. accesoires" code='rac' color="247,221,0"/>    
     </NODE>
-    <NODE desc= "Revenus des actions et parts soumis au prélèvement libératoire" shortname="Rev act lib" code='rev_act_lib' color = "255,233,28"/>
-    <NODE desc= "Cotisations sociales des actions et parts soumis au prélèvement libératoire" shortname="Cotsoc act lib" code = "cotsoc_lib" color = "243,166,171">
-      <NODE desc= "CSG (revenus des actions et parts soumis au prélèvement libératoire)" shortname="CSG act. lib." code= "csg_act_lib" color = "235,114,118"/>
-      <NODE desc= "Prélèvement social sur les revenus des actions et parts soumis au prélèvement libératoire" shortname="Pr. s. act lib." code= "prelsoc_act_lib"/>
-      <NODE desc= "CRDS (revenus des actions et parts soumis au prélèvement libératoire)" shortname="CRDS act. lib." code= "crds_act_lib" color = "229,48,56"/>
+    <NODE desc= "Cotisations sociales sur les revenus du capital" shortname="Cotsoc. capital" code = "cotsoc_cap" color= "255,222,48">
+      <NODE desc= "Cotisations sociales sur les revenus du capital imposés au barème" shortname="Cotsoc cap bar" code= "cotsoc_bar" color = "243,166,171">
+        <NODE desc= "CSG (revenus du capital au barème)" shortname="CSG cap. bar." code= "csg_cap_bar" color = "243,166,171"/>
+        <NODE desc= "Prélèvement social sur les revenus du capital au barème" shortname="Pr. s. cap. bar." code= "prelsoc_cap_bar" color = "243,166,171"/>
+        <NODE desc= "CRDS (revenus du capital au barème)" shortname="CRDS cap. bar." code= "crds_cap_bar" color ="229,48,56"/>
+      </NODE>  
+      <NODE desc= "Cotisations sociales des revenus du patrimoine soumis au prélèvement libératoire" shortname="Cotsoc cap lib" code = "cotsoc_lib" color = "243,166,171">
+        <NODE desc= "CSG (revenus du capital soumis au prélèvement libératoire)" shortname="CSG cap. lib." code= "csg_cap_lib" color = "235,114,118"/>
+        <NODE desc= "Prélèvement social sur les revenus du capital soumis au prélèvement libératoire" shortname="Prel. soc. (lib.)" code= "prelsoc_cap_lib"/>
+        <NODE desc= "CRDS (revenus du capital soumis au prélèvement libératoire)" shortname="CRDS cap. lib." code= "crds_cap_lib" color = "229,48,56"/>
+      </NODE>
     </NODE>
-    <NODE desc= "Prélèvement libératoire sur les revenus des actions et parts" shortname="Prél. libérat." code = "imp_act_lib" color = "232,79,95"/>
-    <NODE desc= "Revenus accessoires" shortname="Rev. accesoires" code='rac' color="247,221,0"/>
+    <NODE desc= "Prélèvement libératoire sur les revenus du patrimoine" shortname="Prél. libérat." code = "imp_lib" color = "232,79,95"/>
   </NODE>
   <NODE desc= "Impôt sur le revenu (Landais, Piketty, Saez)" shortname="IR (LPS)" code = "ir_lps" color = "232,79,95"/>
   <NODE desc= "Prestations sociales" shortname="Prest. soc." code= "psoc" color = "255,102,63">

@@ -189,19 +189,19 @@ class InputTable(ModelDescription):
     
     # RVCM
     # revenus au prélèvement libératoire
-    f2da = IntCol(unit= 'foy')
-    f2dh = IntCol(unit= 'foy')
-    f2ee = IntCol(unit= 'foy')
+    f2da = IntCol(unit = 'foy', label = u"Revenus des actions et parts soumis au prélèvement libératoire")
+    f2dh = IntCol(unit = 'foy')
+    f2ee = IntCol(unit = 'foy', label = u"Revenus au prélèveemnt libératoire hors actions et assurance-vie")
 
     # revenus ouvrant droit à abattement
-    f2dc = IntCol(unit= 'foy')
-    f2fu = IntCol(unit= 'foy')
-    f2ch = IntCol(unit= 'foy')
+    f2dc = IntCol(unit = 'foy', label =u"Revenus des actions et parts donnant droit à abattement")
+    f2fu = IntCol(unit = 'foy')
+    f2ch = IntCol(unit = 'foy')
     
     # Revenus n'ouvrant pas droit à abattement
-    f2ts = IntCol(unit= 'foy')
-    f2go = IntCol(unit= 'foy')
-    f2tr = IntCol(unit= 'foy')
+    f2ts = IntCol(unit = 'foy')
+    f2go = IntCol(unit = 'foy')
+    f2tr = IntCol(unit = 'foy', label = u"Intérêts et autres revenus assimilés")
     
     # Autres
     f2cg = IntCol(unit= 'foy')

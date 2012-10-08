@@ -193,26 +193,33 @@ def _rev_cat_tspr(tspr, _option = {'tspr': ALL}):
 def _deficit_rcm(f2aa, f2al, f2am, f2an):
     return f2aa + f2al + f2am + f2an
 
-def _rev_cat_rvcm(marpac, deficit_rcm, f2ch, f2dc, f2ts, f2ca, f2fu, f2go, f2gr, f2tr, _P):
+def _rev_cat_rvcm(marpac, deficit_rcm, f2ch, f2dc, f2ts, f2ca, f2fu, f2go, f2gr, f2tr, f2da, f2ee, _P):
     ''' 
     REVENUS DES VALEURS ET CAPITAUX MOBILIERS 
     '''
     P = _P.ir.rvcm
     if _P.datesim.year > 2004: f2gr = 0
 
+    # Add f2da to f2dc and f2ee to f2tr when no PFL
+    if _P.ir.autre.finpfl:
+        f2dc_bis = f2dc + f2da
+        f2tr_bis = f2tr + f2ee
+    else:
+        f2dc_bis = f2dc
+        f2tr_bis = f2tr
     ## Calcul du revenu catégoriel
     #1.2 Revenus des valeurs et capitaux mobiliers
     b12 = min_(f2ch, P.abat_assvie*(1 + marpac))
     TOT1 = f2ch-b12
     # Part des frais s'imputant sur les revenus déclarés case DC
-    den = ((f2dc + f2ts)!=0)*(f2dc + f2ts) + ((f2dc + f2ts)==0)
-    F1 =  f2ca/den*f2dc
+    den = ((f2dc_bis + f2ts)!=0)*(f2dc_bis + f2ts) + ((f2dc_bis + f2ts)==0)
+    F1 =  f2ca/den*f2dc_bis
     
     # Revenus de capitaux mobiliers nets de frais, ouvrant droit à abattement
     # partie négative (à déduire des autres revenus nets de frais d'abattements
-    g12a = - min_(f2dc*P.abatmob_taux - F1,0)
+    g12a = - min_(f2dc_bis*P.abatmob_taux - F1,0)
     # partie positive
-    g12b = max_(f2dc*P.abatmob_taux - F1,0)
+    g12b = max_(f2dc_bis*P.abatmob_taux - F1,0)
     
     rev = g12b + f2gr + f2fu*P.abatmob_taux
 
@@ -221,20 +228,24 @@ def _rev_cat_rvcm(marpac, deficit_rcm, f2ch, f2dc, f2ts, f2ca, f2fu, f2go, f2gr,
     TOT2 = max_(0,rev - h12)
     i121= -min_(0,rev - h12)
     
-    # Pars des frais s'imputant sur les revenus déclarés ligne TS
+    # Part des frais s'imputant sur les revenus déclarés ligne TS
     F2 = f2ca - F1
-    TOT3 = (f2ts - F2) + f2go*P.majGO + f2tr - g12a
+    TOT3 = (f2ts - F2) + f2go*P.majGO + f2tr_bis - g12a
 
     DEF = deficit_rcm
 
     return max_(TOT1 + TOT2 + TOT3 - DEF, 0)
 
-def _rfr_rvcm(f2dc, f2fu, _P):
+def _rfr_rvcm(f2dc, f2fu, f2da, _P):
     ''' Abattements sur rvcm à réintégrer dans le revenu fiscal de référence '''
     P = _P.ir.rvcm
+    if _P.ir.autre.finpfl:
+        f2dc_bis = f2dc + f2da
+    else:
+        f2dc_bis = f2dc
     ## TODO: manque le sous total i121 (dans la fonction _rev_cat_rvcm)
     i121 = 0
-    return max_((1-P.abatmob_taux)*(f2dc + f2fu) - i121, 0)
+    return max_((1-P.abatmob_taux)*(f2dc_bis + f2fu) - i121, 0)
 
 def _rev_cat_rfon(f4ba, f4bb, f4bc, f4bd, f4be, _P):
     ''' REVENUS FONCIERS '''    
@@ -476,7 +487,7 @@ def _alv(sal):
 
 def _rfr(rni, alloc, f3va, f3vg, f3vi, rfr_cd, rfr_rvcm, rpns_exon, rpns_pvce, rev_cap_lib):
     '''
-    Revenu fiscal de reference
+    Revenu fiscal de référence
     '''
     return max_(0, rni - alloc) + rfr_cd + rfr_rvcm + rev_cap_lib + f3vi + rpns_exon + rpns_pvce + f3va + f3vg
  
@@ -487,11 +498,15 @@ def _glo(f1tv, f1tw, f1tx, f1uv, f1uw, f1ux, f3vf, f3vi, f3vj, f3vk):
     '''
     return f1tv + f1tw + f1tx + f1uv + f1uw + f1ux + f3vf + f3vi + f3vj + f3vk                   
 
-def _rev_cap_bar(f2dc, f2gr, f2ch, f2ts, f2go, f2tr, f2fu, avf):
+def _rev_cap_bar(f2dc, f2gr, f2ch, f2ts, f2go, f2tr, f2fu, avf, f2da, f2ee, _P):
     '''
     revenus du capital imposés au barème
     '''
-    return f2dc + f2gr + f2ch + f2ts + f2go + f2tr + f2fu - avf
+#    if _P.datesim.year <= 2011:
+#        return f2dc + f2gr + f2ch + f2ts + f2go + f2tr + f2fu - avf
+#    elif _P.datesim.year > 2011:
+#        return f2dc + f2gr + f2ch + f2ts + f2go + f2tr + f2fu - avf + (f2da + f2ee) 
+    return f2dc + f2gr + f2ch + f2ts + f2go + f2tr + f2fu - avf + (f2da + f2ee)*(_P.ir.autre.finpfl)  # we add f2da an f2ee to allow for comparaison between year 
 
 def _rev_cap_lib(f2da, f2dh, f2ee, _P):
     '''
@@ -499,11 +514,10 @@ def _rev_cap_lib(f2da, f2dh, f2ee, _P):
     '''
     if _P.datesim.year <=2007: 
         out = f2dh + f2ee
-    elif _P.datesim.year <= 2011:
+    else:
         out = f2da + f2dh + f2ee
-    elif _P.datesim.year > 2011:
-        out = f2dh*0
-    return out
+        
+    return out*not_(_P.ir.autre.finpfl)
 
 def _avf(f2ab):
     '''
@@ -518,13 +532,15 @@ def _imp_lib(f2da, f2dh, f2ee, _P):
     P = _P.ir.rvcm.prelevement_liberatoire
     if _P.datesim.year <=2007: 
         out = - (P.assvie*f2dh + P.autre*f2ee )
-    elif _P.datesim.year <= 2011:
-        out = - (P.action*f2da + P.assvie*f2dh + P.autre*f2ee )
-    elif _P.datesim.year > 2011:
-        out = P.assvie*f2dh  # TODO check
+    else:
+        out = - (P.action*f2da  + P.autre*f2ee)*not_(_P.ir.autre.finpfl) - P.assvie*f2dh
+    
     return out
 
 def _fon(f4ba, f4bb, f4bc, f4bd, f4be, _P):
+    '''
+    Revenus fonciers
+    '''
     ## Calcul des totaux        
     P = _P.ir.microfoncier
     fon = f4ba - f4bb - f4bc + round(f4be*(1-P.taux))  

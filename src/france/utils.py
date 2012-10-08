@@ -315,19 +315,114 @@ class Scenario(object):
         self.menage = S['menage']
 
 
+
+class Xaxis(object):
+    def __init__(self, col_name = None):
+        super(Xaxis, self).__init__()
+        
+        self.col_name = col_name
+        if self.col_name is not None:
+            self.set(col_name)
+            self.set_label()
+        else:
+            self.typ_tot = None
+            self.typ_tot_default = None
+                 
+    def set_label(self):
+        from core.utils import of_import
+        from core.datatable import Description
+        InputTable = of_import('data', 'InputTable')
+        description = Description(InputTable().columns)
+        label2var, var2label, var2enum = description.builds_dicts()
+        self.label = var2label[self.col_name]
+#        self.typ_tot_labels = {}
+#        for var in self.typ_tot:
+#            self.typ_tot_labels[var] = var2label[var]
+        
+    def set(self, col_name):
+        '''
+        Sets xaxis
+        '''
+        if col_name == 'sali':
+            self.name = 'sal'
+            self.col_name = 'sali' 
+            self.typ_tot = {'salsuperbrut' : 'Salaire super brut',
+                            'salbrut': 'Salaire brut',
+                            'sal':  'Salaire imposable',
+                            'salnet': 'Salaire net'}
+            self.typ_tot_default = 'sal'
+        
+        elif col_name == 'choi':
+            self.name = 'cho'
+            self.col_name = 'choi' 
+            self.typ_tot = {'chobrut': u"Chômage brut",
+                            'cho':     u"Chômage",
+                            'chonet':  u"Chômage net"}
+            self.typ_tot_default = 'cho'
+            
+        elif col_name == 'rsti':
+            self.name ='rst'
+            self.col_name = 'rsti' 
+            self.typ_tot = {'rstbrut': u"Retraite brut",
+                            'rst':     u"Retraite",
+                            'rstnet':  u"Retraite net"}
+            self.typ_tot_default = 'rst'
+            
+        elif col_name == 'f2da':
+            self.name = 'divpfl'
+            self.col_name = 'f2da' 
+            self.typ_tot = {'rev_cap_brut': "Revenus des capitaux", 
+                            'rev_cap_net': "Revenus des capitaux nets",
+                            }
+            self.typ_tot_default = 'rev_cap_brut'
+            
+        elif col_name == 'f2ee':
+            self.name = 'intpfl'
+            self.col_name = 'f2ee' 
+            self.typ_tot = {'rev_cap_brut': "Revenus des capitaux", 
+                            'rev_cap_net': "Revenus des capitaux nets",
+                            }
+            self.typ_tot_default = 'rev_cap_brut'
+            
+        elif col_name == 'f2dc':
+            self.name = 'divb'
+            self.col_name = 'f2dc' 
+            self.typ_tot = {'rev_cap_brut': "Revenus des capitaux", 
+                            'rev_cap_net': "Revenus des capitaux nets",
+                            }
+            self.typ_tot_default = 'rev_cap_brut'
+            
+        elif col_name == 'f2tr':
+            self.name = 'intb'
+            self.col_name = 'f2tr' 
+            self.typ_tot = {'rev_cap_brut': "Revenus des capitaux", 
+                            'rev_cap_net': "Revenus des capitaux nets",
+                            }
+            self.typ_tot_default = 'rev_cap_brut'
+
+
+def build_axes():
+    from core.utils import of_import
+    Xaxis = of_import('utils','Xaxis')
+    axes = []
+    for col_name in ['sali', 'choi', 'rsti', 'f2da', 'f2ee', 'f2dc', 'f2tr' ]:
+        axe = Xaxis(col_name)
+        axes.append(axe)
+    del axe
+    return axes
+
+
 def populate_from_scenario(datatable, scenario):
-    
+    '''
+    Popualte a datatable from a given scenario
+    '''
     from pandas import DataFrame, concat
     import numpy as np
 
-    
     NMEN = CONF.get('simulation', 'nmen')
     datatable.NMEN = NMEN
-    
     datatable._nrows = datatable.NMEN*len(scenario.indiv)
-    MAXREV =     datatable.NMEN = CONF.get('simulation', 'maxrev')
     datesim = datatable.datesim
-
     datatable.table = DataFrame()
 
     idmen = np.arange(60001, 60001 + NMEN)
@@ -368,91 +463,69 @@ def populate_from_scenario(datatable, scenario):
             if var in ('birth', 'noipref', 'noidec', 'noichef', 'quifoy', 'quimen', 'quifam'): continue
             if not index[noi] is None:
                 datatable.set_value(var, np.ones(nb)*val, index, noi)
-
+        del var, val
+        
     index = datatable.index['foy']
     nb = index['nb']
     for noi, dct in scenario.declar.iteritems():
         for var, val in dct.iteritems():
             if not index[noi] is None:
                 datatable.set_value(var, np.ones(nb)*val, index, noi)
-
+        del var, val
+        
     index = datatable.index['men']
     nb = index['nb']
     for noi, dct in scenario.menage.iteritems():
         for var, val in dct.iteritems():
             if not index[noi] is None:
                 datatable.set_value(var, np.ones(nb)*val, index, noi)
-        
+        del var, val
 
-    datatable.MAXREV = CONF.get('simulation', 'maxrev')
-    var = CONF.get('simulation', 'xaxis')
-    if var in ['sal', 'cho', 'rst']:
-        datatable.XAXIS =  var + 'i'
-    else:
-        datatable.XAXIS =  'sali'
-        
+    MAXREV = CONF.get('simulation', 'maxrev')
+    datatable.MAXREV = MAXREV
+    xaxis = CONF.get('simulation', 'xaxis')    
+    
+    axes = build_axes()
     if NMEN>1:
-        var = datatable.XAXIS
-        vls = np.linspace(0, MAXREV, NMEN)
-        datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
-
+        for axe in axes:
+            if axe.name == xaxis:
+                datatable.XAXIS = axe.col_name 
+                vls = np.linspace(0, MAXREV, NMEN)
+            else:
+                vls = np.linspace(0, MAXREV, NMEN)*0
+            var = axe.col_name
+            datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
+    
     datatable._isPopulated = True
 
-XAXES = {}
-XAXES['sal'] = ( [u'Salaire super brut',
-                  u'Salaire brut',
-                  u'Salaire imposable',
-                  u'Salaire net'],  2 , 'sali')
-XAXES['cho'] = ( [u'Chômage brut',
-                  u'Chômage imposable',
-                  u'Chômage net'], 1, 'choi')
-XAXES['rst'] = ([u'Retraite brut',
-                 u'Retraite imposable',
-                 u'Retraite nette'], 0, 'rsti')
-XAXES['divpfl'] = ([u'Dividendes bruts (PFL)',
-                 u'Dividendes nets (PFL)'], 0 , 'f2da')
-XAXES['intpfl'] = ([u'Intérêts bruts (PFL)',
-                 u'Intérêts nets (PFL)'], 0 , 'f2ee')
-XAXES['divb'] = ([u'Dividendes bruts (barème)',
-                 u'Dividendes nets (barème)'], 0 , 'f2dc')
-XAXES['intb'] = ([u'Intérêts bruts (barème)',
-                 u'Intérêts nets (barème)'], 0 , 'f2tr')
+#XAXES = {}
+#XAXES['sal'] = ( [u'Salaire super brut',
+#                  u'Salaire brut',
+#                  u'Salaire imposable',
+#                  u'Salaire net'],  2 , 'sali')
+#XAXES['cho'] = ( [u'Chômage brut',
+#                  u'Chômage imposable',
+#                  u'Chômage net'], 1, 'choi')
+#XAXES['rst'] = ([u'Retraite brut',
+#                 u'Retraite imposable',
+#                 u'Retraite nette'], 0, 'rsti')
+#XAXES['divpfl'] = ([u'Dividendes bruts (PFL)',
+#                 u'Dividendes nets (PFL)'], 0 , 'f2da')
+#XAXES['intpfl'] = ([u'Intérêts bruts (PFL)',
+#                 u'Intérêts nets (PFL)'], 0 , 'f2ee')
+#XAXES['divb'] = ([u'Dividendes bruts (barème)',
+#                 u'Dividendes nets (barème)'], 0 , 'f2dc')
+#XAXES['intb'] = ([u'Intérêts bruts (barème)',
+#                 u'Intérêts nets (barème)'], 0 , 'f2tr')
 
-XAXES2 = {}
-XAXES2['sal'] = ( ['salsuperbrut',
-                   'salbrut',
-                   'sal',
-                   'salnet'],  2 , 'sali')
-XAXES['cho'] = ( ['chobrut',
-                  'cho',
-                  'chonet'], 1, 'choi')
-XAXES['rst'] = (['rstbrut',
-                 'rst',
-                 'rstnet'], 0, 'rsti')
-
-XAXES['divpfl'] = (['divpflbrut',
-                    'divpflnet'], 0 , 'f2da')
-
-XAXES['intpfl'] = (['intpflbrut',
-                    'intpflnet'], 0 , 'f2ee')
-
-XAXES['divb'] = (['divbbrut',
-                  'divbnet'], 0 , 'f2dc')
-
-XAXES['intb'] = (['intbbrut',
-                  'intbnet'], 0 , 'f2tr')
-
-
- 
 
 REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
-                       'rev_cap_bar', 'rev_cap_lib', 'fon'],
+                       'rev_cap_brut', 'fon'],
        'brut': ['salbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
-                 'rev_cap_bar', 'rev_cap_lib', 'fon'],
-       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_bar',
-                      'rev_cap_lib', 'fon', 'cotsoc_bar', 'cotsoc_lib'],
-       'net'      : ['salnet', 'chonet', 'rstnet', 'alr', 'alv', 'rev_cap_bar', 'rev_cap_lib', 'fon',
-                      'cotsoc_bar', 'cotsoc_lib']}        
+                 'rev_cap_brut', 'fon'],
+       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_brut', 'fon', 'cotsoc_bar', 'cotsoc_lib'],
+       'net'      : ['salnet', 'chonet', 'rstnet', 'alr', 'alv', 'rev_cap_net', 'fon',
+                      ]}        
 #        alim = data['alr'].vals + data['alv'].vals
 #        penbrut = data['chobrut'].vals + data['rstbrut'].vals + alim
 #        penimp  = data['cho'].vals + data['rst'].vals + alim
