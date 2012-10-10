@@ -188,11 +188,15 @@ def _cotsoc_lib(csg_cap_lib, prelsoc_cap_lib, crds_cap_lib):
     return csg_cap_lib + prelsoc_cap_lib + crds_cap_lib
 
 def _rev_cap(fon, rev_cap_bar, cotsoc_bar, rev_cap_lib, cotsoc_lib, imp_lib, rac):
-    '''Revenus du patrimoine'''
+    '''
+    Revenus du patrimoine
+    '''
     return fon + rev_cap_bar + cotsoc_bar + rev_cap_lib + cotsoc_lib + imp_lib + rac
  
 def _psoc(pfam, mini, logt):
-    '''Prestations sociales'''
+    '''
+    Prestations sociales
+    '''
     return pfam + mini + logt
 
 def _pfam(af, cf, ars, aeeh, paje, asf, crds_pfam):

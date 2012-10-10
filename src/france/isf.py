@@ -30,14 +30,14 @@ ALL = [x[1] for x in QUIFOY]
 
 def _isf_imm_bati(b1ab, b1ac, _P):
     '''
-    immeubles bâtis
+    Immeubles bâtis
     '''
     P= _P.isf.res_princ
     return (1-P.taux)*b1ab + b1ac
 
 def _isf_imm_non_bati(b1bc, b1be, b1bh, b1bk, _P):
     '''
-    immeubles non bâtis
+    Immeubles non bâtis
     '''
     P= _P.isf.nonbat
     # forêts
@@ -56,7 +56,7 @@ def _isf_imm_non_bati(b1bc, b1be, b1bh, b1bk, _P):
 
 def _isf_actions_sal(b1cl, _P): ## non présent en 2005##
     '''
-    parts ou actions détenues par les salariés et mandataires sociaux
+    Parts ou actions détenues par les salariés et mandataires sociaux
     '''
     P = _P.isf.droits_soc
     return  b1cl*P.taux1  
@@ -84,7 +84,7 @@ def _isf_iai(ass_isf, _P):
 
 def _isf_reduc_pac(nb_pac, nbH, _P):
     '''
-    réductions pour personnes à charges
+    Réductions pour personnes à charges
     '''
     P= _P.isf.reduc_pac
    
@@ -93,7 +93,7 @@ def _isf_reduc_pac(nb_pac, nbH, _P):
 
 def _isf_inv_pme(b2mt, b2ne, b2mv, b2nf, b2mx, b2na, _P):
     '''
-    réductions pour investissements dans les PME
+    Réductions pour investissements dans les PME
     à partir de 2008!
     '''
     
@@ -111,7 +111,7 @@ def _isf_org_int_gen(b2nc, _P):
 
 def _isf_avant_plaf(isf_iai, isf_inv_pme, isf_org_int_gen, isf_reduc_pac, _P ) :
     '''
-    montant de l'impôt avant plafonnement
+    Montant de l'impôt avant plafonnement
     '''
     borne_max = _P.isf.pme.max
     return max_(0, isf_iai - min_(isf_inv_pme + isf_org_int_gen, borne_max) - isf_reduc_pac)
@@ -146,8 +146,8 @@ def _isf_apres_plaf(tot_impot, revetproduits, isf_avant_plaf, _P):
 ## montant net à payer ##
 def _isf_tot(b4rs, isf_avant_plaf, isf_apres_plaf, irpp):
    
-    return -((isf_apres_plaf - b4rs)*((-irpp)>0) + (isf_avant_plaf-b4rs)*((-irpp)<=0))
-## avec indicatrice ## 
+    return min_( -((isf_apres_plaf - b4rs)*((-irpp)>0) + (isf_avant_plaf-b4rs)*((-irpp)<=0)), 0)
+    ## avec indicatrice ## 
 
 
 ## BOUCLIER FISCAL ##
@@ -204,7 +204,7 @@ def _maj_cga(maj_cga_i, _option = {'maj_cga_i': ALL}):
 
 def _bouclier_rev(rbg, maj_cga, csg_deduc, rvcm_plus_abat, rev_cap_lib, rev_exo, rev_or, cd_penali, cd_eparet):
     ''' 
-    total des revenus sur l'année 'n' net de charges
+    otal des revenus sur l'année 'n' net de charges
     '''
     # TODO: réintégrer les déficits antérieur
     # TODO: intégrer les revenus soumis au prélèvement libératoire
@@ -219,7 +219,7 @@ def _bouclier_rev(rbg, maj_cga, csg_deduc, rvcm_plus_abat, rev_cap_lib, rev_exo,
     ## pour le calcul de droit à restitution : prendre 0.7*montant_brut_rev_dist_soumis_au_barème
     rev_bar = rbg - maj_cga - csg_deduc - deficit_ante
 
-## AJOUTER : indemnités de fonction percus par les élus- revenus soumis à régimes spéciaux
+## TODO AJOUTER : indemnités de fonction percus par les élus- revenus soumis à régimes spéciaux
 
     # Revenu soumis à l'impôt sur le revenu forfaitaire
     rev_lib = rev_cap_lib 

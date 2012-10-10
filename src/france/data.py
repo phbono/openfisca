@@ -48,16 +48,16 @@ class InputTable(ModelDescription):
     quifoy  = EnumCol(QUIFOY)
     quifam  = EnumCol(QUIFAM)
     
-    sali = IntCol() #(f1aj, f1bj, f1cj, f1dj, f1ej)
-    choi = IntCol() # (f1ap, f1bp, f1cp, f1dp, f1ep)
-    rsti = IntCol() # (f1as, f1bs, f1cs, f1ds, f1es)
-    fra = IntCol() # (f1ak, f1bk, f1ck, f1dk, f1ek)
+    sali = IntCol(label="Salaire imposable") #(f1aj, f1bj, f1cj, f1dj, f1ej)
+    choi = IntCol(label=u"Chômage imposable") # (f1ap, f1bp, f1cp, f1dp, f1ep)
+    rsti = IntCol(label="Retraite imposable") # (f1as, f1bs, f1cs, f1ds, f1es)
+    fra  = IntCol() # (f1ak, f1bk, f1ck, f1dk, f1ek)
 
-    alr = IntCol() # (f1ao, f1bo, f1co, f1do, f1eo)
+    alr  = IntCol() # (f1ao, f1bo, f1co, f1do, f1eo)
     
     hsup = IntCol()  # f1au
-    inv = BoolCol(label = u'invalide')
-    alt = BoolCol(label = u'garde alternée')
+    inv  = BoolCol(label = u'invalide')
+    alt  = BoolCol(label = u'garde alternée')
     cho_ld = BoolCol(label = 'chômeur de longue durée') # (f1ai, f1bi, f1ci, f1di, f1ei)
     ppe_tp_sa = BoolCol() # (f1ax, f1bx, f1cx, f1dx, f1qx)
     ppe_tp_ns = BoolCol() # (f5nw, f5ow, f5pw)
@@ -189,19 +189,19 @@ class InputTable(ModelDescription):
     
     # RVCM
     # revenus au prélèvement libératoire
-    f2da = IntCol(unit= 'foy')
-    f2dh = IntCol(unit= 'foy')
-    f2ee = IntCol(unit= 'foy')
+    f2da = IntCol(unit = 'foy', label = u"Revenus des actions et parts soumis au prélèvement libératoire")
+    f2dh = IntCol(unit = 'foy')
+    f2ee = IntCol(unit = 'foy', label = u"Revenus au prélèveemnt libératoire hors actions et assurance-vie")
 
     # revenus ouvrant droit à abattement
-    f2dc = IntCol(unit= 'foy')
-    f2fu = IntCol(unit= 'foy')
-    f2ch = IntCol(unit= 'foy')
+    f2dc = IntCol(unit = 'foy', label =u"Revenus des actions et parts donnant droit à abattement")
+    f2fu = IntCol(unit = 'foy')
+    f2ch = IntCol(unit = 'foy')
     
     # Revenus n'ouvrant pas droit à abattement
-    f2ts = IntCol(unit= 'foy')
-    f2go = IntCol(unit= 'foy')
-    f2tr = IntCol(unit= 'foy')
+    f2ts = IntCol(unit = 'foy')
+    f2go = IntCol(unit = 'foy')
+    f2tr = IntCol(unit = 'foy', label = u"Intérêts et autres revenus assimilés")
     
     # Autres
     f2cg = IntCol(unit= 'foy')

@@ -202,6 +202,7 @@ class ModelSF(ModelDescription):
     cont_rev_loc = Prestation(ir._cont_rev_loc, 'foy')
     iai = Prestation(ir._iai, 'foy')
     cehr = Prestation(ir._cehr, 'foy')
+    cesthra =  Prestation(ir._cesthra, 'foy')
     imp_lib = Prestation(ir._imp_lib, 'foy')
     
     
