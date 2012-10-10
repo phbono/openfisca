@@ -491,10 +491,8 @@ def populate_from_scenario(datatable, scenario):
             if axe.name == xaxis:
                 datatable.XAXIS = axe.col_name 
                 vls = np.linspace(0, MAXREV, NMEN)
-            else:
-                vls = np.linspace(0, MAXREV, NMEN)*0
-            var = axe.col_name
-            datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
+                var = axe.col_name
+                datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
     
     datatable._isPopulated = True
 
