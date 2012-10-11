@@ -496,25 +496,13 @@ def populate_from_scenario(datatable, scenario):
     
     datatable._isPopulated = True
 
-#XAXES = {}
-#XAXES['sal'] = ( [u'Salaire super brut',
-#                  u'Salaire brut',
-#                  u'Salaire imposable',
-#                  u'Salaire net'],  2 , 'sali')
-#XAXES['cho'] = ( [u'Chômage brut',
-#                  u'Chômage imposable',
-#                  u'Chômage net'], 1, 'choi')
-#XAXES['rst'] = ([u'Retraite brut',
-#                 u'Retraite imposable',
-#                 u'Retraite nette'], 0, 'rsti')
-#XAXES['divpfl'] = ([u'Dividendes bruts (PFL)',
-#                 u'Dividendes nets (PFL)'], 0 , 'f2da')
-#XAXES['intpfl'] = ([u'Intérêts bruts (PFL)',
-#                 u'Intérêts nets (PFL)'], 0 , 'f2ee')
-#XAXES['divb'] = ([u'Dividendes bruts (barème)',
-#                 u'Dividendes nets (barème)'], 0 , 'f2dc')
-#XAXES['intb'] = ([u'Intérêts bruts (barème)',
-#                 u'Intérêts nets (barème)'], 0 , 'f2tr')
+
+def preproc_inputs(datatable):
+    '''
+    Preprocess inputs table: country specific manipulations 
+    '''
+    datatable.propagate_to_members( 'foy', 'rfr_n_2')
+    datatable.propagate_to_members( 'foy', 'nbptr_n_2')
 
 
 REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',

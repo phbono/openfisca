@@ -147,7 +147,7 @@ def _nivvie_ini(revini, uc):
 
 def _revprim_i(rev_trav, rev_cap, cotpat, cotsal):
     '''
-    Revenu initial individuel
+    Revenu primaire individuel
     'ind'
     '''
     return rev_trav + rev_cap - cotpat - cotsal
