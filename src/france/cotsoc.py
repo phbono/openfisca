@@ -436,16 +436,16 @@ def exo_csg_chom(choi, _P):
     
 
 
-def _chobrut(choi, csg_taux_plein, _P):
+def _chobrut(choi, csg_taux_plein, _defaultP):
     '''
     Calcule les allocations chômage brute à partir des allocations nettes
     '''
     # TODO ajouter la crds ?
-    P = _P.csg.chom
+    P = _defaultP.csg.chom
     chom_plein = P.plein.deduc.inverse()
     chom_reduit = P.reduit.deduc.inverse()
     chobrut = not_(csg_taux_plein)*chom_reduit.calc(choi) +  csg_taux_plein*chom_plein.calc(choi)
-    isexo = exo_csg_chom(choi, _P)
+    isexo = exo_csg_chom(choi, _defaultP)
     chobrut = not_(isexo)*chobrut + (isexo)*choi
  
     return chobrut
@@ -500,14 +500,14 @@ def _cho(chobrut, csgchod, choi, _P):
 ############################################################################
 ## Pensions
 ############################################################################
-def _rstbrut(rsti, csg_taux_plein, _P):
+def _rstbrut(rsti, csg_taux_plein, _defaultP):
     '''
     Calcule les pensions de retraites brutes à partir des pensions nettes
     '''
-    P = _P.csg.retraite
+    P = _defaultP.csg.retraite
     rst_plein = P.plein.deduc.inverse()  # TODO rajouter la non  déductible dans param
     rst_reduit = P.reduit.deduc.inverse()  #
-    rstbrut = not_(csg_taux_plein)*rst_reduit.calc(rsti) + csg_taux_plein*rst_plein.calc(rsti, )    
+    rstbrut = not_(csg_taux_plein)*rst_reduit.calc(rsti) + csg_taux_plein*rst_plein.calc(rsti)    
     return rstbrut
 
 def _csgrstd(rstbrut, csg_taux_plein, _P):
