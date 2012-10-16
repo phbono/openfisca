@@ -394,16 +394,19 @@ class Scenario(object):
         
         if xaxis is None:
             xaxis = CONF.get('simulation', 'xaxis')    
-        
+        print 'xaxis : ', xaxis
         axes = build_axes()
         if nmen>1:
             for axe in axes:
+                print axe.name
                 if axe.name == xaxis:
                     datatable.XAXIS = axe.col_name 
                     vls = np.linspace(0, maxrev, nmen)
+                    print 'vls'
+                    print vls
                     var = axe.col_name
                     datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
-        
+        print datatable.table['sali']
         datatable._isPopulated = True
 
 

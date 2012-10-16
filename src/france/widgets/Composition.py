@@ -413,7 +413,7 @@ class Logement(QDialog, Ui_Logement):
         self.scenario = scenario
         self.spinCP.setValue(scenario.menage[0]['code_postal'])
         self.spinLoyer.setValue(scenario.menage[0]['loyer'])
-        self.comboSo.setCurrentIndex(scenario.menage[0]['so']-1)
+        self.comboSo.setCurrentIndex(scenario.menage[0]['so']-1) # -1 because 0 is "non renseigné"
                         
         code_file = open('france/data/code_apl', 'r')
         code_dict = pickle.load(code_file)
@@ -448,7 +448,7 @@ class Logement(QDialog, Ui_Logement):
         
     def accept(self):
         self.scenario.menage[0].update({'loyer': int(self.spinLoyer.value()),
-                                        'so': int(self.comboSo.currentIndex()+1),
+                                        'so': int(self.comboSo.currentIndex()+1), # +1 because 0 is "non renseigné"
                                         'zone_apl': int(self.spinZone.value()),
                                         'code_postal': int(self.spinCP.value())})
         QDialog.accept(self)
