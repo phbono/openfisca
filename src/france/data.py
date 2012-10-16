@@ -174,6 +174,10 @@ class InputTable(ModelDescription):
     caseT = BoolCol(unit= 'foy')
     caseW = BoolCol(unit= 'foy')
     
+    
+    rfr_n_2  = IntCol(unit='foy', label = 'Revenu fiscal de référence année n-2') # TODO provide in data
+    nbptr_n_2 = IntCol(unit='foy', label = 'Nombre de parts année n-2')  # TODO provide in data
+    
     # Rentes viagères
     f1aw = IntCol(unit= 'foy')
     f1bw = IntCol(unit= 'foy')
@@ -872,7 +876,14 @@ class InputTable(ModelDescription):
     wprm = FloatCol()
     etr = IntCol()     
     coloc = BoolCol()
-    csg_taux_plein = BoolCol(default = True)
+    csg_rempl = EnumCol(label = u"Taux retenu sur la CSG des revenus de remplacment",
+                 unit='ind',
+                 enum = Enum([u"Non renseigné/non pertinent",
+                              u"Exonéré",
+                              u"Taux réduit",
+                              u"Taux plein"]),
+                default = 3)
+                        
     aer = IntCol()
     ass = IntCol()
     f5sq = IntCol()

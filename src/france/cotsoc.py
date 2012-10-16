@@ -23,7 +23,7 @@ This file is part of openFisca.
 
 from __future__ import division
 from france.data import CAT
-from numpy import maximum as max_, minimum as min_, logical_not as not_, zeros
+from numpy import maximum as max_, minimum as min_, logical_not as not_, zeros, ones
 from core.utils import  scaleBaremes, combineBaremes, Bareme, BaremeDict
 
 
@@ -435,8 +435,24 @@ def exo_csg_chom(choi, _P):
     return (choi <= 12*cho_seuil_exo) # annuel
     
 
+def _csg_rempl(rfr_n_2, nbpt_n_2, choi, rsti, _P):
+    '''
+    Taux retenu sur la CSG des revenus de remplacment:
+    0 : Non renseigné/non pertinent
+    1 : Exonéré
+    2 : Taux réduit
+    3 : Taux plein
+    '''
+    P = _P.cotsoc.gen
+    seuil_th = P.plaf_th_1 + P.plaf_th_supp*(max_(0, (nbpt_n_2-1)/2))
+    res =  (0 + 
+            max_((choi>0) + (rsti>0), 0) +
+            (rfr_n_2 >= seuil_th) +
+            1  ) # conditon sur impot avant credit > seuil de non imposition 
+    
+    return 3*ones(len(res))
 
-def _chobrut(choi, csg_taux_plein, _defaultP):
+def _chobrut(choi, csg_rempl, _defaultP):
     '''
     Calcule les allocations chômage brute à partir des allocations nettes
     '''
@@ -444,13 +460,13 @@ def _chobrut(choi, csg_taux_plein, _defaultP):
     P = _defaultP.csg.chom
     chom_plein = P.plein.deduc.inverse()
     chom_reduit = P.reduit.deduc.inverse()
-    chobrut = not_(csg_taux_plein)*chom_reduit.calc(choi) +  csg_taux_plein*chom_plein.calc(choi)
+    chobrut = (csg_rempl==1)*choi + (csg_rempl==2)*chom_reduit.calc(choi) + (csg_rempl==3)*chom_plein.calc(choi) 
     isexo = exo_csg_chom(choi, _defaultP)
     chobrut = not_(isexo)*chobrut + (isexo)*choi
  
     return chobrut
 
-def _csgchod(chobrut, choi, csg_taux_plein, _P):
+def _csgchod(chobrut, choi, csg_rempl, _P):
     '''
     CSG déductible sur les allocations chômage
     '''
@@ -458,13 +474,11 @@ def _csgchod(chobrut, choi, csg_taux_plein, _P):
     csg = scaleBaremes(BaremeDict('csg', _P.csg.chom), plaf_ss)
     taux_plein = csg['plein']['deduc'].calc(chobrut)
     taux_reduit = csg['reduit']['deduc'].calc(chobrut)
-    csgchod = csg_taux_plein*taux_plein + not_(csg_taux_plein)*taux_reduit
-    
+    csgchod = (csg_rempl==2)*taux_reduit + (csg_rempl==3)*taux_plein
     isexo = exo_csg_chom(choi, _P)
+    return - not_(isexo)*csgchod  
 
-    return - not_(isexo)*csgchod
-
-def _csgchoi(chobrut, choi, csg_taux_plein, _P):
+def _csgchoi(chobrut, choi, csg_rempl, _P):
     '''
     CSG imposable sur les allocations chômage
     '''
@@ -472,10 +486,8 @@ def _csgchoi(chobrut, choi, csg_taux_plein, _P):
     csg = scaleBaremes(BaremeDict('csg', _P.csg.chom), plaf_ss)
     taux_plein = csg['plein']['impos'].calc(chobrut)
     taux_reduit = csg['reduit']['impos'].calc(chobrut)
-    csgchoi = csg_taux_plein*taux_plein + not_(csg_taux_plein)*taux_reduit
-    
+    csgchoi = (csg_rempl==2)*taux_reduit + (csg_rempl==3)*taux_plein
     isexo = exo_csg_chom(choi, _P)
-    
     return - not_(isexo)*csgchoi
 
 def _crdscho(chobrut, choi, _P):
@@ -484,10 +496,7 @@ def _crdscho(chobrut, choi, _P):
     '''
     plaf_ss = 12*_P.cotsoc.gen.plaf_ss
     crds = scaleBaremes(_P.crds.act, plaf_ss)
-    
-    isexo = exo_csg_chom(choi, _P)
-    
-    return - not_(isexo)*crds.calc(chobrut)
+    return - crds.calc(chobrut)
 
 def _cho(chobrut, csgchod, choi, _P):
     '''
@@ -500,17 +509,17 @@ def _cho(chobrut, csgchod, choi, _P):
 ############################################################################
 ## Pensions
 ############################################################################
-def _rstbrut(rsti, csg_taux_plein, _defaultP):
+def _rstbrut(rsti, csg_rempl, _defaultP):
     '''
     Calcule les pensions de retraites brutes à partir des pensions nettes
     '''
     P = _defaultP.csg.retraite
     rst_plein = P.plein.deduc.inverse()  # TODO rajouter la non  déductible dans param
     rst_reduit = P.reduit.deduc.inverse()  #
-    rstbrut = not_(csg_taux_plein)*rst_reduit.calc(rsti) + csg_taux_plein*rst_plein.calc(rsti)    
+    rstbrut = (csg_rempl==2)*rst_reduit.calc(rsti) + (csg_rempl==3)*rst_plein.calc(rsti)    
     return rstbrut
 
-def _csgrstd(rstbrut, csg_taux_plein, _P):
+def _csgrstd(rstbrut, csg_rempl, _P):
     '''
     CSG déductible sur les allocations chômage
     '''
@@ -518,10 +527,10 @@ def _csgrstd(rstbrut, csg_taux_plein, _P):
     csg = scaleBaremes(BaremeDict('csg', _P.csg.retraite), plaf_ss)
     taux_plein = csg['plein']['deduc'].calc(rstbrut)
     taux_reduit = csg['reduit']['deduc'].calc(rstbrut)
-    csgrstd = csg_taux_plein*taux_plein + not_(csg_taux_plein)*taux_reduit
+    csgrstd = (csg_rempl==3)*taux_plein + (csg_rempl==2)*taux_reduit
     return - csgrstd
 
-def _csgrsti(rstbrut, csg_taux_plein, _P):
+def _csgrsti(rstbrut, csg_rempl, _P):
     '''
     CSG imposable sur les allocations chômage
     '''
@@ -529,7 +538,7 @@ def _csgrsti(rstbrut, csg_taux_plein, _P):
     csg = scaleBaremes(BaremeDict('csg', _P.csg.retraite), plaf_ss)
     taux_plein = csg['plein']['impos'].calc(rstbrut)
     taux_reduit = csg['reduit']['impos'].calc(rstbrut)    
-    csgrsti = csg_taux_plein*taux_plein + not_(csg_taux_plein)*taux_reduit
+    csgrsti = (csg_rempl==3)*taux_plein + (csg_rempl==2)*taux_reduit
     return - csgrsti
 
 def _crdsrst(rstbrut, _P):

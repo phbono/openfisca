@@ -1012,7 +1012,7 @@
       	    <VALUE valeur="289" deb="2008-03-01" fin="2008-09-30" />
        	    <VALUE valeur="288" deb="2007-02-01" fin="2008-02-28" />
        	    <VALUE valeur="286" deb="2006-07-01" fin="2007-01-31" />
-       	    <VALUE valeur="285" deb="2005-11-01" fin="2006-06-30" />          
+       	    <VALUE valeur="285" deb="2001-05-01" fin="2006-06-30" />          
           </CODE>
       	</NODE>
 	    <NODE description="Etat" code="etat" >

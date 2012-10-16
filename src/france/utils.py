@@ -42,7 +42,7 @@ class Scenario(object):
         self.famille = {}
         
         # menage est un dict de dict la clé est la pref
-        self.menage = {0:{'loyer':500,'so':3, 'code_postal':69001, 'zone_apl':2}}
+        self.menage = {0:{'loyer':500,'so':4, 'code_postal':69001, 'zone_apl':2}}
 
         # on ajoute un individu, déclarant et chef de famille
         self.addIndiv(0, datetime(1975,1,1).date(), 'vous', 'chef')
@@ -315,6 +315,104 @@ class Scenario(object):
         self.menage = S['menage']
 
 
+    def populate_datatable(self, datatable, xaxis = None, nmen = None, maxrev = None):
+        '''
+        Popualte a datatable from a given scenario
+        '''
+        from pandas import DataFrame, concat
+        import numpy as np
+    
+        scenario = self
+        if nmen is None:
+            nmen = CONF.get('simulation', 'nmen')
+        
+        datatable.NMEN = nmen
+        datatable._nrows = datatable.NMEN*len(scenario.indiv)
+        datesim = datatable.datesim
+        datatable.table = DataFrame()
+    
+        idmen = np.arange(60001, 60001 + nmen)
+        
+        for noi, dct in scenario.indiv.iteritems():
+            birth = dct['birth']
+            age = datesim.year- birth.year
+            agem = 12*(datesim.year- birth.year) + datesim.month - birth.month
+            noidec = dct['noidec']
+            quifoy = datatable.description.get_col('quifoy').enum[dct['quifoy']]
+            quifam = datatable.description.get_col('quifam').enum[dct['quifam']]
+            noichef = dct['noichef']
+            quimen = datatable.description.get_col('quimen').enum[dct['quimen']]
+    
+            dct = {'noi': noi*np.ones(nmen),
+                   'age': age*np.ones(nmen),
+                   'agem': agem*np.ones(nmen),
+                   'quimen': quimen*np.ones(nmen),
+                   'quifoy': quifoy*np.ones(nmen),
+                   'quifam': quifam*np.ones(nmen),
+                   'idmen': idmen,
+                   'idfoy': idmen*100 + noidec,
+                   'idfam': idmen*100 + noichef}
+                
+            datatable.table = concat([datatable.table, DataFrame(dct)], ignore_index = True)
+    
+        INDEX = ['men', 'fam', 'foy']
+        datatable.gen_index(INDEX)
+    
+        for name in datatable.col_names:
+            if not name in datatable.table:
+                datatable.table[name] = datatable.description.get_col(name)._default
+            
+        index = datatable.index['men']
+        nb = index['nb']
+        for noi, dct in scenario.indiv.iteritems():
+            for var, val in dct.iteritems():
+                if var in ('birth', 'noipref', 'noidec', 'noichef', 'quifoy', 'quimen', 'quifam'): continue
+                if not index[noi] is None:
+                    datatable.set_value(var, np.ones(nb)*val, index, noi)
+            del var, val
+            
+        index = datatable.index['foy']
+        nb = index['nb']
+        for noi, dct in scenario.declar.iteritems():
+            for var, val in dct.iteritems():
+                if not index[noi] is None:
+                    datatable.set_value(var, np.ones(nb)*val, index, noi)
+            del var, val
+            
+        index = datatable.index['men']
+        nb = index['nb']
+        for noi, dct in scenario.menage.iteritems():
+            for var, val in dct.iteritems():
+                if not index[noi] is None:
+                    datatable.set_value(var, np.ones(nb)*val, index, noi)
+            del var, val
+    
+        if maxrev is None: 
+            maxrev = CONF.get('simulation', 'maxrev')
+        
+        datatable.MAXREV = maxrev
+        
+        if xaxis is None:
+            xaxis = CONF.get('simulation', 'xaxis')    
+        print 'xaxis : ', xaxis
+        axes = build_axes()
+        if nmen>1:
+            for axe in axes:
+                print axe.name
+                if axe.name == xaxis:
+                    datatable.XAXIS = axe.col_name 
+                    vls = np.linspace(0, maxrev, nmen)
+                    print 'vls'
+                    print vls
+                    var = axe.col_name
+                    datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
+        print datatable.table['sali']
+        datatable._isPopulated = True
+
+
+
+
+
 
 class Xaxis(object):
     def __init__(self, col_name = None):
@@ -412,109 +510,14 @@ def build_axes():
     return axes
 
 
-def populate_from_scenario(datatable, scenario):
+
+
+def preproc_inputs(datatable):
     '''
-    Popualte a datatable from a given scenario
+    Preprocess inputs table: country specific manipulations 
     '''
-    from pandas import DataFrame, concat
-    import numpy as np
-
-    NMEN = CONF.get('simulation', 'nmen')
-    datatable.NMEN = NMEN
-    datatable._nrows = datatable.NMEN*len(scenario.indiv)
-    datesim = datatable.datesim
-    datatable.table = DataFrame()
-
-    idmen = np.arange(60001, 60001 + NMEN)
-    
-    for noi, dct in scenario.indiv.iteritems():
-        birth = dct['birth']
-        age = datesim.year- birth.year
-        agem = 12*(datesim.year- birth.year) + datesim.month - birth.month
-        noidec = dct['noidec']
-        quifoy = datatable.description.get_col('quifoy').enum[dct['quifoy']]
-        quifam = datatable.description.get_col('quifam').enum[dct['quifam']]
-        noichef = dct['noichef']
-        quimen = datatable.description.get_col('quimen').enum[dct['quimen']]
-
-        dct = {'noi': noi*np.ones(NMEN),
-               'age': age*np.ones(NMEN),
-               'agem': agem*np.ones(NMEN),
-               'quimen': quimen*np.ones(NMEN),
-               'quifoy': quifoy*np.ones(NMEN),
-               'quifam': quifam*np.ones(NMEN),
-               'idmen': idmen,
-               'idfoy': idmen*100 + noidec,
-               'idfam': idmen*100 + noichef}
-            
-        datatable.table = concat([datatable.table, DataFrame(dct)], ignore_index = True)
-
-    INDEX = ['men', 'fam', 'foy']
-    datatable.gen_index(INDEX)
-
-    for name in datatable.col_names:
-        if not name in datatable.table:
-            datatable.table[name] = datatable.description.get_col(name)._default
-        
-    index = datatable.index['men']
-    nb = index['nb']
-    for noi, dct in scenario.indiv.iteritems():
-        for var, val in dct.iteritems():
-            if var in ('birth', 'noipref', 'noidec', 'noichef', 'quifoy', 'quimen', 'quifam'): continue
-            if not index[noi] is None:
-                datatable.set_value(var, np.ones(nb)*val, index, noi)
-        del var, val
-        
-    index = datatable.index['foy']
-    nb = index['nb']
-    for noi, dct in scenario.declar.iteritems():
-        for var, val in dct.iteritems():
-            if not index[noi] is None:
-                datatable.set_value(var, np.ones(nb)*val, index, noi)
-        del var, val
-        
-    index = datatable.index['men']
-    nb = index['nb']
-    for noi, dct in scenario.menage.iteritems():
-        for var, val in dct.iteritems():
-            if not index[noi] is None:
-                datatable.set_value(var, np.ones(nb)*val, index, noi)
-        del var, val
-
-    MAXREV = CONF.get('simulation', 'maxrev')
-    datatable.MAXREV = MAXREV
-    xaxis = CONF.get('simulation', 'xaxis')    
-    
-    axes = build_axes()
-    if NMEN>1:
-        for axe in axes:
-            if axe.name == xaxis:
-                datatable.XAXIS = axe.col_name 
-                vls = np.linspace(0, MAXREV, NMEN)
-                var = axe.col_name
-                datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
-    
-    datatable._isPopulated = True
-
-#XAXES = {}
-#XAXES['sal'] = ( [u'Salaire super brut',
-#                  u'Salaire brut',
-#                  u'Salaire imposable',
-#                  u'Salaire net'],  2 , 'sali')
-#XAXES['cho'] = ( [u'Chômage brut',
-#                  u'Chômage imposable',
-#                  u'Chômage net'], 1, 'choi')
-#XAXES['rst'] = ([u'Retraite brut',
-#                 u'Retraite imposable',
-#                 u'Retraite nette'], 0, 'rsti')
-#XAXES['divpfl'] = ([u'Dividendes bruts (PFL)',
-#                 u'Dividendes nets (PFL)'], 0 , 'f2da')
-#XAXES['intpfl'] = ([u'Intérêts bruts (PFL)',
-#                 u'Intérêts nets (PFL)'], 0 , 'f2ee')
-#XAXES['divb'] = ([u'Dividendes bruts (barème)',
-#                 u'Dividendes nets (barème)'], 0 , 'f2dc')
-#XAXES['intb'] = ([u'Intérêts bruts (barème)',
-#                 u'Intérêts nets (barème)'], 0 , 'f2tr')
+    datatable.propagate_to_members( 'foy', 'rfr_n_2')
+    datatable.propagate_to_members( 'foy', 'nbptr_n_2')
 
 
 REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
