@@ -396,21 +396,21 @@ class Scenario(object):
             xaxis = CONF.get('simulation', 'xaxis')    
 
         axes = build_axes()
+        var = None
         if nmen>1:
             for axe in axes:
-                print axe.name
                 if axe.name == xaxis:
                     datatable.XAXIS = axe.col_name
                     var = axe.col_name
                     
-                else:
-                    print 'xaxis not found in predefined axes'
-                    datatable.XAXIS = xaxis 
-                    var = xaxis
+            if var is None:
+                print 'xaxis not found in predefined axes'
+                datatable.XAXIS = xaxis 
+                var = xaxis
                         
-                vls = np.linspace(0, maxrev, nmen)
-                datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}}) 
-                datatable._isPopulated = True
+            vls = np.linspace(0, maxrev, nmen)
+            datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}}) 
+            datatable._isPopulated = True
         
 
 class Xaxis(object):

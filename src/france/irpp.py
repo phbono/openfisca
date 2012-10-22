@@ -345,7 +345,7 @@ def _ir_plaf_qf(ir_brut, rni, nb_adult, nb_pac, nbptr, marpac, veuf, jveuf, celd
         B3*(condition63 & not_(condition61))
     C = max_(0,A-B)
     # Impôt après plafonnement
-    IP0 = max_(I, C) #I*(I>=C) + C*(I<C)
+    IP0 = max_(I, C) 
 
     # 6.2 réduction d'impôt pratiquée sur l'impot après plafonnement et le cas particulier des DOM
     # pas de réduction complémentaire

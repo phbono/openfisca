@@ -35,8 +35,6 @@ import os
 from core.utils import of_import
 
 
-Scenario = of_import('utils', 'Scenario')
-InputTable = of_import('data', 'InputTable')
 
 
 class S:
@@ -49,12 +47,13 @@ class S:
     fampos = 6
 
 class ScenarioWidget(QDockWidget, Ui_Menage):
-    def __init__(self, scenario, parent = None):
+    def __init__(self, scenario = None, parent = None):
         super(ScenarioWidget, self).__init__(parent)
         self.setupUi(self)
-        self.parent = parent
-        self.scenario = scenario
-
+        if parent is not None:
+            self.parent = parent
+        if scenario is not None:
+            self.set_scenario(scenario)
 
         # Initialize xaxes
         
@@ -95,6 +94,9 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
         self.rmv_btn.setEnabled(False)
         self.emit(SIGNAL("ok()"))
 
+    def set_scenario(self, scenario):
+        self.scenario = scenario
+        self.parent.scenario = scenario
 
     def set_xaxis(self):
         '''
@@ -262,6 +264,7 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
         self.addRow()
         if noi == 1: self.scenario.addIndiv(noi, birth = date(1975,1,1), quifoy = 'conj', quifam = 'part')
         else:        self.scenario.addIndiv(noi, birth = date(2000,1,1), quifoy = 'pac' , quifam = 'enf')
+        
         self.emit(SIGNAL('compoChanged()'))
             
     def addRow(self):
@@ -301,7 +304,8 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
             self.add_btn.setEnabled(False)
 
     def rmvPerson(self, noi = None):
-        if noi == None: noi = self.nbRow() - 1
+        if noi == None: 
+            noi = self.nbRow() - 1
         self.scenario.rmvIndiv(noi)
         self.rmvRow()
         self.add_btn.setEnabled(True)
@@ -324,8 +328,10 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
         '''
         while self.nbRow() > 1:
             self.rmvPerson()
-            
-        self.scenario = Scenario()
+           
+        del self.scenario
+        Scenario = of_import('utils', 'Scenario')
+        self.set_scenario(Scenario())
         self.emit(SIGNAL('compoChanged()'))
         
         
