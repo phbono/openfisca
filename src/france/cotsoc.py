@@ -24,7 +24,7 @@ This file is part of openFisca.
 from __future__ import division
 from france.data import CAT
 from numpy import maximum as max_, minimum as min_, logical_not as not_, zeros, ones
-from core.utils import  scaleBaremes, combineBaremes, Bareme, BaremeDict
+from core.utils import  scaleBaremes, combineBaremes, BaremeDict
 
 
                 
@@ -38,18 +38,18 @@ from core.utils import  scaleBaremes, combineBaremes, Bareme, BaremeDict
                         
 # Exonération de CSG et de CRDS sur les revenus du chômage 
 # et des préretraites si cela abaisse ces revenus sous le smic brut        
-# TODO mettre un trigger pour l'éxonération des revenus du chômage sous un smic
+# TODO: mettre un trigger pour l'éxonération des revenus du chômage sous un smic
 
-# TODO RAFP assiette + prime
-# TODO pension assiette = salaire hors prime
+# TODO: RAFP assiette + prime
+# TODO: pension assiette = salaire hors prime
 # autres salaires + primes
 
 
-# TODO contribution patronale de prévoyance complémentaire
+# TODO: contribution patronale de prévoyance complémentaire
 # Formation professionnelle (entreprise de 10 à moins de 20 salariés) salaire total 1,05%
 # Formation professionnelle (entreprise de moins de 10 salariés)      salaire total 0,55%
 # Taxe sur les salaries (pour ceux non-assujettis à la TVA)           salaire total 4,25% 
-# TODO accident du travail ?
+# TODO: accident du travail ?
     
 #temp = 0
 #if hasattr(P, "prelsoc"):
@@ -355,7 +355,7 @@ def _cotsal_noncontrib(salbrut, hsup, type_sal, _P):
         iscat = (type_sal == categ[1])
         for bar in sal[categ[0]].itervalues():
             is_noncontrib = (bar.option == "noncontrib")
-            is_exempt_fds = (categ[0] in ['etat_t', 'colloc_t'])*(bar._name == 'solidarite')*( (salbrut-hsup) <= seuil_assuj_fds)   #TODO check assiette voir IPP
+            is_exempt_fds = (categ[0] in ['etat_t', 'colloc_t'])*(bar._name == 'solidarite')*( (salbrut-hsup) <= seuil_assuj_fds)   #TODO: check assiette voir IPP
             
             temp = - (iscat*bar.calc(salbrut-hsup))*is_noncontrib*not_(is_exempt_fds)
             cotsal += temp
@@ -429,7 +429,7 @@ def exo_csg_chom(choi, _P):
     '''
     Indicatrice d'exonération de la CSG sur les revenus du chômage
     '''
-    # TODO on néglige la csg imposable ...
+    # TODO: on néglige la csg imposable ...
     nbh_travail = 151.67 # depuis 2001
     cho_seuil_exo = _P.csg.chom.min_exo*nbh_travail*_P.cotsoc.gen.smic_h_b
     return (choi <= 12*cho_seuil_exo) # annuel
@@ -456,7 +456,7 @@ def _chobrut(choi, csg_rempl, _defaultP):
     '''
     Calcule les allocations chômage brute à partir des allocations nettes
     '''
-    # TODO ajouter la crds ?
+    # TODO: ajouter la crds ?
     P = _defaultP.csg.chom
     chom_plein = P.plein.deduc.inverse()
     chom_reduit = P.reduit.deduc.inverse()
@@ -514,7 +514,7 @@ def _rstbrut(rsti, csg_rempl, _defaultP):
     Calcule les pensions de retraites brutes à partir des pensions nettes
     '''
     P = _defaultP.csg.retraite
-    rst_plein = P.plein.deduc.inverse()  # TODO rajouter la non  déductible dans param
+    rst_plein = P.plein.deduc.inverse()  # TODO:     rajouter la non  déductible dans param
     rst_reduit = P.reduit.deduc.inverse()  #
     rstbrut = (csg_rempl==2)*rst_reduit.calc(rsti) + (csg_rempl==3)*rst_plein.calc(rsti)    
     return rstbrut

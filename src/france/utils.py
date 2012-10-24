@@ -394,25 +394,24 @@ class Scenario(object):
         
         if xaxis is None:
             xaxis = CONF.get('simulation', 'xaxis')    
-        print 'xaxis : ', xaxis
+
         axes = build_axes()
+        var = None
         if nmen>1:
             for axe in axes:
-                print axe.name
                 if axe.name == xaxis:
-                    datatable.XAXIS = axe.col_name 
-                    vls = np.linspace(0, maxrev, nmen)
-                    print 'vls'
-                    print vls
+                    datatable.XAXIS = axe.col_name
                     var = axe.col_name
-                    datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
-        print datatable.table['sali']
-        datatable._isPopulated = True
-
-
-
-
-
+                    
+            if var is None:
+                print 'xaxis not found in predefined axes'
+                datatable.XAXIS = xaxis 
+                var = xaxis
+                        
+            vls = np.linspace(0, maxrev, nmen)
+            datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}}) 
+            datatable._isPopulated = True
+        
 
 class Xaxis(object):
     def __init__(self, col_name = None):
@@ -524,7 +523,7 @@ REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
                        'rev_cap_brut', 'fon'],
        'brut': ['salbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
                  'rev_cap_brut', 'fon'],
-       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_brut', 'fon', 'cotsoc_bar', 'cotsoc_lib'],
+       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_brut', 'fon', 'cotsoc_cap'],
        'net'      : ['salnet', 'chonet', 'rstnet', 'alr', 'alv', 'rev_cap_net', 'fon',
                       ]}        
 #        alim = data['alr'].vals + data['alv'].vals
