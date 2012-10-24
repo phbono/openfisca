@@ -4,9 +4,9 @@
       <NODE desc="Salaires imposables" shortname="Sal. impos." code="sal" color= "0,115,170">
         <NODE desc="Salaires bruts" shortname="Sal. bruts" code="salbrut" color = "0,99,143">
           <NODE desc= "Salaires super bruts" shortname="Coût travail" code= "salsuperbrut" color = "0,66,92" />
-       <NODE desc= "Cotisations sociales patronales" shortname="Cotsoc pat" code= "cotpat" color = "249,208,211"/>
-       <NODE desc= "Allègement sur les bas salaires" shortname="Allèg. sal." code= "alleg_fillon"/>
-        </NODE>
+       		<NODE desc= "Cotisations sociales patronales" shortname="Cotsoc pat" code= "cotpat" color = "249,208,211"/>
+       		<NODE desc= "Allègement sur les bas salaires" shortname="Allèg. sal." code= "alleg_fillon"/>
+          </NODE>
         <NODE desc= "Cotisations sociales salariées" shortname="Cotsoc sal" code= "cotsal" color = "243,166,171"/>
         <NODE desc= "CSG déductible (salaires)" shortname="CSG deduc" code= "csgsald" color = "235,114,118"/>
         <NODE desc= "Heures supplémentaires" shortname="Heures sup" code= "mhsup" color = "0,115,170"/>

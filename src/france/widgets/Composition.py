@@ -411,6 +411,24 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
         if not fileName == '':
             self.scenario.saveFile(fileName)
 
+
+def get_zone(code, filename = None):
+    '''
+    Gets commune name and zone apl from postal code
+    '''
+    if filename is None:
+        code_file = open('france/data/code_apl', 'r')
+    else:
+        code_file = open(filename, 'r')
+    code_dict = pickle.load(code_file)
+    code_file.close()
+    if str(code) in code_dict:
+        commune = code_dict[str(code)]
+        return commune
+    else:
+        return None
+    
+
 class Logement(QDialog, Ui_Logement):
     def __init__(self, scenario, parent = None):
         super(Logement, self).__init__(parent)
@@ -421,13 +439,10 @@ class Logement(QDialog, Ui_Logement):
         self.spinLoyer.setValue(scenario.menage[0]['loyer'])
         self.comboSo.setCurrentIndex(scenario.menage[0]['so']-1) # -1 because 0 is "non renseigné"
                         
-        code_file = open('france/data/code_apl', 'r')
-        code_dict = pickle.load(code_file)
-        code_file.close()
 
         def update_ville(code):        
-            if str(code) in code_dict:
-                commune = code_dict[str(code)]
+            commune = get_zone(code)
+            if commune is not None:
                 self.bbox.button(QDialogButtonBox.Ok).setEnabled(True)
             else:
                 commune = ("Ce code postal n'est pas reconnu", '2')

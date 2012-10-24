@@ -4,7 +4,7 @@ Created on Sep 19, 2012
 @author: benjello
 '''
 
-from pandas import  HDFStore, read_csv, ExcelFile
+from pandas import  HDFStore, read_csv, ExcelFile, concat
 
     
 def csv2hdf5(csv_name, h5_name, dfname):
@@ -20,11 +20,32 @@ def test(h5_name, dfname):
     print table.columns
     store.close()
     
+        
+def build_totals():
+    h5_name = "../amounts.h5"
+    store = HDFStore(h5_name)
+    files = ['totals_pfam']
+    first = True
+    for xlsfile in files:
+        xls = ExcelFile(xlsfile + '.xls')
+        df = xls.parse('data', na_values=['NA'])
+        print df
+        if first:
+            amounts_df = df
+            first = False
+        else:
+            amounts_df = concat(amounts_df, df)
+
+    amounts_df = amounts_df.set_index("var")
+    print amounts_df.to_string()
+    
+    
+    store['amounts'] = amounts_df
+    store.close
+    
 def build_actualisation():
     h5_name = "../actualisation_groups.h5"
     store = HDFStore(h5_name)
-    import os 
-    print os.getcwd()
     xls = ExcelFile('actualisation_groups.xls')
     df = xls.parse('data', na_values=['NA'])
     store['actualisation'] = df
@@ -47,5 +68,7 @@ if __name__ == '__main__':
 #    #csv2hdf5(csv_name, h5_name, dfname)
 #    
 #    test(h5_name, dfname)
-    build_actualisation()
+
+    #build_actualisation()
     
+    build_totals()

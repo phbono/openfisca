@@ -523,7 +523,7 @@ REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
                        'rev_cap_brut', 'fon'],
        'brut': ['salbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
                  'rev_cap_brut', 'fon'],
-       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_brut', 'fon', 'cotsoc_bar', 'cotsoc_lib'],
+       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_brut', 'fon', 'cotsoc_cap'],
        'net'      : ['salnet', 'chonet', 'rstnet', 'alr', 'alv', 'rev_cap_net', 'fon',
                       ]}        
 #        alim = data['alr'].vals + data['alv'].vals
