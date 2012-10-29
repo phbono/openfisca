@@ -428,6 +428,10 @@ def _rsa(rsa_socle, ra_rsa, forf_log, br_rmi, _P, _option = {'ra_rsa': [CHEF, PA
     
 def _rsa_act(rsa, rmi):    
     return rsa - rmi
+
+
+def _crds_mini(rsa_act, _P):
+    return _P.fam.af.crds*rsa_act
         
 def _api(agem, age, smic55, isol, forf_log, br_rmi, af_majo, rsa, _P, _option = {'age': ENFS, 'agem': ENFS, 'smic55': ENFS}):
     '''
@@ -688,6 +692,6 @@ def _ass(br_pf, cho, concub, _P, _option = {'cho': [CHEF, PART]}):
     
     return 12*ass  # annualisé
     
-    
+
 # TODO surle rsa hors rmi et api ?    def crds_mini():
     

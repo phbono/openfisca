@@ -385,12 +385,12 @@ class ModelSF(ModelDescription):
     
     rmi_nbp = Prestation(ms._rmi_nbp, 'fam', label = u"Nombre de personne à charge au sens du Rmi/Rsa")
     forf_log  = Prestation(ms._forf_log, 'fam')
-    rsa_socle = Prestation(ms._rsa_socle, 'fam')
-    rmi  = Prestation(ms._rmi, 'fam')
-    rsa  = Prestation(ms._rsa, 'fam')
-    rsa_act = Prestation(ms._rsa_act, 'fam', start = date(2009, 7, 1))
-    api  = Prestation(ms._api, 'fam')
-    
+    rsa_socle = Prestation(ms._rsa_socle, 'fam', label = u"RSA socle")
+    rmi  = Prestation(ms._rmi, 'fam', u"Revenu de solidarité active - socle")
+    rsa  = Prestation(ms._rsa, 'fam', u"Revenu de solidarité active")
+    rsa_act = Prestation(ms._rsa_act, 'fam', u"Revenu de solidarité active - activité", start = date(2009, 7, 1))
+    api  = Prestation(ms._api, 'fam', end = date(2009, 7, 1), u"Allocation de parent isolé" )
+    crds_mini = Prestation(ms._crds_mini, 'fam', start = date(2009, 7, 1))
     aefa = Prestation(ms._aefa, 'fam')
 
     ############################################################

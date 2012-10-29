@@ -223,12 +223,12 @@ def _impo(irpp):
     '''
     return irpp
 
-def _crds(crdssal, crdsrst, crdscho, crds_cap_bar, crds_cap_lib, crds_pfam, crds_lgtm):
+def _crds(crdssal, crdsrst, crdscho, crds_cap_bar, crds_cap_lib, crds_pfam, crds_lgtm, crds_mini):
     '''
     Contribution au remboursemetn de la dette sociale
     '''
-    return crdssal + crdsrst + crdscho + crds_cap_bar + crds_cap_lib + crds_pfam + crds_lgtm
-    
+    return crdssal + crdsrst + crdscho + crds_cap_bar + crds_cap_lib + crds_pfam + crds_lgtm + crds_mini
+        
 def _csg(csgsali, csgsald, csgchoi, csgchod, csgrsti, csg_cap_lib, csg_cap_bar):
     '''
     Contribution sociale généralisée
