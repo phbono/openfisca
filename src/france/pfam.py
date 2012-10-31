@@ -152,8 +152,7 @@ def _af_majo(age, smic55, _P, _option={'age': ENFS, 'smic55': ENFS}):
     nbenf_maj2 = age_sf_aine(age, P.age2, P_af.age2, ageaine)
 
     af_majo = nbenf_maj1 * af_maj1 + nbenf_maj2 * af_maj2
-
-    return 12 * af_majo # annualisé
+    return 12*af_majo # annualisé
 
 def _af_forf(age, af_nbenf, smic55, _P, _option={'age': ENFS, 'smic55': ENFS}):
     '''
@@ -707,7 +706,7 @@ def age_aine(ages, ag1, ag2):
     familiales) de chaque famille
     '''
     ageaine = -9999
-    for age in ages:
+    for age in ages.itervalues():
         ispacaf = (ag1 <= age) & (age <= ag2)
         isaine = ispacaf & (age > ageaine)
         ageaine = isaine * age + not_(isaine) * ageaine
