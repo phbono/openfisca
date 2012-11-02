@@ -211,11 +211,11 @@ def _mini(aspa, aah, caah, asi, rsa, aefa, api, ass):
     '''
     return aspa + aah + caah + asi + rsa + aefa + api + ass
 
-def _logt(apl, als, alf, alset, crds_lgtm):
+def _logt(apl, als, alf, crds_lgtm):
     '''
     Prestations logement
     '''
-    return apl + als + alf + alset + crds_lgtm
+    return apl + als + alf + crds_lgtm
 
 def _impo(irpp):
     '''

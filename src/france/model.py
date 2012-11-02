@@ -366,6 +366,7 @@ class ModelSF(ModelDescription):
     al     = Prestation(lg._al, 'fam', label = u"Allocation logement (indifferrenciée)")
     alf    = Prestation(lg._alf, 'fam', label = u"Allocation logement familiale")
     als    = Prestation(lg._als, 'fam', label = u"Allocation logement sociale")
+    als_nonet    = Prestation(lg._als_nonet, 'fam', label = u"Allocation logement sociale (non étudiant)")
     alset  = Prestation(lg._alset, 'fam', label = u"Allocation logement sociale étudiante")
     apl    = Prestation(lg._apl, 'fam', label = u"Aide personalisée au logement")
     crds_lgtm =Prestation(lg._crds_lgtm, 'fam', label = u"CRDS (allocation logement)")

@@ -235,12 +235,18 @@ def _alf(al, al_pac):
     alf   = (al_pac>=1)*al 
     return alf
      
-def _als(al, al_pac, etu, _option = {'etu': [CHEF, PART]}):
+def _als_nonet(al, al_pac, etu, _option = {'etu': [CHEF, PART]}):
+    '''
+    Allocation logement sociale (non étudiante)
+    '''    
+    als   = (al_pac==0)*not_(etu[CHEF]|etu[PART])*al
+    return als
+     
+def _als(als_nonet, alset):
     '''
     Allocation logement sociale
-    '''    
-    als   = (al_pac==0)*not_(etu[CHEF]|etu[PART])*al # Allocation logement sociale
-    return als
+    '''
+    return als_nonet + alset
      
      
 def _alset(al, al_pac, etu, _option = {'etu': [CHEF, PART]}):

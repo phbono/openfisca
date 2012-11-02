@@ -223,6 +223,7 @@ def _asf(age, rst, isol, asf_elig, smic55, _P, _option={'rst': [CHEF, PART], 'ag
     # TODO: Ajouter orphelin recueilli, soustraction à l'obligation d'entretien (et date de celle-ci),
     # action devant le TGI pour complêter l'éligibilité               
 
+    # TODO la valeur est annualisé mais l'ASF peut ne pas être versée toute l'année   
     P = _P.fam
     asf_nbenf = nb_enf(age, smic55, P.af.age1, P.af.age2)
     # TODO : gérer la mensualisation de l'ASF: pb de la pension alimentaire
@@ -245,7 +246,8 @@ def _ars(age, smic55, br_pf, _P, _option={'age': ENFS, 'smic55': ENFS}):
     P = _P.fam
     bmaf = P.af.bmaf
     # On prend l'âge en septembre
-    enf_05 = nb_enf(age, smic55, P.ars.agep - 1, P.ars.agep - 1)  # 6 ans avant le 31 janvier
+    # enf_05 = nb_enf(age, smic55, P.ars.agep - 1, P.ars.agep - 1)  # 6 ans avant le 31 décembre
+    enf_05 = 0
     # Un enfant scolarisé qui n'a pas encore atteint l'âge de 6 ans 
     # avant le 1er février 2012 peut donner droit à l'ARS à condition qu'il 
     # soit inscrit à l'école primaire. Il faudra alors présenter un 
@@ -318,7 +320,8 @@ def _paje_nais(agem, age, af_nbenf, br_pf, isol, biact, _P, _option={'age': ENFS
     # donc les enfants concernés sont les enfants qui ont -2 mois  
     nbnais = 0
     for age_m in agem.itervalues():
-        nbnais += (age_m == -2)
+# nbnais += (age_m == -2) cas mensuel
+        nbnais += (age_m >= -2) * (age_m < 10) 
           
     # Et on compte le nombre d'enfants AF présents  pour le seul mois de la prime
     nbaf = af_nbenf
@@ -331,7 +334,6 @@ def _paje_nais(agem, age, af_nbenf, br_pf, isol, biact, _P, _option={'age': ENFS
     nais_plaf = paje_plaf * plaf_tx + majo
     elig = (br_pf <= nais_plaf) * (nbnais != 0)
     nais_brut = nais_prime * elig * (nbnais)
-    
     return nais_brut  
     
 def _paje_clca(agem, af_nbenf, paje_base, inactif, partiel1, partiel2, _P, _option={'agem': ENFS}):
