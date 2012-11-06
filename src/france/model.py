@@ -214,7 +214,7 @@ class ModelSF(ModelDescription):
     ppe_elig_i  = BoolPresta(ir._ppe_elig_i)
     ppe_rev     = Prestation(ir._ppe_rev)
     ppe_brute   = Prestation(ir._ppe_brute, 'foy')
-    ppe  = Prestation(ir._ppe,'foy')
+    ppe  = Prestation(ir._ppe,'foy', label="Prime pour l'emploi")
     
     # Autres crédits d'impôts
     creimp = Prestation(ci._creimp, 'foy')
@@ -240,7 +240,7 @@ class ModelSF(ModelDescription):
     
     credits_impot = Prestation(ci._credits_impot, 'foy')
     
-    irpp = Prestation(ir._irpp, 'foy')
+    irpp = Prestation(ir._irpp, 'foy', label=u"Impôt sur le revenu des personnes physiques")
 
     rfr = Prestation(ir._rfr, 'foy')
     rfr_rvcm = Prestation(ir._rfr_rvcm, 'foy')

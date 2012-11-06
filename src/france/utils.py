@@ -27,6 +27,8 @@ import pickle
 from datetime import datetime
 
 
+currency = u"€"
+
 
 class Scenario(object):
     def __init__(self):
