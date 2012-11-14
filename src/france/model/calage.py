@@ -23,7 +23,7 @@ This file is part of openFisca.
 
 from __future__ import division
 from numpy import  floor, arange, array, where 
-from france.data import QUIMEN
+from france.model.data import QUIMEN
 
 ALL_MEN = [x[1] for x in QUIMEN]
 PREF = QUIMEN['pref']

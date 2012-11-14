@@ -22,7 +22,7 @@ This file is part of openFisca.
 """
 from __future__ import division
 from numpy import ( maximum as max_, minimum as min_) 
-from france.data import QUIFOY
+from france.model.data import QUIFOY
 ALL = [x[1] for x in QUIFOY]
 
 
