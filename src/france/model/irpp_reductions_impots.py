@@ -499,7 +499,7 @@ def _creaen(f7fy, f7gy, f7jy, f7hy, f7ky, f7iy, f7ly, f7my, _P):
         
 def _ecpess(f7ea, f7eb, f7ec, f7ed, f7ef, f7eg, _P):
     '''
-    Enfants à charge poursuivant leurs études secondaires ou supérieures
+    Réduction d'impôt au titre des enfants à charge poursuivant leurs études secondaires ou supérieures
     '''
     P = _P.ir.reductions_impots.ecpess
     return (P.col*(f7ea + f7eb/2) +

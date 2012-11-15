@@ -48,14 +48,14 @@ class InputTable(ModelDescription):
     quifoy  = EnumCol(QUIFOY)
     quifam  = EnumCol(QUIFAM)
     
-    sali = IntCol(label="Salaire imposable") #(f1aj, f1bj, f1cj, f1dj, f1ej)
-    choi = IntCol(label=u"Chômage imposable") # (f1ap, f1bp, f1cp, f1dp, f1ep)
-    rsti = IntCol(label="Retraite imposable") # (f1as, f1bs, f1cs, f1ds, f1es)
-    fra  = IntCol() # (f1ak, f1bk, f1ck, f1dk, f1ek)
+    sali = IntCol(label="Salaire imposable", val_type="monetary") #(f1aj, f1bj, f1cj, f1dj, f1ej)
+    choi = IntCol(label=u"Chômage imposable", val_type="monetary") # (f1ap, f1bp, f1cp, f1dp, f1ep)
+    rsti = IntCol(label="Retraite imposable", val_type="monetary") # (f1as, f1bs, f1cs, f1ds, f1es)
+    fra  = IntCol( val_type="monetary") # (f1ak, f1bk, f1ck, f1dk, f1ek)
 
-    alr  = IntCol() # (f1ao, f1bo, f1co, f1do, f1eo)
+    alr  = IntCol( val_type="monetary") # (f1ao, f1bo, f1co, f1do, f1eo)
     
-    hsup = IntCol()  # f1au
+    hsup = IntCol( val_type="monetary")  # f1au
     inv  = BoolCol(label = u'invalide')
     alt  = BoolCol(label = u'garde alternée')
     cho_ld = BoolCol(label = 'chômeur de longue durée') # (f1ai, f1bi, f1ci, f1di, f1ei)
@@ -64,11 +64,11 @@ class InputTable(ModelDescription):
     ppe_du_sa = IntCol() # (f1av, f1bv, f1cv, f1dv, f1qv)
     ppe_du_ns = IntCol() # (f5nv, f5ov, f5pv)
     jour_xyz = IntCol(default = 360)
-    age = AgesCol(label = u"âge")
-    agem = AgesCol(label = u"âge (en mois)")
+    age = AgesCol(label = u"âge" ,  val_type="age")
+    agem = AgesCol(label = u"âge (en mois)", val_type="months")
     
     zone_apl = EnumCol(label = u"zone apl", default = 2, unit= 'menage')
-    loyer = IntCol(unit='men') # Loyer mensuel
+    loyer = IntCol(unit='men', val_type="monetary") # Loyer mensuel
     so = EnumCol(label = u"Statut d'occupation",
                  unit='men',
                  enum = Enum([u"Non renseigné",
@@ -175,184 +175,184 @@ class InputTable(ModelDescription):
     caseW = BoolCol(unit= 'foy')
     
     
-    rfr_n_2  = IntCol(unit='foy', label = 'Revenu fiscal de référence année n-2') # TODO provide in data
-    nbptr_n_2 = IntCol(unit='foy', label = 'Nombre de parts année n-2')  # TODO provide in data
+    rfr_n_2  = IntCol(unit='foy', label = 'Revenu fiscal de référence année n-2', val_type="monetary") # TODO provide in data
+    nbptr_n_2 = IntCol(unit='foy', label = 'Nombre de parts année n-2', val_type="monetary")  # TODO provide in data
     
     # Rentes viagères
-    f1aw = IntCol(unit= 'foy')
-    f1bw = IntCol(unit= 'foy')
-    f1cw = IntCol(unit= 'foy')
-    f1dw = IntCol(unit= 'foy')
+    f1aw = IntCol(unit= 'foy', val_type="monetary")
+    f1bw = IntCol(unit= 'foy', val_type="monetary")
+    f1cw = IntCol(unit= 'foy', val_type="monetary")
+    f1dw = IntCol(unit= 'foy', val_type="monetary")
     
-    f1tv = IntCol(unit= 'foy')
-    f1uv = IntCol(unit= 'foy')
-    f1tw = IntCol(unit= 'foy')
-    f1uw = IntCol(unit= 'foy')
-    f1tx = IntCol(unit= 'foy')
-    f1ux = IntCol(unit= 'foy')
+    f1tv = IntCol(unit= 'foy', val_type="monetary")
+    f1uv = IntCol(unit= 'foy', val_type="monetary")
+    f1tw = IntCol(unit= 'foy', val_type="monetary")
+    f1uw = IntCol(unit= 'foy', val_type="monetary")
+    f1tx = IntCol(unit= 'foy', val_type="monetary")
+    f1ux = IntCol(unit= 'foy', val_type="monetary")
     
     # RVCM
     # revenus au prélèvement libératoire
-    f2da = IntCol(unit = 'foy', label = u"Revenus des actions et parts soumis au prélèvement libératoire")
-    f2dh = IntCol(unit = 'foy')
-    f2ee = IntCol(unit = 'foy', label = u"Revenus au prélèveemnt libératoire hors actions et assurance-vie")
+    f2da = IntCol(unit = 'foy', label = u"Revenus des actions et parts soumis au prélèvement libératoire", val_type="monetary")
+    f2dh = IntCol(unit = 'foy', val_type="monetary")
+    f2ee = IntCol(unit = 'foy', label = u"Revenus au prélèvement libératoire hors actions et assurance-vie", val_type="monetary")
 
     # revenus ouvrant droit à abattement
-    f2dc = IntCol(unit = 'foy', label =u"Revenus des actions et parts donnant droit à abattement")
-    f2fu = IntCol(unit = 'foy')
-    f2ch = IntCol(unit = 'foy')
+    f2dc = IntCol(unit = 'foy', label =u"Revenus des actions et parts donnant droit à abattement", val_type="monetary")
+    f2fu = IntCol(unit = 'foy', val_type="monetary")
+    f2ch = IntCol(unit = 'foy', val_type="monetary")
     
     # Revenus n'ouvrant pas droit à abattement
-    f2ts = IntCol(unit = 'foy')
-    f2go = IntCol(unit = 'foy')
-    f2tr = IntCol(unit = 'foy', label = u"Intérêts et autres revenus assimilés")
+    f2ts = IntCol(unit = 'foy', val_type="monetary")
+    f2go = IntCol(unit = 'foy', val_type="monetary")
+    f2tr = IntCol(unit = 'foy', label = u"Intérêts et autres revenus assimilés", val_type="monetary")
     
     # Autres
-    f2cg = IntCol(unit= 'foy')
-    f2bh = IntCol(unit= 'foy')
-    f2ca = IntCol(unit= 'foy')
-    f2aa = IntCol(unit='foy')
-    f2ab = IntCol(unit= 'foy')
-    f2al = IntCol(unit= 'foy')
-    f2am = IntCol(unit= 'foy')
-    f2an = IntCol(unit= 'foy')
+    f2cg = IntCol(unit= 'foy', val_type="monetary")
+    f2bh = IntCol(unit= 'foy', val_type="monetary")
+    f2ca = IntCol(unit= 'foy', val_type="monetary")
+    f2aa = IntCol(unit='foy', val_type="monetary")
+    f2ab = IntCol(unit= 'foy', val_type="monetary")
+    f2al = IntCol(unit= 'foy', val_type="monetary")
+    f2am = IntCol(unit= 'foy', val_type="monetary")
+    f2an = IntCol(unit= 'foy', val_type="monetary")
     # non accessible (from previous years)
-    f2gr = IntCol(unit= 'foy') 
+    f2gr = IntCol(unit= 'foy', val_type="monetary") 
         
-    f3vc = IntCol(unit= 'foy')
-    f3vd = IntCol(unit= 'foy')
-    f3ve = IntCol(unit= 'foy')
+    f3vc = IntCol(unit= 'foy', val_type="monetary")
+    f3vd = IntCol(unit= 'foy', val_type="monetary")
+    f3ve = IntCol(unit= 'foy', val_type="monetary")
     f3vf = IntCol(unit= 'foy')    
     
-    f3vl = IntCol(unit= 'foy')
-    f3vi = IntCol(unit= 'foy')
-    f3vm = IntCol(unit= 'foy')
+    f3vl = IntCol(unit= 'foy', val_type="monetary")
+    f3vi = IntCol(unit= 'foy', val_type="monetary")
+    f3vm = IntCol(unit= 'foy', val_type="monetary")
     
-    f3vj = IntCol(unit= 'foy')
-    f3vk = IntCol(unit= 'foy')
-    f3va = IntCol(unit= 'foy')
+    f3vj = IntCol(unit= 'foy', val_type="monetary")
+    f3vk = IntCol(unit= 'foy', val_type="monetary")
+    f3va = IntCol(unit= 'foy', val_type="monetary")
     
     # Plus values et gains taxables à 18%
-    f3vg = IntCol(unit= 'foy')
-    f3vh = IntCol(unit= 'foy')
-    f3vt = IntCol(unit= 'foy')
-    f3vu = IntCol(unit= 'foy')
-    f3vv = IntCol(unit= 'foy')
+    f3vg = IntCol(unit= 'foy', val_type="monetary")
+    f3vh = IntCol(unit= 'foy', val_type="monetary")
+    f3vt = IntCol(unit= 'foy', val_type="monetary")
+    f3vu = IntCol(unit= 'foy', val_type="monetary")
+    f3vv = IntCol(unit= 'foy', val_type="monetary")
 
     # Revenu foncier
-    f4ba = IntCol(unit= 'foy')
-    f4bb = IntCol(unit= 'foy')
-    f4bc = IntCol(unit= 'foy')
-    f4bd = IntCol(unit= 'foy')
-    f4be = IntCol(unit= 'foy')
+    f4ba = IntCol(unit= 'foy', val_type="monetary")
+    f4bb = IntCol(unit= 'foy', val_type="monetary")
+    f4bc = IntCol(unit= 'foy', val_type="monetary")
+    f4bd = IntCol(unit= 'foy', val_type="monetary")
+    f4be = IntCol(unit= 'foy', val_type="monetary")
     
     # Prime d'assurance loyers impayés
-    f4bf = IntCol(unit= 'foy')
+    f4bf = IntCol(unit= 'foy', val_type="monetary")
     
-    f4bl = IntCol(unit= 'foy')
+    f4bl = IntCol(unit= 'foy', val_type="monetary")
     
-    f5qm = IntCol(unit= 'foy')
-    f5rm = IntCol(unit= 'foy')
+    f5qm = IntCol(unit= 'foy', val_type="monetary")
+    f5rm = IntCol(unit= 'foy', val_type="monetary")
     
     # Csg déductible
-    f6de = IntCol(unit= 'foy')
+    f6de = IntCol(unit= 'foy', val_type="monetary")
 
     # Pensions alimentaires
-    f6gi = IntCol(unit= 'foy')
-    f6gj = IntCol(unit= 'foy')
-    f6el = IntCol(unit= 'foy')
-    f6em = IntCol(unit= 'foy')
-    f6gp = IntCol(unit= 'foy')
-    f6gu = IntCol(unit= 'foy')
+    f6gi = IntCol(unit= 'foy', val_type="monetary")
+    f6gj = IntCol(unit= 'foy', val_type="monetary")
+    f6el = IntCol(unit= 'foy', val_type="monetary")
+    f6em = IntCol(unit= 'foy', val_type="monetary")
+    f6gp = IntCol(unit= 'foy', val_type="monetary")
+    f6gu = IntCol(unit= 'foy', val_type="monetary")
     
     # Frais d'accueil d'une personne de plus de 75 ans dans le besoin
-    f6eu = IntCol(unit= 'foy')
+    f6eu = IntCol(unit= 'foy', val_type="monetary")
     f6ev = IntCol(unit= 'foy')
     
     # Déductions diverses
-    f6dd = IntCol(unit= 'foy')
+    f6dd = IntCol(unit= 'foy', val_type="monetary")
     
     # Épargne retraite - PERP, PRÉFON, COREM et CGOS
-    f6ps = IntCol(unit= 'foy')
-    f6rs = IntCol(unit= 'foy')
-    f6ss = IntCol(unit= 'foy')
-    f6pt = IntCol(unit= 'foy')
-    f6rt = IntCol(unit= 'foy')
-    f6st = IntCol(unit= 'foy')
-    f6pu = IntCol(unit= 'foy')
-    f6ru = IntCol(unit= 'foy')
-    f6su = IntCol(unit= 'foy')
+    f6ps = IntCol(unit= 'foy', val_type="monetary")
+    f6rs = IntCol(unit= 'foy', val_type="monetary")
+    f6ss = IntCol(unit= 'foy', val_type="monetary")
+    f6pt = IntCol(unit= 'foy', val_type="monetary")
+    f6rt = IntCol(unit= 'foy', val_type="monetary")
+    f6st = IntCol(unit= 'foy', val_type="monetary")
+    f6pu = IntCol(unit= 'foy', val_type="monetary")
+    f6ru = IntCol(unit= 'foy', val_type="monetary")
+    f6su = IntCol(unit= 'foy', val_type="monetary")
     
     # Souscriptions en faveur du cinéma ou de l’audiovisuel
-    f6aa = IntCol(unit= 'foy')
+    f6aa = IntCol(unit= 'foy', val_type="monetary")
     
     # Souscriptions au capital des SOFIPÊCHE
-    f6cc = IntCol(unit= 'foy')
+    f6cc = IntCol(unit= 'foy', val_type="monetary")
     
     # Investissements DOM-TOM dans le cadre d’une entreprise <= 2005
     # ou Versements sur un compte épargne codéveloppement 
-    f6eh = IntCol(unit= 'foy')
+    f6eh = IntCol(unit= 'foy', val_type="monetary")
     
     # Pertes en capital consécutives à la souscription au capital de sociétés 
     # nouvelles ou de sociétés en difficulté
-    f6da = IntCol(unit= 'foy')
+    f6da = IntCol(unit= 'foy', val_type="monetary")
     
     
     # Dépenses de grosses réparations effectuées par les nus propriétaires
-    f6cb = IntCol(unit= 'foy')
-    f6hj = IntCol(unit= 'foy')
+    f6cb = IntCol(unit= 'foy', val_type="monetary")
+    f6hj = IntCol(unit= 'foy', val_type="monetary")
     
     # Sommes à rajouter au revenu imposable
-    f6gh = IntCol(unit= 'foy')    
+    f6gh = IntCol(unit= 'foy', val_type="monetary")    
     
     # Deficit Antérieur
-    f6fa = IntCol(unit= 'foy')
-    f6fb = IntCol(unit= 'foy')
-    f6fc = IntCol(unit= 'foy')
-    f6fd = IntCol(unit= 'foy')
-    f6fe = IntCol(unit= 'foy')
-    f6fl = IntCol(unit= 'foy')
+    f6fa = IntCol(unit= 'foy', val_type="monetary")
+    f6fb = IntCol(unit= 'foy', val_type="monetary")
+    f6fc = IntCol(unit= 'foy', val_type="monetary")
+    f6fd = IntCol(unit= 'foy', val_type="monetary")
+    f6fe = IntCol(unit= 'foy', val_type="monetary")
+    f6fl = IntCol(unit= 'foy', val_type="monetary")
     
     # Dons
-    f7ud = IntCol(unit= 'foy')
-    f7uf = IntCol(unit= 'foy')
-    f7xs = IntCol(unit= 'foy')
-    f7xt = IntCol(unit= 'foy')
-    f7xu = IntCol(unit= 'foy')
-    f7xw = IntCol(unit= 'foy')
-    f7xy = IntCol(unit= 'foy')
+    f7ud = IntCol(unit= 'foy', val_type="monetary")
+    f7uf = IntCol(unit= 'foy', val_type="monetary")
+    f7xs = IntCol(unit= 'foy', val_type="monetary")
+    f7xt = IntCol(unit= 'foy', val_type="monetary")
+    f7xu = IntCol(unit= 'foy', val_type="monetary")
+    f7xw = IntCol(unit= 'foy', val_type="monetary")
+    f7xy = IntCol(unit= 'foy', val_type="monetary")
     
     # Cotisations syndicales des salariées et pensionnés
-    f7ac = IntCol(unit= 'foy')
-    f7ae = IntCol(unit= 'foy')
-    f7ag = IntCol(unit= 'foy')
+    f7ac = IntCol(unit= 'foy', val_type="monetary")
+    f7ae = IntCol(unit= 'foy', val_type="monetary")
+    f7ag = IntCol(unit= 'foy', val_type="monetary")
 
     # Salarié à domicile
-    f7db = IntCol(unit= 'foy')
-    f7df = IntCol(unit= 'foy')
-    f7dq = IntCol(unit= 'foy')
-    f7dg = BoolCol(unit= 'foy')
-    f7dl = IntCol(unit= 'foy')
+    f7db = IntCol(unit= 'foy', val_type="monetary")
+    f7df = IntCol(unit= 'foy', val_type="monetary")
+    f7dq = IntCol(unit= 'foy', val_type="monetary")
+    f7dg = BoolCol(unit= 'foy', val_type="monetary")
+    f7dl = IntCol(unit= 'foy', val_type="monetary")
     
     # Intérêt des emprunts contractés pour l'acquisition ou la construction de l'habitation principale
-    f7vy = IntCol(unit= 'foy')
-    f7vz = IntCol(unit= 'foy')
-    f7vx = IntCol(unit= 'foy')
-    f7vw = IntCol(unit= 'foy')
+    f7vy = IntCol(unit= 'foy', val_type="monetary")
+    f7vz = IntCol(unit= 'foy', val_type="monetary")
+    f7vx = IntCol(unit= 'foy', val_type="monetary")
+    f7vw = IntCol(unit= 'foy', val_type="monetary")
 
     # Dépenses d'accueil dans un établissement pour personnes âgées dépendantes
-    f7cd = IntCol(unit= 'foy')
-    f7ce = IntCol(unit= 'foy')
+    f7cd = IntCol(unit= 'foy', val_type="monetary")
+    f7ce = IntCol(unit= 'foy', val_type="monetary")
 
     # Frais de garde des enfants de moins de 6 ans
-    f7ga = IntCol(unit= 'foy')
-    f7gb = IntCol(unit= 'foy')
-    f7gc = IntCol(unit= 'foy')
-    f7ge = IntCol(unit= 'foy')
-    f7gf = IntCol(unit= 'foy')
-    f7gg = IntCol(unit= 'foy')
+    f7ga = IntCol(unit= 'foy', val_type="monetary")
+    f7gb = IntCol(unit= 'foy', val_type="monetary")
+    f7gc = IntCol(unit= 'foy', val_type="monetary")
+    f7ge = IntCol(unit= 'foy', val_type="monetary")
+    f7gf = IntCol(unit= 'foy', val_type="monetary")
+    f7gg = IntCol(unit= 'foy', val_type="monetary")
 
-    # Enfants à charge poursuivant leurs études
+    # Nombre d'enfants à charge poursuivant leurs études
     f7ea = IntCol(unit= 'foy')
     f7eb = IntCol(unit= 'foy')
     f7ec = IntCol(unit= 'foy')
@@ -361,32 +361,32 @@ class InputTable(ModelDescription):
     f7eg = IntCol(unit= 'foy')
 
     # Intérêts des prêts étudiants
-    f7td = IntCol(unit= 'foy')
-    f7vo = IntCol(unit= 'foy')
-    f7uk = IntCol(unit= 'foy')
+    f7td = IntCol(unit= 'foy', val_type="monetary")
+    f7vo = IntCol(unit= 'foy', val_type="monetary")
+    f7uk = IntCol(unit= 'foy', val_type="monetary")
     
     # Primes de survies, contrat d'épargne handicap
-    f7gz = IntCol(unit= 'foy')
+    f7gz = IntCol(unit= 'foy', val_type="monetary")
     
     # Prestations compensatoires
-    f7wm = IntCol(unit= 'foy')
-    f7wn = IntCol(unit= 'foy')
-    f7wo = IntCol(unit= 'foy')
-    f7wp = IntCol(unit= 'foy')
+    f7wm = IntCol(unit= 'foy', val_type="monetary")
+    f7wn = IntCol(unit= 'foy', val_type="monetary")
+    f7wo = IntCol(unit= 'foy', val_type="monetary")
+    f7wp = IntCol(unit= 'foy', val_type="monetary")
     
     # Dépenses en faveur de la qualité environnementale
-    f7we = IntCol(unit= 'foy')
-    f7wq = IntCol(unit= 'foy')
-    f7wh = IntCol(unit= 'foy')
-    f7wk = IntCol(unit= 'foy')
-    f7wf = IntCol(unit= 'foy')
+    f7we = IntCol(unit= 'foy', val_type="monetary")
+    f7wq = IntCol(unit= 'foy', val_type="monetary")
+    f7wh = IntCol(unit= 'foy', val_type="monetary")
+    f7wk = IntCol(unit= 'foy', val_type="monetary")
+    f7wf = IntCol(unit= 'foy', val_type="monetary")
     
     # Dépenses en faveur de l'aide aux personnes
-    f7wi = IntCol(unit= 'foy')
-    f7wj = IntCol(unit= 'foy')
-    f7wl = IntCol(unit= 'foy')
+    f7wi = IntCol(unit= 'foy', val_type="monetary")
+    f7wj = IntCol(unit= 'foy', val_type="monetary")
+    f7wl = IntCol(unit= 'foy', val_type="monetary")
     
-    # Investissements dans les DOM-TOM dans le cadre d'une entrepise
+    # Investissements dans les DOM-TOM dans le cadre d'une entrepise  TODO: RESTART FROM HERE FOR , val_type="monetary"
     f7ur = IntCol(unit= 'foy')
     f7oz = IntCol(unit= 'foy')
     f7pz = IntCol(unit= 'foy')
