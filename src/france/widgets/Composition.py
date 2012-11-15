@@ -35,8 +35,6 @@ import os
 from core.utils import of_import
 
 
-
-
 class S:
     name = 0
     birth = 1
