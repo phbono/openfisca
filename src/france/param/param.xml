@@ -325,7 +325,7 @@
     </CODE>
   </NODE>
   <NODE description="Fusion IR - CSG (à la Landais, Piketty, Saez)" code = 'lps'>
-    <BAREME description="Barème appliqué à l'assiette de la CSG" code="bareme" >
+    <BAREME description="Barème appliqué à l'assiette de la CSG" code="bareme" type = "monetary">
       <TRANCHE code="tranche0">	            
         <SEUIL>
           <VALUE valeur="0" deb="2010-01-01" fin="2011-12-31"/>
@@ -975,7 +975,7 @@
 	          <SEUIL>
 	            <VALUE valeur="0" deb="2003-01-01" fin="2020-12-31"/>
 	    	  </SEUIL>
-	          <TAUX>²
+	          <TAUX>
 	            <VALUE valeur="0.01" deb="2002-01-01" fin="2011-12-31"/>      
 	          </TAUX>
 	        </TRANCHE>
@@ -1100,7 +1100,8 @@
 	          <TAUX>
 	            <VALUE valeur="0.0488" deb="2012-01-01" fin="2012-12-31"/>
 	            <VALUE valeur="0.0480" deb="2011-01-01" fin="2011-12-31"/>
-	            <VALUE valeur="0.0476" deb="1989-01-01" fin="2010-12-31"/>	          </TAUX>
+	            <VALUE valeur="0.0476" deb="1989-01-01" fin="2010-12-31"/>	          
+	          </TAUX>
             </TRANCHE>
             <TRANCHE code="tranche2">
 	          <SEUIL>
@@ -3037,7 +3038,7 @@
 	    <VALUE valeur="0" deb="2001-01-01" fin="2012-12-31"/>
       </CODE>
     </NODE>
-    <BAREME description="Contribution exceptionnelle sur les hauts revenus" code = "cehr">
+    <BAREME description="Contribution exceptionnelle sur les hauts revenus" code = "cehr" type = "monetary">
       <TRANCHE>
         <SEUIL>
           <VALUE valeur="0" deb="2010-01-01" fin="2012-12-31"/>
@@ -3065,7 +3066,7 @@
         </TAUX>
       </TRANCHE>
     </BAREME>
-    <BAREME description="Contribution exceptionnelle de solidarité sur les très hauts revenus d'activité" code = "cesthra">
+    <BAREME description="Contribution exceptionnelle de solidarité sur les très hauts revenus d'activité" code = "cesthra" type == "Qt.EditRole"monetary"">
       <TRANCHE>
         <SEUIL>
           <VALUE valeur="0" deb="2010-01-01" fin="2012-12-31"/>
@@ -4287,7 +4288,7 @@
     </NODE>
   </NODE>
   <NODE description="Impôt de solidarité sur la fortune (ISF)" code = "isf">
-  <BAREME description="Impôt de solidarité" code="bareme">
+  <BAREME description="Impôt de solidarité" code="bareme" type = "monetary">
     <TRANCHE code="tranche0">
 	  <SEUIL>
 	  	<VALUE valeur="0" deb="2001-01-01" fin="2012-12-31"/>
