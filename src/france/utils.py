@@ -44,7 +44,7 @@ class Scenario(object):
         self.famille = {}
         
         # menage est un dict de dict la clé est la pref
-        self.menage = {0:{'loyer':500,'so':4, 'code_postal':69001, 'zone_apl':2}}
+        self.menage = {0:{'loyer':500,'so':4, 'code_postal':69001, 'zone_apl':2, 'zthabm' :0}}
 
         # on ajoute un individu, déclarant et chef de famille
         self.addIndiv(0, datetime(1975,1,1).date(), 'vous', 'chef')

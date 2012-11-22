@@ -1673,7 +1673,7 @@
     </NODE>
   </NODE>
   <NODE description="Impôt sur le revenu" code="ir">
-    <BAREME code = "bareme" description="Tranches de l'IR">
+    <BAREME code = "bareme" description="Tranches de l'IR" type="monetary">
       <TRANCHE code = "tranche0">
 	<SEUIL>
 	  <VALUE valeur="0" deb="2002-01-01" fin="2011-12-31"/>
@@ -3628,7 +3628,7 @@
       <VALUE valeur="374.12" deb="2009-01-01" fin="2009-12-31"/>
       <VALUE valeur="377.86" deb="2010-01-01" fin="2010-12-31"/>
     </CODE>
-    <CODE description="Revenu minimum d'insertion puis rsa socle n-2" code="rmi" format='integer' type="monetary">
+    <CODE description="Revenu minimum d'insertion puis rsa socle n-2" code="rmi" format='float' type="monetary">
       <VALUE valeur="397.60" deb="2002-01-01" fin="2003-06-30"/>
       <VALUE valeur="405.62" deb="2003-07-01" fin="2004-06-30"/>
       <VALUE valeur="411.70" deb="2004-07-01" fin="2005-08-31"/>
@@ -3645,7 +3645,7 @@
 	<VALUE valeur="76" deb="2002-01-01" fin="2007-06-30"/>
 	<VALUE valeur="95" deb="2007-07-01" fin="2012-12-31"/>
       </CODE>
-      <CODE description="Évaluation forfaitaire des ressources R. 351-7-1" code="dar_2" format='integer' type="monetary">
+      <CODE description="Évaluation forfaitaire des ressources R. 351-7-1" code="dar_2" format='float' type="monetary">
 	<VALUE valeur="6173.82" deb="2002-01-01" fin="2002-06-30"/>
 	<VALUE valeur="6300" deb="2002-07-01" fin="2003-06-30"/>
 	<VALUE valeur="6400" deb="2003-07-01" fin="2007-06-30"/>
@@ -3655,7 +3655,7 @@
 	<VALUE valeur="13" deb="2002-01-01" fin="2007-06-30"/>
 	<VALUE valeur="16.25" deb="2007-07-01" fin="2010-12-31"/>
       </CODE>
-      <CODE description="Montant R. 351-7-2" code="dar_4">
+      <CODE description="Montant R. 351-7-2" code="dar_4" format='float' type="monetary">
 	<VALUE valeur="5411.62" deb="2002-01-01" fin="2002-06-30"/>
 	<VALUE valeur="5500" deb="2002-07-01" fin="2007-06-30"/>
 	<VALUE valeur="6900" deb="2007-07-01" fin="2008-12-31"/>
@@ -3663,7 +3663,7 @@
 	<VALUE valeur="7200" deb="2011-01-01" fin="2011-12-31"/>
 	<VALUE valeur="7300" deb="2012-01-01" fin="2012-12-31"/>
       </CODE>
-      <CODE description="Minoration si titulaire d'une bourse de l'enseignement supérieur" code="dar_5" format='integer' type="monetary">
+      <CODE description="Minoration si titulaire d'une bourse de l'enseignement supérieur" code="dar_5" format='float' type="monetary">
 	<VALUE valeur="990.86" deb="2002-01-01" fin="2002-11-30"/>
 	<VALUE valeur="1100" deb="2002-12-01" fin="2007-06-30"/>
 	<VALUE valeur="1400" deb="2007-07-01" fin="2010-12-31"/>
@@ -3671,7 +3671,7 @@
 	<VALUE valeur="1400" deb="2009-01-01" fin="2009-12-31"/>
 	<VALUE valeur="1400" deb="2010-01-01" fin="2012-12-31"/>
       </CODE>
-      <CODE description="Demandes antérieures au 1er juillet" code="dar_6" format='integer' type="monetary">
+      <CODE description="Demandes antérieures au 1er juillet" code="dar_6" format='float' type="monetary">
 	<VALUE valeur="4420.76" deb="2002-01-01" fin="2002-06-30"/>
 	<VALUE valeur="4400" deb="2002-07-01" fin="2007-06-30"/>
 	<VALUE valeur="5500" deb="2007-07-01" fin="2008-12-31"/>
@@ -3976,8 +3976,8 @@
     </NODE>
   </NODE>
   <NODE description="Minima sociaux" code="minim" >
-    <NODE description="Revenu de solidarité active" code="rmi" format='float' type="monetary">
-      <CODE description="Rsa socle" code="rmi">
+    <NODE description="Revenu de solidarité active" code="rmi" >
+      <CODE description="Rsa socle" code="rmi" format='float' type="monetary">
 	<VALUE valeur="397.6" deb="2001-01-01" fin="2001-12-31"/>
 	<VALUE valeur="405.62" deb="2002-01-01" fin="2002-12-31"/>
 	<VALUE valeur="411.7" deb="2003-01-01" fin="2003-12-31"/>

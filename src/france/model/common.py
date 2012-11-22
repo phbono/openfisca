@@ -217,11 +217,11 @@ def _logt(apl, als, alf, crds_lgtm):
     '''
     return apl + als + alf + crds_lgtm
 
-def _impo(irpp):
+def _impo(irpp, th):
     '''
     Impôts directs
     '''
-    return irpp
+    return irpp + th
 
 def _crds(crdssal, crdsrst, crdscho, crds_cap_bar, crds_cap_lib, crds_pfam, crds_lgtm, crds_mini):
     '''

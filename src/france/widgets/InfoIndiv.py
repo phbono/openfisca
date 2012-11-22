@@ -61,5 +61,5 @@ class InfoIndivWidget(QDockWidget):
         input_cols = []
         
         for var in input_cols:
-            BoxFromCol() TODO finish here
+            BoxFromCol() TODO: finish here
         
