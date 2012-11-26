@@ -345,7 +345,7 @@ class ModelSF(ModelDescription):
     paje           = Prestation(pf._paje, 'fam', label = u"PAJE - Ensemble des prestations", start=date(2004,1,1))
 
 
-    cf             = Prestation(pf._cf_cumul, 'fam', label = u"Complément familial avant d'éventuels cumuls")    
+    cf             = Prestation(pf._cf_cumul, 'fam', label = u"Complément familial")    
     aeeh           = Prestation(pf._aeeh, 'fam', label = u"Allocation d'éducation de l'enfant handicapé")
 
     ape_temp       = Prestation(pf._ape, 'fam', label = u"Allocation parentale d'éducation", end=date(2004, 1,1))
@@ -536,5 +536,5 @@ class ModelSF(ModelDescription):
     logt = Prestation(cm._logt, label=u"Allocation logment")
     impo = Prestation(cm._impo, label=u"Impôt sur le revenu")
     crds = Prestation(cm._crds, label=u"Contribution au remboursement de la dette sociale")
-    csg  = Prestation(cm._csg, label=u"Contribution sociale généraisée")
+    csg  = Prestation(cm._csg, label=u"Contribution sociale généralisée")
     cotsoc_noncontrib = Prestation(cm._cotsoc_noncontrib, label=u"Cotisations sociales non contributives")

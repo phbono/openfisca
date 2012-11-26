@@ -24,7 +24,7 @@ def test(h5_name):
 def build_totals():
     h5_name = "../amounts.h5"
     store = HDFStore(h5_name)
-    files = ['logement_tous_regime', 'openfisca_pfam_tous_regimes', 'minima_sociaux_tous_regimes' ]
+    files = ['logement_tous_regime', 'openfisca_pfam_tous_regimes', 'minima_sociaux_tous_regimes', 'IRPP_PPE' ]
     first = True
     for xlsfile in files:
         xls = ExcelFile(xlsfile + '.xlsx')
