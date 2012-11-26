@@ -13,18 +13,18 @@ def csv2hdf5(csv_name, h5_name, dfname):
     store[dfname] = table
     store.close() 
 
-def test(h5_name, dfname):
+def test(h5_name):
     store = HDFStore(h5_name)
-    table = store[dfname]
-    print table
-    print table.columns
+    for key in store.keys():
+        print key
+    
     store.close()
     
         
 def build_totals():
     h5_name = "../amounts.h5"
     store = HDFStore(h5_name)
-    files = ['logement_tous_regime', 'openfisca_pfam_tous_regimes']
+    files = ['logement_tous_regime', 'openfisca_pfam_tous_regimes', 'minima_sociaux_tous_regimes' ]
     first = True
     for xlsfile in files:
         xls = ExcelFile(xlsfile + '.xlsx')
@@ -41,8 +41,7 @@ def build_totals():
     
     amounts_df, benef_df = amounts_df.set_index("var"), benef_df.set_index("var")
     print amounts_df.to_string()
-    print benef_df.to_string()
-    
+    print benef_df.to_string()    
     store['amounts'] = amounts_df
     store['benef']   = benef_df
     store.close
@@ -107,19 +106,22 @@ def build_actualisation_groups():
 
 
 def build_survey(year):
-    h5_name = '../survey_bis.h5'    
+    h5_name = '../survey.h5'    
     dfname = 'survey_' + str(year)
     csv_name = "final" + str(year)[2:4] + ".csv"
     print("Using " + csv_name + " to build " + h5_name)
     csv2hdf5(csv_name, h5_name, dfname)
 
-def build_all_surveys():
-    build_survey(2006)
-    build_survey(2009)
+def build_all_surveys():    
+    for year in range(2006,2010):
+        build_survey(year)
+        
+    
 
 if __name__ == '__main__':
     
-
+#    test('../survey.h5')
 #    build_actualisation_group_amounts_h5()
-#    build_totals()
-    build_survey(2009)
+    build_totals()
+#    build_survey(2006)
+#   test('../survey.h5')

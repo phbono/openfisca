@@ -3066,7 +3066,7 @@
         </TAUX>
       </TRANCHE>
     </BAREME>
-    <BAREME description="Contribution exceptionnelle de solidarité sur les très hauts revenus d'activité" code = "cesthra" type == "Qt.EditRole"monetary"">
+    <BAREME description="Contribution exceptionnelle de solidarité sur les très hauts revenus d'activité" code = "cesthra" type="monetary">
       <TRANCHE>
         <SEUIL>
           <VALUE valeur="0" deb="2010-01-01" fin="2012-12-31"/>

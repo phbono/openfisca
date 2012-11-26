@@ -653,7 +653,7 @@ def _ric(mbic_exon, mbic_impv, mbic_imps, abic_exon, nbic_exon, abic_impn, nbic_
     
     cond = (mbic_impv>0) & (mbic_imps==0)
     taux = P.vente.taux*cond + P.servi.taux*not_(cond)
-        
+            
     cbic = min_(mbic_impv + mbic_imps + mbic_exon, 
                 max_(P.vente.min,round(mbic_impv*P.vente.taux + mbic_imps*P.servi.taux + mbic_exon*taux)))
     

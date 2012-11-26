@@ -145,12 +145,14 @@ def _nivvie_ini(revini, uc):
 
 
 
-def _revprim_i(rev_trav, rev_cap, cotpat, cotsal):
+def _revprim_i(rev_trav, cho, rev_cap, cotpat, cotsal):
     '''
     Revenu primaire individuel
+    Ensemble des revenus d'activités superbruts avant tout prélèvement
+    Il est égale à la valeur ajoutée produite par les ésidents
     'ind'
     '''
-    return rev_trav + rev_cap - cotpat - cotsal
+    return rev_trav + rev_cap - cotpat - cotsal - cho
 
 def _revprim(revprim_i, _option = {'revprim_i': ALL}):
     '''
@@ -163,28 +165,40 @@ def _revprim(revprim_i, _option = {'revprim_i': ALL}):
     return r
 
 
-def _rev_trav(sal_net, rag, ric, rnc):
-    '''Revenu du travail'''
-    return sal_net + rag + ric + rnc
+def _rev_trav(rev_sal, rag, ric, rnc):
+    '''
+    Revenu du travail
+    '''
+    return rev_sal + rag + ric + rnc
 
 def _pen(chonet, rstnet, alr, alv, rto):
-    '''Pensions'''
+    '''
+    Pensions
+    '''
     return chonet + rstnet + alr + alv + rto
 
 def _chonet(cho, csgchoi, crdscho):
-    '''Chômage net'''
+    '''
+    Chômage net
+    '''
     return cho + csgchoi + crdscho
 
 def _rstnet(rst, csgrsti, crdsrst):
-    '''Retraites nettes'''
+    '''
+    Retraites nettes
+    '''
     return rst + csgrsti + crdsrst
 
 def _cotsoc_bar(csg_cap_bar, prelsoc_cap_bar, crds_cap_bar):
-    '''Cotisations sociales sur les revenus du capital imposés au barème'''
+    '''
+    Cotisations sociales sur les revenus du capital imposés au barème
+    '''
     return csg_cap_bar + prelsoc_cap_bar + crds_cap_bar
 
 def _cotsoc_lib(csg_cap_lib, prelsoc_cap_lib, crds_cap_lib):
-    '''Cotisations sociales sur les revenus du capital soumis au prélèvement libératoire'''
+    '''
+    Cotisations sociales sur les revenus du capital soumis au prélèvement libératoire
+    '''
     return csg_cap_lib + prelsoc_cap_lib + crds_cap_lib
 
 def _rev_cap(fon, rev_cap_bar, cotsoc_bar, rev_cap_lib, cotsoc_lib, imp_lib, rac):
