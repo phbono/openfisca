@@ -36,6 +36,7 @@ import france.model.mini as ms
 import france.model.lgtm as lg
 import france.model.common as cm
 import france.model.calage as cl
+import france.model.th as th
 
 class ModelSF(ModelDescription):
     
@@ -392,7 +393,7 @@ class ModelSF(ModelDescription):
     rsa_act = Prestation(ms._rsa_act, 'fam', label = u"Revenu de solidarité active - activité", start = date(2009, 7, 1))
     api  = Prestation(ms._api, 'fam', end = date(2009, 7, 1), label = u"Allocation de parent isolé" )
     crds_mini = Prestation(ms._crds_mini, 'fam', start = date(2009, 7, 1))
-    aefa = Prestation(ms._aefa, 'fam')
+    aefa = Prestation(ms._aefa, 'fam', label = u"Allocation exceptionelle de fin d'année")
 
     ############################################################
     # ASPA/ASI, Minimum vieillesse
@@ -422,6 +423,12 @@ class ModelSF(ModelDescription):
     br_aah  = Prestation(ms._br_aah, 'fam', label = u"Base ressources de l'allocation adulte handicapé")
     aah     = Prestation(ms._aah, 'fam', label = u"Allocation adulte handicapé")
     caah    = Prestation(ms._caah, 'fam', label = u"Complément de l'allocation adulte handicapé")
+
+    ############################################################
+    # Taxe d'habitation
+    ############################################################
+    
+    th       = Prestation(th._th, 'men', label = u"Taxe d'habitation")
 
     ############################################################
     # Unité de consommation du ménage

@@ -100,9 +100,10 @@
   <NODE desc= "Prime pour l'emploi" shortname="PPE" code = "ppe" color = "182,34,131"/>
   <NODE desc= "Impôts directs" shortname="Impôts directs" code = "impo" color = "232,79,95">
     <NODE desc= "Impôt sur le revenu" shortname="IRPP" code = "irpp" color = "232,79,95"/>
-   <NODE desc= "ISF net" shortname="ISF net" code = "isf net" color="182,34,131">
+    <NODE desc= "ISF net" shortname="ISF net" code = "isf net" color="182,34,131">
       <NODE desc= "Impôt de solidarité sur la fortune" shortname="ISF" code = "isf_tot" color="232,79,95"/>
       <NODE desc= "Bouclier fiscal" shortname="Bouclier fiscal" code = "bouclier_fiscal" color="182,34,131"/>
     </NODE>	
+    <NODE desc= "Taxe d'habitation" shortname="TH" code = "th" color = "232,79,95"/>
   </NODE>	
 </NODE> 

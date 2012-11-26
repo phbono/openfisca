@@ -59,7 +59,7 @@ def _al_pac(age, smic55, nbR, _P, _option = {'age': ENFS, 'smic55': ENFS}):
     age1 = P.fam.af.age1
     age2 = P.fam.cf.age2
     al_nbenf = nb_enf(age, smic55, age1, age2)
-    al_pac = P.al.autres.D_enfch*(al_nbenf + al_nbinv) #  manque invalides
+    al_pac = P.al.autres.D_enfch*(al_nbenf + al_nbinv) #  TODO: manque invalides
     # TODO: il faudrait probablement définir les AL pour un ménage et non 
     # pour une famille
     return al_pac
@@ -228,41 +228,46 @@ def _al(concub, br_al, so, loyer, coloc, isol, al_pac, zone_apl, _P):
 
     return al
 
-def _alf(al, al_pac):
+def _alf(al, al_pac, so):
     '''
     Allocation logement familiale
     '''    
-    alf   = (al_pac>=1)*al 
+    alf   = (al_pac>=1)*(so != 3)*al    # TODO: également pour les jeunes ménages et femems enceints
     return alf
      
-def _als_nonet(al, al_pac, etu, _option = {'etu': [CHEF, PART]}):
+def _als_nonet(al, al_pac, etu, so, _option = {'etu': [CHEF, PART]}):
     '''
     Allocation logement sociale (non étudiante)
     '''    
-    als   = (al_pac==0)*not_(etu[CHEF]|etu[PART])*al
+    als   = (al_pac==0)*(so != 3)*not_(etu[CHEF]|etu[PART])*al
     return als
+          
      
+def _alset(al, al_pac, etu, so, _option = {'etu': [CHEF, PART]}):
+    '''
+    Allocation logement sociale étudiante
+    '''    
+    alset = (al_pac==0)*(so != 3)*(etu[CHEF] | etu[PART])*al
+    return alset
+
 def _als(als_nonet, alset):
     '''
     Allocation logement sociale
     '''
     return als_nonet + alset
-     
-     
-def _alset(al, al_pac, etu, _option = {'etu': [CHEF, PART]}):
-    '''
-    Allocation logement sociale étudiante
-    '''    
-    alset = (al_pac==0)*(etu[CHEF] | etu[PART])*al
-    return alset
 
-def _apl(al):
-    #TODO: Pour les logements conventionné (surtout des HLM)
-    return al*0
+
+def _apl(al, so):
+    '''
+    Aide personalisée au logement (réservée aux logements conventionné, surtout des HLM, 
+    et financé par le fonds national de l'habitation)
+    '''
+    #TODO: 
+    return al*(so == 3)
 
 def _crds_lgtm(al, _P):
     '''
-    Calcule la CRDS des allocations logement
+    CRDS des allocations logement
     '''
     return -al*_P.fam.af.crds
 
