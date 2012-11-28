@@ -96,7 +96,7 @@ def _br_al(etu, boursier, br_pf_i, rev_coll, biact, _P ,_option = {'boursier': [
     
     # somme des revenus catégoriels après abatement
     revCat = revCatVsCj + rev_coll
-    # charges déductibles : pension alimentaires et abatements spéciaux
+    # TODO: charges déductibles : pension alimentaires et abatements spéciaux
     revNet = revCat
     
     # On ne considère pas l'abattement sur les ressources de certaines
@@ -130,13 +130,13 @@ def _al(concub, br_al, so, loyer, coloc, isol, al_pac, zone_apl, _P):
     # ne prend pas en compte les chambres ni les logements-foyers.
     # variables nécéssaires dans FA
     # isol : ménage isolé
-    # self.coup: ménage en coup (rq : self.coup = ~isol.
-    # self.al_pac : nb de personne à charge du ménage prise en compte pour les AL
-    # self.zone_apl
-    # self.loyer
-    # self.BRapl : base ressource des al après abattement.
-    # self.coloc (1 si colocation, 0 sinon)
-    # self.SO : statut d'occupation du logement
+    # concub: ménage en couple (rq : concub = ~isol.
+    # al_pac : nb de personne à charge du ménage prise en compte pour les AL
+    # zone_apl
+    # loyer
+    # br_al : base ressource des al après abattement.
+    # coloc (1 si colocation, 0 sinon)
+    # so : statut d'occupation du logement
     #   SO==1 : Accédant à la propriété
     #   SO==2 : Propriétaire (non accédant) du logement.
     #   SO==3 : Locataire d'un logement HLM
@@ -173,7 +173,7 @@ def _al(concub, br_al, so, loyer, coloc, isol, al_pac, zone_apl, _P):
           ( coloc)*((isol*0.5 + concub)*P_fc.fc1 + al_pac*P_fc.fc2)
     
     # dépense éligible
-    E = L + C;
+    E = L + C
     
     # ressources prises en compte 
     R = br_al
@@ -212,7 +212,7 @@ def _al(concub, br_al, so, loyer, coloc, isol, al_pac, zone_apl, _P):
 
     RL = L / L_Ref
 
-    # TODO ; paramètres en dur ??
+    # TODO: paramètres en dur ??
     TL = max_(max_(0,P.al.TL.taux2*(RL-0.45)),P.al.TL.taux3*(RL-0.75)+P.al.TL.taux2*(0.75-0.45))
     
     Tp= TF + TL
