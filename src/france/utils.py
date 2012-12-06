@@ -22,7 +22,7 @@ This file is part of openFisca.
 """
 
 from __future__ import division
-from Config import CONF, VERSION
+from Config import VERSION
 import pickle
 from datetime import datetime
 
@@ -33,7 +33,7 @@ currency = u"€"
 class Scenario(object):
     def __init__(self):
         super(Scenario, self).__init__()
-        self.year = CONF.get('simulation', 'datesim').year
+        self.year = None
         self.indiv = {}
         # indiv est un dict de dict. La clé est le noi de l'individu
         # Exemple :
@@ -48,6 +48,10 @@ class Scenario(object):
 
         # on ajoute un individu, déclarant et chef de famille
         self.addIndiv(0, datetime(1975,1,1).date(), 'vous', 'chef')
+    
+        self.nmen = None
+        self.xaxis = None
+        self.maxrev = None
     
     def check_consistency(self):
         '''
@@ -317,16 +321,14 @@ class Scenario(object):
         self.menage = S['menage']
 
 
-    def populate_datatable(self, datatable, xaxis = None, nmen = None, maxrev = None):
+    def populate_datatable(self, datatable):
         '''
         Popualte a datatable from a given scenario
         '''
         from pandas import DataFrame, concat
         import numpy as np
-    
         scenario = self
-        if nmen is None:
-            nmen = CONF.get('simulation', 'nmen')
+        nmen = self.nmen 
         
         datatable.NMEN = nmen
         datatable._nrows = datatable.NMEN*len(scenario.indiv)
@@ -389,14 +391,10 @@ class Scenario(object):
                     datatable.set_value(var, np.ones(nb)*val, index, noi)
             del var, val
     
-        if maxrev is None: 
-            maxrev = CONF.get('simulation', 'maxrev')
-        
+        maxrev = self.maxrev      
         datatable.MAXREV = maxrev
         
-        if xaxis is None:
-            xaxis = CONF.get('simulation', 'xaxis')    
-
+        xaxis = self.xaxis    
         axes = build_axes()
         var = None
         if nmen>1:
@@ -406,7 +404,7 @@ class Scenario(object):
                     var = axe.col_name
                     
             if var is None:
-                print 'xaxis not found in predefined axes'
+                raise Exception('france.utils.Scenario: xaxis not found in predefined axes')
                 datatable.XAXIS = xaxis 
                 var = xaxis
                         
