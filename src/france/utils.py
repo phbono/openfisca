@@ -27,13 +27,15 @@ import pickle
 from datetime import datetime
 
 
+
+INDEX = ['men', 'fam', 'foy']
 currency = u"€"
 
 
 class Scenario(object):
     def __init__(self):
         super(Scenario, self).__init__()
-        self.year = None
+
         self.indiv = {}
         # indiv est un dict de dict. La clé est le noi de l'individu
         # Exemple :
@@ -52,6 +54,12 @@ class Scenario(object):
         self.nmen = None
         self.xaxis = None
         self.maxrev = None
+        self.year = None
+    
+    def copy(self):
+        from copy import deepcopy
+        return deepcopy(self)
+
     
     def check_consistency(self):
         '''
@@ -153,8 +161,7 @@ class Scenario(object):
 
     def _assignChef(self, noi):
         ''' 
-        Ajoute la personne numéro 'noi' à la famille numéro 'declar' en tant
-        que 'vous' et crée un conjoint vide si necéssaire
+        Désigne la personne numéro 'noi' comme chef de famille et crée une famille vide
         '''
         self.indiv[noi]['quifam'] = 'chef'
         self.indiv[noi]['noichef'] = noi
@@ -162,9 +169,9 @@ class Scenario(object):
 
     def _assignPart(self, noi, noichef):
         ''' 
-        Ajoute la personne numéro 'noi' à la déclaration numéro 'noidec' en tant 
-        que 'conj' si declar n'a pas de conj. Sinon, cherche le premier foyer sans
-        conjoint. Sinon, crée un nouveau foyer en tant que vous.
+        Ajoute la personne numéro 'noi' à la famille 'noichef' en tant 
+        que 'part' si noi n'a pas de part. Sinon, cherche la première famille sans
+        'part'. Sinon, crée un nouvelle famille en tant que vous.
         '''
         famnum = noichef
         if (noichef not in self.famille) or self.hasPart(noichef):
@@ -179,8 +186,8 @@ class Scenario(object):
 
     def _assignEnfF(self, noi, noichef):
         ''' 
-        Ajoute la personne numéro 'noi' à la déclaration numéro 'noidec' en tant
-        que 'pac'
+        Ajoute la personne numéro 'noi' à la déclaration famille 'noifam' en tant
+        que 'enf'
         '''
         self.indiv[noi]['quifam'] = 'enf0'
         self.indiv[noi]['noichef'] = noichef
@@ -328,6 +335,10 @@ class Scenario(object):
         from pandas import DataFrame, concat
         import numpy as np
         scenario = self
+        
+        if self.nmen is None:
+            raise Exception('france.scenario: self.nmen should be not None')
+        
         nmen = self.nmen 
         
         datatable.NMEN = nmen
@@ -359,7 +370,6 @@ class Scenario(object):
                 
             datatable.table = concat([datatable.table, DataFrame(dct)], ignore_index = True)
     
-        INDEX = ['men', 'fam', 'foy']
         datatable.gen_index(INDEX)
     
         for name in datatable.col_names:
@@ -391,8 +401,13 @@ class Scenario(object):
                     datatable.set_value(var, np.ones(nb)*val, index, noi)
             del var, val
     
+        if self.maxrev is None:
+            raise Exception('france.utils.Scenario: self.maxrev should not be None')
         maxrev = self.maxrev      
         datatable.MAXREV = maxrev
+        
+        if self.xaxis is None:
+            raise Exception('france.utils.Scenario: self.xaxis should not be None')
         
         xaxis = self.xaxis    
         axes = build_axes()
@@ -404,7 +419,7 @@ class Scenario(object):
                     var = axe.col_name
                     
             if var is None:
-                raise Exception('france.utils.Scenario: xaxis not found in predefined axes')
+
                 datatable.XAXIS = xaxis 
                 var = xaxis
                         
@@ -509,8 +524,6 @@ def build_axes():
     return axes
 
 
-
-
 def preproc_inputs(datatable):
     '''
     Preprocess inputs table: country specific manipulations 
@@ -543,7 +556,6 @@ REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
 #            out = data['salnet'].vals + pennet + capnet
 
 
-
-
+    
 
 
