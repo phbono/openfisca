@@ -54,6 +54,7 @@ class Scenario(object):
         self.nmen = None
         self.xaxis = None
         self.maxrev = None
+        self.same_rev_couple = None
         self.year = None
     
     def copy(self):
@@ -340,7 +341,7 @@ class Scenario(object):
             raise Exception('france.scenario: self.nmen should be not None')
         
         nmen = self.nmen 
-        
+        same_rev_couple = self.same_rev_couple
         datatable.NMEN = nmen
         datatable._nrows = datatable.NMEN*len(scenario.indiv)
         datesim = datatable.datesim
@@ -380,7 +381,8 @@ class Scenario(object):
         nb = index['nb']
         for noi, dct in scenario.indiv.iteritems():
             for var, val in dct.iteritems():
-                if var in ('birth', 'noipref', 'noidec', 'noichef', 'quifoy', 'quimen', 'quifam'): continue
+                if var in ('birth', 'noipref', 'noidec', 'noichef', 'quifoy', 'quimen', 'quifam'): 
+                    continue
                 if not index[noi] is None:
                     datatable.set_value(var, np.ones(nb)*val, index, noi)
             del var, val
@@ -424,7 +426,13 @@ class Scenario(object):
                 var = xaxis
                         
             vls = np.linspace(0, maxrev, nmen)
-            datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}}) 
+            if same_rev_couple is True:
+                index_men = datatable.index['men']
+                datatable.set_value(var, 0.5*vls, index_men, opt = 0)
+                datatable.set_value(var, 0.5*vls, index_men, opt = 1)
+            else:
+                datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
+                
             datatable._isPopulated = True
         
 
