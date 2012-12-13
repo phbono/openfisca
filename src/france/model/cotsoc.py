@@ -22,9 +22,9 @@ This file is part of openFisca.
 """
 
 from __future__ import division
-from france.model.data import CAT
+from src.france.model.data import CAT
 from numpy import maximum as max_, minimum as min_, logical_not as not_, zeros, ones
-from core.utils import  scaleBaremes, combineBaremes, BaremeDict
+from src.core.utils import  scaleBaremes, combineBaremes, BaremeDict
 
 
                 
@@ -143,7 +143,7 @@ def _salbrut(sali, hsup, type_sal, _defaultP):
 
     sal = scaleBaremes(BaremeDict('sal', _defaultP.cotsoc.sal), plaf_ss)
     csg = scaleBaremes(BaremeDict('csg', _defaultP.csg), plaf_ss)
-
+    
     sal['noncadre'].update(sal['commun'])
     sal['cadre'].update(sal['commun'])
 
@@ -443,6 +443,7 @@ def _csg_rempl(rfr_n_2, nbpt_n_2, choi, rsti, _P):
     2 : Taux réduit
     3 : Taux plein
     '''
+    # TODO: problème avec le rfr n-2
     P = _P.cotsoc.gen
     seuil_th = P.plaf_th_1 + P.plaf_th_supp*(max_(0, (nbpt_n_2-1)/2))
     res =  (0 + 

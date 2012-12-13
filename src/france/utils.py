@@ -22,7 +22,7 @@ This file is part of openFisca.
 """
 
 from __future__ import division
-from Config import VERSION
+from src.Config import VERSION
 import pickle
 from datetime import datetime
 
@@ -403,25 +403,26 @@ class Scenario(object):
                     datatable.set_value(var, np.ones(nb)*val, index, noi)
             del var, val
     
-        if self.maxrev is None:
-            raise Exception('france.utils.Scenario: self.maxrev should not be None')
-        maxrev = self.maxrev      
-        datatable.MAXREV = maxrev
-        
-        if self.xaxis is None:
-            raise Exception('france.utils.Scenario: self.xaxis should not be None')
-        
-        xaxis = self.xaxis    
-        axes = build_axes()
-        var = None
+
         if nmen>1:
+            if self.maxrev is None:
+                raise Exception('france.utils.Scenario: self.maxrev should not be None')
+            maxrev = self.maxrev      
+            datatable.MAXREV = maxrev
+            
+            if self.xaxis is None:
+                raise Exception('france.utils.Scenario: self.xaxis should not be None')
+            
+            xaxis = self.xaxis    
+            axes = build_axes()
+            var = None
+            
             for axe in axes:
                 if axe.name == xaxis:
                     datatable.XAXIS = axe.col_name
                     var = axe.col_name
                     
             if var is None:
-
                 datatable.XAXIS = xaxis 
                 var = xaxis
                         

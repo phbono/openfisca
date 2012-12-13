@@ -24,7 +24,7 @@ This file is part of openFisca.
 from __future__ import division
 from numpy import (round, floor, zeros, maximum as max_, minimum as min_,
                    logical_not as not_)
-from france.model.data import QUIFAM
+from src.france.model.data import QUIFAM
 
 
 CHEF = QUIFAM['chef']

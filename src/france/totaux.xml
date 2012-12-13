@@ -104,6 +104,6 @@
       <NODE desc= "Impôt de solidarité sur la fortune" shortname="ISF" code = "isf_tot" color="232,79,95"/>
       <NODE desc= "Bouclier fiscal" shortname="Bouclier fiscal" code = "bouclier_fiscal" color="182,34,131"/>
     </NODE>	
-    <NODE desc= "Taxe d'habitation" shortname="TH" code = "th" color = "232,79,95"/>
+    <NODE desc= "Taxe d'habitation" shortname="TH" code = "tax_hab" color = "232,79,95"/>
   </NODE>	
 </NODE> 
