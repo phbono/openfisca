@@ -22,10 +22,9 @@ This file is part of openFisca.
 """
 
 from __future__ import division
-from numpy import (round, ceil, floor, maximum as max_, minimum as min_, 
-                   logical_not as not_, arange)
-from france.model.data import QUIFAM, QUIMEN
-from france.model.pfam import nb_enf
+from numpy import (floor, logical_not as not_, arange)
+from src.france.model.data import QUIFAM, QUIMEN
+
 
 CHEF = QUIFAM['chef']
 PART = QUIFAM['part']
@@ -231,11 +230,11 @@ def _logt(apl, als, alf, crds_lgtm):
     '''
     return apl + als + alf + crds_lgtm
 
-def _impo(irpp, th):
+def _impo(irpp, tax_hab):
     '''
     Impôts directs
     '''
-    return irpp + th
+    return irpp + tax_hab
 
 def _crds(crdssal, crdsrst, crdscho, crds_cap_bar, crds_cap_lib, crds_pfam, crds_lgtm, crds_mini):
     '''
@@ -256,7 +255,7 @@ def _cotsoc_noncontrib(cotpat_noncontrib, cotsal_noncontrib, prelsoc_cap_lib, pr
     '''
     return cotpat_noncontrib + cotsal_noncontrib + prelsoc_cap_lib + prelsoc_cap_bar
 
-from core.utils import mark_weighted_percentiles
+from src.core.utils import mark_weighted_percentiles
 
 def _decile(nivvie, champm, wprm):
     '''

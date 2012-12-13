@@ -22,9 +22,9 @@ This file is part of openFisca.
 """
 
 
-from core.description import ModelDescription
-from core.columns import IntCol, EnumCol, BoolCol, AgesCol, FloatCol
-from core.utils import Enum
+from src.core.description import ModelDescription
+from src.core.columns import IntCol, EnumCol, BoolCol, AgesCol, FloatCol
+from src.core.utils import Enum
 
 QUIFOY = Enum(['vous', 'conj', 'pac1','pac2','pac3','pac4','pac5','pac6','pac7','pac8','pac9'])
 QUIFAM = Enum(['chef', 'part', 'enf1','enf2','enf3','enf4','enf5','enf6','enf7','enf8','enf9'])
@@ -175,8 +175,8 @@ class InputTable(ModelDescription):
     caseW = BoolCol(unit= 'foy')
     
     
-    rfr_n_2  = IntCol(unit='foy', label = 'Revenu fiscal de référence année n-2', val_type="monetary") # TODO provide in data
-    nbptr_n_2 = IntCol(unit='foy', label = 'Nombre de parts année n-2', val_type="monetary")  # TODO provide in data
+    rfr_n_2  = IntCol(unit='foy', label = 'Revenu fiscal de référence année n-2', val_type="monetary") # TODO: provide in data
+    nbptr_n_2 = IntCol(unit='foy', label = 'Nombre de parts année n-2', val_type="monetary")  # TODO: provide in data
     
     # Rentes viagères
     f1aw = IntCol(unit= 'foy', val_type="monetary")
@@ -867,7 +867,7 @@ class InputTable(ModelDescription):
 
     rev_or= IntCol()
     rev_exo= IntCol()
-    tax_hab= IntCol()
+
     tax_fonc= IntCol()
     restit_imp= IntCol()
         
@@ -894,5 +894,5 @@ class InputTable(ModelDescription):
     m_colcam  = IntCol()
     m_mgamm   = IntCol()
     m_mgdomm  = IntCol()
-    zthabm    = IntCol()
-    
+    zthabm    = IntCol()  # Devrait être renommée tax
+    # tax_hab= IntCol()    

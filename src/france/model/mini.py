@@ -23,8 +23,8 @@ This file is part of openFisca.
 
 from __future__ import division
 from numpy import (floor, maximum as max_, where, logical_not as not_)
-from france.model.data import QUIFAM, QUIFOY
-from france.model.pfam import nb_enf, age_en_mois_benjamin
+from src.france.model.data import QUIFAM, QUIFOY
+from src.france.model.pfam import nb_enf, age_en_mois_benjamin
 
 CHEF = QUIFAM['chef']
 PART = QUIFAM['part']
