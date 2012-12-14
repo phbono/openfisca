@@ -62,6 +62,9 @@ from src.core.utils import  scaleBaremes, combineBaremes, BaremeDict
 #return Dicts2Object(**a)
 
 def _mhsup(hsup):
+    """
+    Heures supplémentaires comptèes négativement
+    """
     return -hsup
 
 ############################################################################

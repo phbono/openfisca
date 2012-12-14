@@ -483,11 +483,11 @@ def _irpp(iai, credits_impot, cehr, cesthra):
 ## Autres totaux utiles pour la suite
 ###############################################################################
 
-def _alv(sal):
+def _alv(f6gi, f6gj, f6el, f6em, f6gp, f6gu):
     '''
     Pensions alimentaires versées
     '''
-    return 0*sal
+    return - (f6gi + f6gj + f6el + f6em + f6gp + f6gu)
 
 def _rfr(rni, alloc, f3va, f3vg, f3vi, rfr_cd, rfr_rvcm, rpns_exon, rpns_pvce, rev_cap_lib):
     '''

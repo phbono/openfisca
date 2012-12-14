@@ -9,7 +9,7 @@
           </NODE>
         <NODE desc= "Cotisations sociales salariées" shortname="Cotsoc sal" code= "cotsal" color = "243,166,171"/>
         <NODE desc= "CSG déductible (salaires)" shortname="CSG deduc" code= "csgsald" color = "235,114,118"/>
-        <NODE desc= "Heures supplémentaires" shortname="Heures sup" code= "mhsup" color = "0,115,170"/>
+        <NODE desc= "Heures supplémentaires éxonérées" shortname="Heures sup" code= "mhsup" color = "0,115,170"/>
       </NODE>
       <NODE desc= "CSG non déductible (salaires)" shortname="CSG imp. sal." code= "csgsali" color = "235,114,118"/>
       <NODE desc= "CRDS (salaires)" shortname="CRDS sal." code= "crdssal" color = "229,48,56"/>
