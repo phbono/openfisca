@@ -22,7 +22,7 @@ This file is part of openFisca.
 """
 from __future__ import division
 from numpy import ( maximum as max_, minimum as min_) 
-from france.model.data import QUIFOY
+from src.france.model.data import QUIFOY
 ALL = [x[1] for x in QUIFOY]
 
 
@@ -133,21 +133,25 @@ def _revetproduits(sal_net, pen_net, rto_net, rfr_rvcm, fon, ric, rag, rpns_exon
     return pt*P.taux
 
 def _isf_apres_plaf(tot_impot, revetproduits, isf_avant_plaf, _P): 
+    """
+    Impôt sur la fortune après plafonnement
+    """
+    ## si ISF avant plafonnement n'excède pas seuil 1= la limitation du plafonnement ne joue pas ##
+    ## si entre les deux seuils; l'allègement est limité au 1er seuil ##
+    ## si ISF avant plafonnement est supérieur au 2nd seuil, l'allègement qui résulte du plafonnement est limité à 50% de l'ISF ##
     plafonnement = max_(tot_impot- revetproduits, 0)
     P = _P.isf.plaf
-    limitationplaf = (isf_avant_plaf<= P.seuil1)*plafonnement + (P.seuil1 <= isf_avant_plaf)*(isf_avant_plaf <= P.seuil2)*min_(plafonnement, P.seuil1) + (isf_avant_plaf >= P.seuil2)*min_(isf_avant_plaf*P.taux, plafonnement)  
+    limitationplaf = (
+                      (isf_avant_plaf<= P.seuil1)*plafonnement + 
+                      (P.seuil1 <= isf_avant_plaf)*(isf_avant_plaf <= P.seuil2)*min_(plafonnement, P.seuil1) + 
+                      (isf_avant_plaf >= P.seuil2)*min_(isf_avant_plaf*P.taux, plafonnement))  
     return (isf_avant_plaf - limitationplaf)
-## si ISF avant plafonnement n'excède pas seuil 1= la limitation du plafonnement ne joue pas ##
-## si entre les deux seuils; l'allègement est limité au 1er seuil ##
-## si ISF avant plafonnement est supérieur au 2nd seuil, l'allègement qui résulte du plafonnement est limité à 50% de l'ISF ##
 
 
-## rs est le montant des impôts acquittés hors de France ## 
-## montant net à payer ##
 def _isf_tot(b4rs, isf_avant_plaf, isf_apres_plaf, irpp):
-   
+    ## rs est le montant des impôts acquittés hors de France ## 
     return min_( -((isf_apres_plaf - b4rs)*((-irpp)>0) + (isf_avant_plaf-b4rs)*((-irpp)<=0)), 0)
-    ## avec indicatrice ## 
+
 
 
 ## BOUCLIER FISCAL ##
@@ -204,7 +208,7 @@ def _maj_cga(maj_cga_i, _option = {'maj_cga_i': ALL}):
 
 def _bouclier_rev(rbg, maj_cga, csg_deduc, rvcm_plus_abat, rev_cap_lib, rev_exo, rev_or, cd_penali, cd_eparet):
     ''' 
-    otal des revenus sur l'année 'n' net de charges
+    Total des revenus sur l'année 'n' net de charges
     '''
     # TODO: réintégrer les déficits antérieur
     # TODO: intégrer les revenus soumis au prélèvement libératoire
@@ -219,7 +223,7 @@ def _bouclier_rev(rbg, maj_cga, csg_deduc, rvcm_plus_abat, rev_cap_lib, rev_exo,
     ## pour le calcul de droit à restitution : prendre 0.7*montant_brut_rev_dist_soumis_au_barème
     rev_bar = rbg - maj_cga - csg_deduc - deficit_ante
 
-## TODO AJOUTER : indemnités de fonction percus par les élus- revenus soumis à régimes spéciaux
+## TODO: AJOUTER : indemnités de fonction percus par les élus- revenus soumis à régimes spéciaux
 
     # Revenu soumis à l'impôt sur le revenu forfaitaire
     rev_lib = rev_cap_lib 
@@ -249,11 +253,11 @@ def _bouclier_imp_gen (irpp, tax_hab, tax_fonc, isf_tot, cotsoc_lib, cotsoc_bar,
     ## impôt sur les plus-values immo et cession de fonds de commerce
     imp1= cotsoc_lib + cotsoc_bar + csgsald + csgchod + crdssal + csgrstd  + imp_lib
     ''' 
-    impôts payés en l'année 'n' au titre des revenus réalisés sur l'année 'n' 
+    Impôts payés en l'année 'n' au titre des revenus réalisés sur l'année 'n' 
     '''
     imp2= irpp + isf_tot + tax_hab + tax_fonc  + csgsali + csgchoi + csgrsti
     '''
-    impôts payés en l'année 'n' au titre des revenus réalisés en 'n-1'
+    Impôts payés en l'année 'n' au titre des revenus réalisés en 'n-1'
     '''
     return imp1+ imp2
 
@@ -261,13 +265,13 @@ def _bouclier_imp_gen (irpp, tax_hab, tax_fonc, isf_tot, cotsoc_lib, cotsoc_bar,
 
 def _restitutions(ppe, restit_imp ):
     '''
-    restitutions d'impôt sur le revenu et degrèvements percus en l'année 'n'
+    Restitutions d'impôt sur le revenu et degrèvements percus en l'année 'n'
     '''
     return ppe + restit_imp
 
 def _bouclier_sumimp(bouclier_imp_gen, restitutions):
     '''
-    somme totale des impôts moins restitutions et degrèvements 
+    Somme totale des impôts moins restitutions et degrèvements 
     '''
     return - bouclier_imp_gen +restitutions 
     

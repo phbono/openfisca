@@ -59,6 +59,8 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
         axes = build_axes()
         
         xaxis = CONF.get('simulation', 'xaxis')
+        
+        
         axes_names = []
         for axe in axes:
             self.xaxis_box.addItem(axe.label, QVariant(axe.name))
@@ -102,9 +104,10 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
         '''
         widget = self.xaxis_box
         if isinstance(widget, QComboBox):
-            data = widget.itemData(widget.currentIndex())
+            data  = widget.itemData(widget.currentIndex())
             xaxis = unicode(data.toString())
-            CONF.set('simulation', 'xaxis', xaxis) 
+            self.scenario.xaxis = xaxis
+            CONF.set('simulation', 'xaxis', xaxis)
         self.emit(SIGNAL('compoChanged()'))
     
     def set_maxrev(self):
@@ -113,7 +116,9 @@ class ScenarioWidget(QDockWidget, Ui_Menage):
         '''
         widget = self.maxrev_box
         if isinstance(widget, QSpinBox) or isinstance(widget, QDoubleSpinBox):
-            CONF.set('simulation', 'maxrev', widget.value()) 
+            maxrev = widget.value()
+            self.scenario.maxrev = maxrev
+            CONF.set('simulation', 'maxrev', maxrev) 
         self.emit(SIGNAL('compoChanged()'))
 
     def changed(self):

@@ -24,7 +24,7 @@ This file is part of openFisca.
 from __future__ import division
 from numpy import (round, floor, zeros, maximum as max_, minimum as min_,
                    logical_not as not_)
-from france.model.data import QUIFAM
+from src.france.model.data import QUIFAM
 
 
 CHEF = QUIFAM['chef']
@@ -96,7 +96,8 @@ def _rev_coll(rto_net, rev_cap_lib, rev_cap_bar, div, abat_spe, glo, fon, alv, f
     revenus collectif
     '''
     # TODO: ajouter les revenus de l'étranger etr*0.9
-    return rto_net + rev_cap_lib + rev_cap_bar + fon + glo - alv - f7ga - f7gb - f7gc - abat_spe
+    # alv is negative since it is paid by the declaree
+    return rto_net + rev_cap_lib + rev_cap_bar + fon + glo + alv - f7ga - f7gb - f7gc - abat_spe
     
 def _br_pf(br_pf_i, rev_coll, _option={'br_pf_i': [CHEF, PART], 'rev_coll': [CHEF, PART]}):
     '''
