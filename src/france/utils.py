@@ -22,18 +22,20 @@ This file is part of openFisca.
 """
 
 from __future__ import division
-from Config import CONF, VERSION
+from src.Config import VERSION
 import pickle
 from datetime import datetime
 
 
+
+INDEX = ['men', 'fam', 'foy']
 currency = u"€"
 
 
 class Scenario(object):
     def __init__(self):
         super(Scenario, self).__init__()
-        self.year = CONF.get('simulation', 'datesim').year
+
         self.indiv = {}
         # indiv est un dict de dict. La clé est le noi de l'individu
         # Exemple :
@@ -48,6 +50,17 @@ class Scenario(object):
 
         # on ajoute un individu, déclarant et chef de famille
         self.addIndiv(0, datetime(1975,1,1).date(), 'vous', 'chef')
+    
+        self.nmen = None
+        self.xaxis = None
+        self.maxrev = None
+        self.same_rev_couple = None
+        self.year = None
+    
+    def copy(self):
+        from copy import deepcopy
+        return deepcopy(self)
+
     
     def check_consistency(self):
         '''
@@ -149,8 +162,7 @@ class Scenario(object):
 
     def _assignChef(self, noi):
         ''' 
-        Ajoute la personne numéro 'noi' à la famille numéro 'declar' en tant
-        que 'vous' et crée un conjoint vide si necéssaire
+        Désigne la personne numéro 'noi' comme chef de famille et crée une famille vide
         '''
         self.indiv[noi]['quifam'] = 'chef'
         self.indiv[noi]['noichef'] = noi
@@ -158,9 +170,9 @@ class Scenario(object):
 
     def _assignPart(self, noi, noichef):
         ''' 
-        Ajoute la personne numéro 'noi' à la déclaration numéro 'noidec' en tant 
-        que 'conj' si declar n'a pas de conj. Sinon, cherche le premier foyer sans
-        conjoint. Sinon, crée un nouveau foyer en tant que vous.
+        Ajoute la personne numéro 'noi' à la famille 'noichef' en tant 
+        que 'part' si noi n'a pas de part. Sinon, cherche la première famille sans
+        'part'. Sinon, crée un nouvelle famille en tant que vous.
         '''
         famnum = noichef
         if (noichef not in self.famille) or self.hasPart(noichef):
@@ -175,8 +187,8 @@ class Scenario(object):
 
     def _assignEnfF(self, noi, noichef):
         ''' 
-        Ajoute la personne numéro 'noi' à la déclaration numéro 'noidec' en tant
-        que 'pac'
+        Ajoute la personne numéro 'noi' à la déclaration famille 'noifam' en tant
+        que 'enf'
         '''
         self.indiv[noi]['quifam'] = 'enf0'
         self.indiv[noi]['noichef'] = noichef
@@ -317,17 +329,19 @@ class Scenario(object):
         self.menage = S['menage']
 
 
-    def populate_datatable(self, datatable, xaxis = None, nmen = None, maxrev = None):
+    def populate_datatable(self, datatable):
         '''
         Popualte a datatable from a given scenario
         '''
         from pandas import DataFrame, concat
         import numpy as np
-    
         scenario = self
-        if nmen is None:
-            nmen = CONF.get('simulation', 'nmen')
         
+        if self.nmen is None:
+            raise Exception('france.scenario: self.nmen should be not None')
+        
+        nmen = self.nmen 
+        same_rev_couple = self.same_rev_couple
         datatable.NMEN = nmen
         datatable._nrows = datatable.NMEN*len(scenario.indiv)
         datesim = datatable.datesim
@@ -357,7 +371,6 @@ class Scenario(object):
                 
             datatable.table = concat([datatable.table, DataFrame(dct)], ignore_index = True)
     
-        INDEX = ['men', 'fam', 'foy']
         datatable.gen_index(INDEX)
     
         for name in datatable.col_names:
@@ -368,7 +381,8 @@ class Scenario(object):
         nb = index['nb']
         for noi, dct in scenario.indiv.iteritems():
             for var, val in dct.iteritems():
-                if var in ('birth', 'noipref', 'noidec', 'noichef', 'quifoy', 'quimen', 'quifam'): continue
+                if var in ('birth', 'noipref', 'noidec', 'noichef', 'quifoy', 'quimen', 'quifam'): 
+                    continue
                 if not index[noi] is None:
                     datatable.set_value(var, np.ones(nb)*val, index, noi)
             del var, val
@@ -389,29 +403,37 @@ class Scenario(object):
                     datatable.set_value(var, np.ones(nb)*val, index, noi)
             del var, val
     
-        if maxrev is None: 
-            maxrev = CONF.get('simulation', 'maxrev')
-        
-        datatable.MAXREV = maxrev
-        
-        if xaxis is None:
-            xaxis = CONF.get('simulation', 'xaxis')    
 
-        axes = build_axes()
-        var = None
         if nmen>1:
+            if self.maxrev is None:
+                raise Exception('france.utils.Scenario: self.maxrev should not be None')
+            maxrev = self.maxrev      
+            datatable.MAXREV = maxrev
+            
+            if self.xaxis is None:
+                raise Exception('france.utils.Scenario: self.xaxis should not be None')
+            
+            xaxis = self.xaxis    
+            axes = build_axes()
+            var = None
+            
             for axe in axes:
                 if axe.name == xaxis:
                     datatable.XAXIS = axe.col_name
                     var = axe.col_name
                     
             if var is None:
-                print 'xaxis not found in predefined axes'
                 datatable.XAXIS = xaxis 
                 var = xaxis
                         
             vls = np.linspace(0, maxrev, nmen)
-            datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}}) 
+            if same_rev_couple is True:
+                index_men = datatable.index['men']
+                datatable.set_value(var, 0.5*vls, index_men, opt = 0)
+                datatable.set_value(var, 0.5*vls, index_men, opt = 1)
+            else:
+                datatable.set_value(var, vls, {0:{'idxIndi': index[0]['idxIndi'], 'idxUnit': index[0]['idxIndi']}})
+                
             datatable._isPopulated = True
         
 
@@ -511,8 +533,6 @@ def build_axes():
     return axes
 
 
-
-
 def preproc_inputs(datatable):
     '''
     Preprocess inputs table: country specific manipulations 
@@ -545,7 +565,6 @@ REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
 #            out = data['salnet'].vals + pennet + capnet
 
 
-
-
+    
 
 

@@ -22,21 +22,21 @@ This file is part of openFisca.
 """
 
 from datetime import date
-from core.utils import Enum
-from core.description import ModelDescription
-from core.columns import Prestation, BoolPresta, IntPresta, EnumPresta
-import france.model.cotsoc as cs
-import france.model.irpp as ir
-import france.model.irpp_charges_deductibles as cd
-import france.model.irpp_reductions_impots as ri
-import france.model.irpp_credits_impots as ci
-import france.model.isf as isf
-import france.model.pfam as pf
-import france.model.mini as ms
-import france.model.lgtm as lg
-import france.model.common as cm
-import france.model.calage as cl
-import france.model.th as th
+from src.core.utils import Enum
+from src.core.description import ModelDescription
+from src.core.columns import Prestation, BoolPresta, IntPresta, EnumPresta
+import src.france.model.cotsoc as cs
+import src.france.model.irpp as ir
+import src.france.model.irpp_charges_deductibles as cd
+import src.france.model.irpp_reductions_impots as ri
+import src.france.model.irpp_credits_impots as ci
+import src.france.model.isf as isf
+import src.france.model.pfam as pf
+import src.france.model.mini as ms
+import src.france.model.lgtm as lg
+import src.france.model.common as cm
+import src.france.model.calage as cl
+import src.france.model.th as th
 
 class ModelSF(ModelDescription):
     
@@ -428,7 +428,7 @@ class ModelSF(ModelDescription):
     # Taxe d'habitation
     ############################################################
     
-    th       = Prestation(th._th, 'men', label = u"Taxe d'habitation")
+    tax_hab       = Prestation(th._tax_hab, 'men', label = u"Taxe d'habitation")
 
     ############################################################
     # Unité de consommation du ménage

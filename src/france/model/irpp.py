@@ -24,7 +24,7 @@ from __future__ import division
 from numpy import ( maximum as max_, minimum as min_, logical_xor as xor_, 
                      logical_not as not_, round) 
 
-from france.model.data import QUIFOY
+from src.france.model.data import QUIFOY
 
 VOUS = QUIFOY['vous']
 CONJ = QUIFOY['conj']
@@ -483,11 +483,11 @@ def _irpp(iai, credits_impot, cehr, cesthra):
 ## Autres totaux utiles pour la suite
 ###############################################################################
 
-def _alv(sal):
+def _alv(f6gi, f6gj, f6el, f6em, f6gp, f6gu):
     '''
     Pensions alimentaires versées
     '''
-    return 0*sal
+    return - (f6gi + f6gj + f6el + f6em + f6gp + f6gu)
 
 def _rfr(rni, alloc, f3va, f3vg, f3vi, rfr_cd, rfr_rvcm, rpns_exon, rpns_pvce, rev_cap_lib):
     '''
@@ -901,7 +901,7 @@ def _abat_spe(age, caseP, caseF, rng, nbN, _P, _option = {'age': [VOUS, CONJ]}):
 def _nbptr(nb_pac, marpac, celdiv, veuf, jveuf, nbF, nbG, nbH, nbI, nbR, nbJ, caseP, caseW, caseG, caseE, caseK, caseN, caseF, caseS, caseL, caseT, _P):
     '''
     Nombre de parts du foyer
-    
+    'foy'
     note 1 enfants et résidence alternée (formulaire 2041 GV page 10)
     
     P.enf1 : nb part 2 premiers enfants

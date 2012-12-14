@@ -23,7 +23,7 @@ This file is part of openFisca.
 
 from __future__ import division
 from numpy import minimum as min_, maximum as max_, zeros, logical_not as not_
-from france.model.data import QUIFOY 
+from src.france.model.data import QUIFOY 
 
 VOUS = QUIFOY['vous']
 CONJ = QUIFOY['conj']
