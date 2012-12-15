@@ -53,7 +53,7 @@ class InputTable(ModelDescription):
     rsti = IntCol(label="Retraite imposable", val_type="monetary") # (f1as, f1bs, f1cs, f1ds, f1es)
     fra  = IntCol( val_type="monetary") # (f1ak, f1bk, f1ck, f1dk, f1ek)
 
-    alr  = IntCol( val_type="monetary") # (f1ao, f1bo, f1co, f1do, f1eo)
+    alr  = IntCol(label = u"Pension alimentaire reçue", val_type="monetary") # (f1ao, f1bo, f1co, f1do, f1eo)
     
     hsup = IntCol( val_type="monetary")  # f1au
     inv  = BoolCol(label = u'invalide')
