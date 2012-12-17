@@ -22,7 +22,7 @@ This file is part of openFisca.
 """
 
 from __future__ import division
-from src.Config import VERSION
+from src import __version__ as VERSION
 import pickle
 from datetime import datetime
 
