@@ -426,8 +426,9 @@ def _rsa(rsa_socle, ra_rsa, forf_log, br_rmi, _P, _option = {'ra_rsa': [CHEF, PA
     rsa = (RSA>=P.rsa_nv)*RSA
     return rsa
     
-def _rsa_act(rsa, rmi):    
-    return rsa - rmi
+def _rsa_act(rsa, rmi):
+    res = max_(rsa - rmi, 0)
+    return res 
 
 
 def _crds_mini(rsa_act, _P):
