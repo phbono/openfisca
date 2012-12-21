@@ -117,18 +117,24 @@ class SurveyExplorerWidget(OpenfiscaPluginWidget):
         self.dataframes = {}
         self.vars = set()
 
+        self.initialize()
+
         self.connect(self.add_btn, SIGNAL('clicked()'), self.add_var)
         self.connect(self.remove_btn, SIGNAL('clicked()'), self.remove_var)
         self.connect(self.datatable_combo.box, SIGNAL('currentIndexChanged(int)'), self.select_data)        
-
         self.update_btns()
 
+        
+    def initialize(self):
+        """
+        Initialize widget
+        """
+        pass
 
     def set_simulation(self, survey_simulation):
         """
         Set survey_simulation
         """
-        
         country = CONF.get('parameters', 'country')
         datesim = CONF.get('parameters', 'datesim')
         reforme = CONF.get('survey', 'reforme')
@@ -136,20 +142,19 @@ class SurveyExplorerWidget(OpenfiscaPluginWidget):
         survey_simulation.set_config(year = year, country = country, reforme = reforme)
         self.survey_simulation = survey_simulation
 
-        
     def load_from_file(self):        
         fname = CONF.get('survey', 'data_file')
         if path.isfile(fname):
             self.survey_simulation.set_survey(filename = fname)
+            
+            year = self.survey_simulation.survey.survey_year
+            # Sets year in label
+            print 'laod from file :', year
+            self.data_label.setText("Survey data from year " + str(year))
+            self.add_dataframe(self.survey_simulation.survey.table, name = "input")
+            self.update_view()
             return True
                 
-                
-    def set_year(self, year):
-        '''
-        Sets year in label
-        '''
-        self.data_label.setText("Survey data from year " + str(year))
-
     def update_btns(self):
         if (self.vars - self.selected_vars):
             self.add_btn.setEnabled(True)
