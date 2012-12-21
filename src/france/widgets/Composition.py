@@ -21,25 +21,26 @@ This file is part of openFisca.
     along with openFisca.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from PyQt4.QtGui import (QDockWidget, QDialog, QLabel, QDateEdit, QComboBox, QSpinBox, QDoubleSpinBox, 
-                         QPushButton, QApplication, QFileDialog, QMessageBox, QDialogButtonBox)
-from PyQt4.QtCore import QObject, SIGNAL, SLOT, QDate, Qt, QVariant
+
 from datetime import date
 import pickle
 import os
+
+from src.qt.QtGui import (QGroupBox, QVBoxLayout, QDialog, QLabel, QDateEdit, QComboBox, QSpinBox, 
+                          QDoubleSpinBox, QPushButton, QApplication, QFileDialog, QMessageBox, 
+                          QDialogButtonBox)
+from src.qt.QtCore import QObject, SIGNAL, SLOT, QDate, Qt, QVariant
 
 from src.views.ui_composition import Ui_Menage
 from src.views.ui_logement import Ui_Logement
 from src.widgets.InfoComp import InfoComp
 from src.widgets.Declaration import Declaration
 
-from src.qt.QtGui import QGroupBox, QVBoxLayout
 from src.core.config import CONF, get_icon
 from src.plugins.__init__ import OpenfiscaPluginWidget, PluginConfigPage
 from src.core.utils_old import of_import
 from src.core.baseconfig import get_translation
-
-_ = get_translation('composition', 'src.plugins.scenario') # TODO
+_ = get_translation('composition', 'src.plugins.scenario') # TODO:
 
 
 class S:
@@ -81,6 +82,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
     """
     CONF_SECTION = 'composition'
     CONFIGWIDGET_CLASS = CompositionConfigPage
+    DISABLE_ACTIONS_WHEN_HIDDEN = False
 
     def __init__(self, simulation_scenario = None, parent = None):
         super(CompositionWidget, self).__init__(parent)
@@ -104,7 +106,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
                         
         self.xaxis_box.setCurrentIndex(axes_names.index(xaxis))            
         
-        # Initialize maxrev # mae it xountry dependant  
+        # Initialize maxrev # make it country dependant  
         self.maxrev_box.setMinimum(0)
         self.maxrev_box.setMaximum(100000000)
         self.maxrev_box.setSingleStep(1000)
@@ -121,17 +123,13 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         self.connect(self.reset_btn, SIGNAL('clicked()'), self.resetScenario)
         self.connect(self.xaxis_box, SIGNAL('currentIndexChanged(int)'), self.set_xaxis)
         self.connect(self.maxrev_box, SIGNAL('valueChanged(int)'), self.set_maxrev)
-
         self.connect(self, SIGNAL('compoChanged()'), self.changed)
-
         self._listPerson = []
         self.addPref()
         self.rmv_btn.setEnabled(False)
         self.emit(SIGNAL("ok()"))
         
-        
     #------ Public API ---------------------------------------------    
-
 
     def set_scenario(self, scenario_simulation):
         """
@@ -494,7 +492,34 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         Note: these actions will be enabled when plugin's dockwidget is visible
               and they will be disabled when it's hidden
         """
-        raise NotImplementedError
+        from src.core.qthelpers_new import create_action
+        
+
+        self.open_action = create_action(self, _("&Open..."),
+                icon='fileopen.png', tip=_("Open composition file"),
+                triggered=self.load)
+        self.register_shortcut(self.open_action, context="Editor",
+                               name="Open file", default="Ctrl+O")
+        self.save_action = create_action(self, _("&Save"),
+                icon='filesave.png', tip=_("Save current file"),
+                triggered=self.save)
+        self.register_shortcut(self.save_action, context="Editor",
+                               name="Save file", default="Ctrl+S")
+
+#        Tabbbify Composition widget to compare two menage
+#        self.save_all_action = create_action(self, _("Sav&e all"),
+#                icon='save_all.png', tip=_("Save all opened files"),
+#                triggered=self.save_all)
+#        self.register_shortcut(self.save_all_action, context="Editor",
+#                               name="Save all", default="Ctrl+Shift+S")
+#        save_as_action = create_action(self, _("Save &as..."), None,
+#                'filesaveas.png', _("Save current file as..."),
+#                triggered=self.save_as)
+
+        self.file_menu_actions = [self.open_action, self.save_action,
+                             self.save_all_action]
+    
+        return self.file_menu_actions
     
     def register_plugin(self):
         """
@@ -516,6 +541,15 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         Note: returned value is ignored if *cancelable* is False
         """
         return True
+
+#
+#        SpyderPluginWidget.visibility_changed(self, enable)
+#        if self.dockwidget.isWindow():
+#            self.dock_toolbar.show()
+#        else:
+#            self.dock_toolbar.hide()
+#        if enable:
+#            self.refresh_plugin()
 
 
 def get_zone(code, filename = None):
