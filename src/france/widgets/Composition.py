@@ -492,7 +492,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         Note: these actions will be enabled when plugin's dockwidget is visible
               and they will be disabled when it's hidden
         """
-        from src.core.qthelpers_new import create_action
+        from src.core.utils.qthelpers import create_action
         
 
         self.open_action = create_action(self, _("&Open..."),
