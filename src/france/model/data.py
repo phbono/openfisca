@@ -175,8 +175,8 @@ class InputTable(ModelDescription):
     caseW = BoolCol(unit= 'foy')
     
     
-    rfr_n_2  = IntCol(unit='foy', label = 'Revenu fiscal de référence année n-2', val_type="monetary") # TODO: provide in data
-    nbptr_n_2 = IntCol(unit='foy', label = 'Nombre de parts année n-2', val_type="monetary")  # TODO: provide in data
+    rfr_n_2  = IntCol(unit='foy', label = u"Revenu fiscal de référence année n-2", val_type="monetary") # TODO: provide in data
+    nbptr_n_2 = IntCol(unit='foy', label = u"Nombre de parts année n-2", val_type="monetary")  # TODO: provide in data
     
     # Rentes viagères
     f1aw = IntCol(unit= 'foy', val_type="monetary")

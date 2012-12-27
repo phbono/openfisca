@@ -24,17 +24,14 @@ This file is part of openFisca.
 from PyQt4.QtGui import (QDockWidget, QDialog, QLabel, QDateEdit, QComboBox, QSpinBox, QDoubleSpinBox, 
                          QPushButton, QApplication, QFileDialog, QMessageBox, QDialogButtonBox)
 from PyQt4.QtCore import QObject, SIGNAL, SLOT, QDate, Qt, QVariant
-from views.ui_composition import Ui_Menage
-from views.ui_logement import Ui_Logement
-from widgets.InfoComp import InfoComp
-from widgets.Declaration import Declaration
-from datetime import date
-import pickle
-from Config import CONF
-import os
-from core.utils import of_import
+from src.views.ui_composition import Ui_Menage
+from src.views.ui_logement import Ui_Logement
+from src.widgets.InfoComp import InfoComp
+from src.widgets.Declaration import Declaration
 
-from core.columns import IntCol, FloatCol, BoolCol, EnumCol
+
+
+from src.core.columns import IntCol, FloatCol, BoolCol, EnumCol
 
 class S:
     name = 0
@@ -45,7 +42,7 @@ class S:
     famnum = 5
     fampos = 6
 
-from core.qthelpers import MyDoubleSpinBox, MyComboBox
+from src.core.qthelpers import MyDoubleSpinBox, MyComboBox
 
 def BoxFromCol(col):
     if col in [IntCol, FloatCol]:

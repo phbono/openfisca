@@ -26,7 +26,7 @@ from datetime import date
 import pickle
 import os
 
-from src.qt.QtGui import (QGroupBox, QVBoxLayout, QDialog, QLabel, QDateEdit, QComboBox, QSpinBox, 
+from src.qt.QtGui import (QDialog, QLabel, QDateEdit, QComboBox, QSpinBox, 
                           QDoubleSpinBox, QPushButton, QApplication, QFileDialog, QMessageBox, 
                           QDialogButtonBox)
 from src.qt.QtCore import QObject, SIGNAL, SLOT, QDate, Qt, QVariant
@@ -36,11 +36,12 @@ from src.views.ui_logement import Ui_Logement
 from src.widgets.InfoComp import InfoComp
 from src.widgets.Declaration import Declaration
 
+from src.core.utils.qthelpers import create_action
 from src.core.config import CONF, get_icon
-from src.plugins.__init__ import OpenfiscaPluginWidget, PluginConfigPage
+from src.plugins import OpenfiscaPluginWidget
 from src.core.utils_old import of_import
 from src.core.baseconfig import get_translation
-_ = get_translation('composition', 'src.plugins.scenario') # TODO:
+_ = get_translation('src')
 
 
 class S:
@@ -52,29 +53,7 @@ class S:
     famnum = 5
     fampos = 6
 
-
-class CompositionConfigPage(PluginConfigPage):
-    def __init__(self, plugin, parent):
-        PluginConfigPage.__init__(self, plugin, parent)
-        self.get_name = lambda: _("Composition")
-        
-    def setup_page(self):
-
-        axis_group = QGroupBox(_("Axis"))
-#        choices = [('cvs', 'csv'),
-#                   ('xls', 'xls'),]
-#        table_format = self.create_combobox(_('Table export format'), choices, 'format')
-        
-        #xaxis          
-        layout = QVBoxLayout()
-#        layout.addWidget(axis_format)
-        axis_group.setLayout(layout)
-        
-        vlayout = QVBoxLayout()
-        vlayout.addWidget(axis_group)
-        vlayout.addStretch(1)
-        self.setLayout(vlayout)
-
+from src.plugins.scenario import CompositionConfigPage
 
 class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):    
     """
@@ -97,7 +76,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         country = CONF.get('parameters','country')
         build_axes = of_import('utils','build_axes', country)
         axes = build_axes(country)
-        xaxis = CONF.get('composition', 'xaxis')
+        xaxis = self.get_option('xaxis')
         
         axes_names = []
         for axe in axes:
@@ -111,11 +90,11 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         self.maxrev_box.setMaximum(100000000)
         self.maxrev_box.setSingleStep(1000)
         self.maxrev_box.setSuffix(u"€")
-        maxrev = CONF.get('composition', 'maxrev')
+        maxrev = self.get_option('maxrev')
         self.maxrev_box.setValue(maxrev)
         
-        self.connect(self.open_btn, SIGNAL('clicked()'), self.openScenario)
-        self.connect(self.save_btn, SIGNAL('clicked()'), self.saveScenario)
+        self.connect(self.open_btn, SIGNAL('clicked()'), self.load)
+        self.connect(self.save_btn, SIGNAL('clicked()'), self.save)
         self.connect(self.add_btn, SIGNAL('clicked()'), self.addPerson)
         self.connect(self.rmv_btn, SIGNAL('clicked()'), self.rmvPerson)
         self.connect(self.lgt_btn, SIGNAL('clicked()'), self.openLogement)
@@ -137,9 +116,9 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         """
         from datetime import datetime
         
-        xaxis = CONF.get('composition', 'xaxis')
-        maxrev = CONF.get('composition', 'maxrev')
-        nmen = CONF.get('composition', 'nmen')
+        xaxis = self.get_option('xaxis')
+        maxrev = self.get_option('maxrev')
+        nmen = self.get_option('nmen')
         self.nmen = nmen
         country = CONF.get('parameters', 'country')
         datesim = CONF.get('parameters', 'datesim')
@@ -162,7 +141,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
             data  = widget.itemData(widget.currentIndex())
             xaxis = unicode(data.toString())
             self.scenario.xaxis = xaxis
-            CONF.set('composition', 'xaxis', xaxis)
+            self.set_option('xaxis', xaxis)
         self.emit(SIGNAL('compoChanged()'))
     
     def set_maxrev(self):
@@ -173,7 +152,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         if isinstance(widget, QSpinBox) or isinstance(widget, QDoubleSpinBox):
             maxrev = widget.value()
             self.scenario.maxrev = maxrev
-            CONF.set('simulation', 'maxrev', maxrev) 
+            self.set_option('maxrev', maxrev) 
         self.emit(SIGNAL('compoChanged()'))
 
     def changed(self):
@@ -430,10 +409,10 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
             QObject.connect(person[S.famnum], SIGNAL('currentIndexChanged(int)'), self.familleChanged)
             QObject.connect(person[S.decbtn], SIGNAL('clicked()'), self.openDeclaration)
 
-    def openScenario(self):
-        cas_type_dir = CONF.get('paths', 'cas_type_dir')
+    def load(self):
+        cas_type_dir = self.get_option('import_dir')
         fileName = QFileDialog.getOpenFileName(self,
-                                               u"Ouvrir un cas type", 
+                                               _("Open a test case"), 
                                                cas_type_dir, 
                                                u"Cas type OpenFisca (*.ofct)")
         if not fileName == '':
@@ -454,16 +433,17 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
                     QMessageBox.Ok, QMessageBox.NoButton)
 
         
-    def saveScenario(self):
-        cas_type_dir = CONF.get('paths', 'cas_type_dir')
+    def save(self):
+        cas_type_dir = self.get_option('export_dir')
         default_fileName = os.path.join(cas_type_dir, 'sans-titre')
         fileName = QFileDialog.getSaveFileName(self,
-                                               u"Sauver un cas type", 
+                                               _("Save a test casr"), 
                                                default_fileName, 
                                                u"Cas type OpenFisca (*.ofct)")
         if not fileName == '':
             self.scenario.saveFile(fileName)
 
+ 
 
     #------ OpenfiscaPluginMixin API ---------------------------------------------
     #------ OpenfiscaPluginWidget API ---------------------------------------------
@@ -474,7 +454,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         Note: after some thinking, it appears that using a method
         is more flexible here than using a class attribute
         """
-        return "Table"
+        return "Composition"
 
     
     def get_plugin_icon(self):
@@ -492,40 +472,34 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         Note: these actions will be enabled when plugin's dockwidget is visible
               and they will be disabled when it's hidden
         """
-        from src.core.utils.qthelpers import create_action
-        
 
         self.open_action = create_action(self, _("&Open..."),
                 icon='fileopen.png', tip=_("Open composition file"),
                 triggered=self.load)
-        self.register_shortcut(self.open_action, context="Editor",
-                               name="Open file", default="Ctrl+O")
+        self.register_shortcut(self.open_action, context="Composer",
+                               name="Open composition file", default="Ctrl+O")
         self.save_action = create_action(self, _("&Save"),
-                icon='filesave.png', tip=_("Save current file"),
+                icon='filesave.png', tip=_("Save current composition"),
                 triggered=self.save)
-        self.register_shortcut(self.save_action, context="Editor",
-                               name="Save file", default="Ctrl+S")
+        self.register_shortcut(self.save_action, context="Composer",
+                               name="Save composition file", default="Ctrl+S")
 
-#        Tabbbify Composition widget to compare two menage
-#        self.save_all_action = create_action(self, _("Sav&e all"),
-#                icon='save_all.png', tip=_("Save all opened files"),
-#                triggered=self.save_all)
-#        self.register_shortcut(self.save_all_action, context="Editor",
-#                               name="Save all", default="Ctrl+Shift+S")
-#        save_as_action = create_action(self, _("Save &as..."), None,
-#                'filesaveas.png', _("Save current file as..."),
-#                triggered=self.save_as)
 
-        self.file_menu_actions = [self.open_action, self.save_action,
-                             self.save_all_action]
-    
+        self.file_menu_actions = [self.open_action, self.save_action,]
+
+        print self.main
+        self.main.file_menu_actions += self.file_menu_actions
+            
         return self.file_menu_actions
+    
     
     def register_plugin(self):
         """
         Register plugin in OpenFisca's main window
         """
+        self.get_plugin_actions()
         self.main.add_dockwidget(self)
+        self.connect(self, SIGNAL('changed()'), self.main.enable_refresh_test_case)
 
 
     def refresh_plugin(self):
