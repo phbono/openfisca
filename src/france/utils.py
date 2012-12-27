@@ -26,11 +26,7 @@ from src import __version__ as VERSION
 import pickle
 from datetime import datetime
 
-
-
-INDEX = ['men', 'fam', 'foy']
-currency = u"€"
-
+from src.france import ENTITIES_INDEX
 
 class Scenario(object):
     def __init__(self):
@@ -371,7 +367,7 @@ class Scenario(object):
                 
             datatable.table = concat([datatable.table, DataFrame(dct)], ignore_index = True)
     
-        datatable.gen_index(INDEX)
+        datatable.gen_index(ENTITIES_INDEX)
     
         for name in datatable.col_names:
             if not name in datatable.table:
@@ -414,7 +410,7 @@ class Scenario(object):
                 raise Exception('france.utils.Scenario: self.xaxis should not be None')
             
             xaxis = self.xaxis    
-            axes = build_axes()
+            axes = build_axes('france')
             var = None
             
             for axe in axes:
@@ -456,9 +452,6 @@ class Xaxis(object):
         description = Description(InputTable().columns)
         label2var, var2label, var2enum = description.builds_dicts()
         self.label = var2label[self.col_name]
-#        self.typ_tot_labels = {}
-#        for var in self.typ_tot:
-#            self.typ_tot_labels[var] = var2label[var]
         
     def set(self, col_name):
         '''
@@ -541,29 +534,6 @@ def preproc_inputs(datatable):
     datatable.propagate_to_members( 'foy', 'rfr_n_2')
     datatable.propagate_to_members( 'foy', 'nbptr_n_2')
 
-
-REV_TYPE = {'superbrut' : ['salsuperbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
-                       'rev_cap_brut', 'fon'],
-       'brut': ['salbrut', 'chobrut', 'rstbrut', 'alr', 'alv',
-                 'rev_cap_brut', 'fon'],
-       'imposable' : ['sal', 'cho', 'rst', 'alr', 'alv', 'rev_cap_brut', 'fon', 'cotsoc_cap'],
-       'net'      : ['salnet', 'chonet', 'rstnet', 'alr', 'alv', 'rev_cap_net', 'fon',
-                      ]}        
-#        alim = data['alr'].vals + data['alv'].vals
-#        penbrut = data['chobrut'].vals + data['rstbrut'].vals + alim
-#        penimp  = data['cho'].vals + data['rst'].vals + alim
-#        pennet  = data['chonet'].vals + data['rstnet'].vals + alim
-#        capbrut = data['rev_cap_bar'].vals + data['rev_cap_lib'].vals + data['fon'].vals
-#        capnet = capbrut + data['cotsoc_bar'].vals + data['cotsoc_lib'].vals
-
-#        if   typrev == 'superbrut': 
-#            out = data['salsuperbrut'].vals + penbrut + capbrut
-#        elif typrev == 'brut':      
-#            out = data['salbrut'].vals + penbrut + capbrut
-#        elif typrev == 'imposable':
-#            out = data['sali'].vals + penimp + capnet
-#        elif typrev == 'net':       
-#            out = data['salnet'].vals + pennet + capnet
 
 
     
