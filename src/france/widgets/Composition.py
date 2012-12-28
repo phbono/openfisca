@@ -28,8 +28,8 @@ import os
 
 from src.qt.QtGui import (QDialog, QLabel, QDateEdit, QComboBox, QSpinBox, 
                           QDoubleSpinBox, QPushButton, QApplication, QFileDialog, QMessageBox, 
-                          QDialogButtonBox)
-from src.qt.QtCore import QObject, SIGNAL, SLOT, QDate, Qt, QVariant
+                          QDialogButtonBox, QDockWidget)
+from src.qt.QtCore import QObject, SIGNAL, SLOT, QDate, Qt, QVariant, Signal
 
 from src.views.ui_composition import Ui_Menage
 from src.views.ui_logement import Ui_Logement
@@ -61,7 +61,12 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
     """
     CONF_SECTION = 'composition'
     CONFIGWIDGET_CLASS = CompositionConfigPage
+    FEATURES = QDockWidget.DockWidgetClosable | \
+               QDockWidget.DockWidgetFloatable | \
+               QDockWidget.DockWidgetMovable
     DISABLE_ACTIONS_WHEN_HIDDEN = False
+    sig_option_changed = Signal(str, object)
+
 
     def __init__(self, simulation_scenario = None, parent = None):
         super(CompositionWidget, self).__init__(parent)
@@ -107,6 +112,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         self.addPref()
         self.rmv_btn.setEnabled(False)
         self.emit(SIGNAL("ok()"))
+        self.initialize_plugin()
         
     #------ Public API ---------------------------------------------    
 
@@ -114,23 +120,18 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         """
         Set scenario_simualtion
         """
-        from datetime import datetime
-        
         xaxis = self.get_option('xaxis')
         maxrev = self.get_option('maxrev')
         nmen = self.get_option('nmen')
         self.nmen = nmen
         country = CONF.get('parameters', 'country')
         datesim = CONF.get('parameters', 'datesim')
-        #print date_str
-        #datesim = datetime.strptime(date_str ,"%Y-%m-%d").date()
         year = datesim.year
         self.scenario_simulation = scenario_simulation
         self.scenario_simulation.set_config(year = year, country = country, xaxis = xaxis, 
                                             nmen = self.nmen, maxrev = maxrev, reforme = False, mode ='bareme')
         self.scenario_simulation.set_param()
         self.scenario = self.scenario_simulation.scenario
-        self.parent.scenario = self.scenario
 
     def set_xaxis(self):
         '''
@@ -437,24 +438,43 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         cas_type_dir = self.get_option('export_dir')
         default_fileName = os.path.join(cas_type_dir, 'sans-titre')
         fileName = QFileDialog.getSaveFileName(self,
-                                               _("Save a test casr"), 
+                                               _("Save a test case"), 
                                                default_fileName, 
                                                u"Cas type OpenFisca (*.ofct)")
         if not fileName == '':
             self.scenario.saveFile(fileName)
 
- 
 
     #------ OpenfiscaPluginMixin API ---------------------------------------------
-    #------ OpenfiscaPluginWidget API ---------------------------------------------
 
+    def apply_plugin_settings(self, options):
+        """
+        Apply configuration file's plugin settings
+        """
+        if 'maxrev' in options:
+            maxrev = self.get_option('maxrev')
+            self.maxrev_box.setValue(maxrev)
+        if 'xaxis' in options:
+            country = CONF.get('parameters','country')
+            build_axes = of_import('utils','build_axes', country)        
+            axes = build_axes(country)
+            xaxis = self.get_option('xaxis')
+            axes_names = []
+            for axe in axes:
+                axes_names.append(axe.name)        
+            self.xaxis_box.setCurrentIndex(axes_names.index(xaxis))
+
+        if 'reform' in options:
+            self.scenario_simulation.set_config( reforme = self.get_option('reform'))
+            self.main
+    #------ OpenfiscaPluginWidget API ---------------------------------------------
     def get_plugin_title(self):
         """
         Return plugin title
         Note: after some thinking, it appears that using a method
         is more flexible here than using a class attribute
         """
-        return "Composition"
+        return _("Composer")
 
     
     def get_plugin_icon(self):
@@ -487,11 +507,10 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
 
         self.file_menu_actions = [self.open_action, self.save_action,]
 
-        print self.main
+
         self.main.file_menu_actions += self.file_menu_actions
             
         return self.file_menu_actions
-    
     
     def register_plugin(self):
         """
@@ -507,6 +526,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         Update Scenario Table
         '''
         pass
+        
     
     def closing_plugin(self, cancelable=False):
         """
