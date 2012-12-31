@@ -116,7 +116,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         
     #------ Public API ---------------------------------------------    
 
-    def set_scenario(self, scenario_simulation):
+    def set_scenario(self, simulation):
         """
         Set scenario_simualtion
         """
@@ -127,11 +127,11 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         country = CONF.get('parameters', 'country')
         datesim = CONF.get('parameters', 'datesim')
         year = datesim.year
-        self.scenario_simulation = scenario_simulation
-        self.scenario_simulation.set_config(year = year, country = country, xaxis = xaxis, 
+        self.simulation = simulation
+        self.simulation.set_config(year = year, country = country, xaxis = xaxis, 
                                             nmen = self.nmen, maxrev = maxrev, reforme = False, mode ='bareme')
-        self.scenario_simulation.set_param()
-        self.scenario = self.scenario_simulation.scenario
+        self.simulation.set_param()
+        self.scenario = self.simulation.scenario
 
     def set_xaxis(self):
         '''
@@ -157,11 +157,12 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         self.emit(SIGNAL('compoChanged()'))
 
     def changed(self):
-        self.disconnectAll()
+#        self.disconnectAll()
         self.scenario.genNbEnf()
         self.populate()
-        self.emit(SIGNAL('changed()'))
-        self.connectAll()
+        self.action_compute.setEnabled(True)
+#        self.emit(SIGNAL('changed()'))
+#        self.connectAll()
         
     def nbRow(self):
         return self.scenario.nbIndiv()
@@ -366,7 +367,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         '''
         while self.nbRow() > 1:
             self.rmvPerson()
-        self.scenario_simulation.reset_scenario
+        self.simulation.reset_scenario
         self.emit(SIGNAL('compoChanged()'))
         
     def openDeclaration(self):
@@ -430,7 +431,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
                 self.emit(SIGNAL("ok()"))
             except Exception, e:
                 QMessageBox.critical(
-                    self, "Erreur", u"Erreur lors de l'ouverture du fichier : le fichier n'est pas reconnu",
+                    self, "Erreur", u"Erreur lors de l'ouverture du fichier : le fichier n'est pas reconnu : \n " + e,
                     QMessageBox.Ok, QMessageBox.NoButton)
 
         
@@ -445,6 +446,58 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
             self.scenario.saveFile(fileName)
 
 
+    def compute(self):
+        """
+        Computing the test case
+        """
+        self.starting_long_process(_("Computing test case ..."))
+        # Consistency check on scenario
+        msg = self.simulation.scenario.check_consistency()
+        if msg:
+            QMessageBox.critical(self, u"Ménage non valide",
+                                 msg, 
+                                 QMessageBox.Ok, QMessageBox.NoButton)
+            return False
+        # If it is consistent starts the computation
+ 
+        self.action_compute.setEnabled(False)
+        P, P_default = self.main.parameters.getParam(), self.main.parameters.getParam(defaut = True)
+        self.simulation.set_param(P, P_default)
+        self.simulation.compute()
+        self.main.refresh_test_case_plugins()
+        self.ending_long_process( _("Test case results are updated"))
+        
+
+    def set_reform(self, reform):
+        '''
+        Toggle reform mode for test case
+        '''
+        self.simulation.set_config(reforme = reform)
+        self.set_option('reform', reform)
+        self.action_compute.setEnabled(True)
+    
+    def set_single(self, is_single = True):
+        if is_single:
+            self.simulation.set_config(nmen = 1, mode = 'castype') # TODO: this might be removed ??            
+            self.action_compute.setEnabled(True)
+            self.action_set_bareme.setChecked(False)
+        else:
+            self.action_set_bareme.setChecked(True)
+            self.set_bareme()
+        self.action_compute.setEnabled(True)
+        
+    def set_bareme(self, is_bareme = True):
+        if is_bareme:
+            nmen = self.get_option('nmen')
+            self.simulation.set_config(nmen = nmen, mode = 'bareme') # # TODO: this might be removed ??
+            self.action_compute.setEnabled(True)
+            self.action_set_single.setChecked(False)
+        else:
+            self.action_set_single.setChecked(True)
+            self.set_single()
+        self.action_compute.setEnabled(True)
+        
+    
     #------ OpenfiscaPluginMixin API ---------------------------------------------
 
     def apply_plugin_settings(self, options):
@@ -465,8 +518,9 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
             self.xaxis_box.setCurrentIndex(axes_names.index(xaxis))
 
         if 'reform' in options:
-            self.scenario_simulation.set_config( reforme = self.get_option('reform'))
-            self.main
+            self.action_set_reform.setChecked(self.get_option('reform'))
+            
+    
     #------ OpenfiscaPluginWidget API ---------------------------------------------
     def get_plugin_title(self):
         """
@@ -492,34 +546,57 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         Note: these actions will be enabled when plugin's dockwidget is visible
               and they will be disabled when it's hidden
         """
-
+        print 'get_plugin actions compo'
+        # File menu actions and shortcuts
         self.open_action = create_action(self, _("&Open..."),
                 icon='fileopen.png', tip=_("Open composition file"),
                 triggered=self.load)
         self.register_shortcut(self.open_action, context="Composer",
-                               name="Open composition file", default="Ctrl+O")
+                               name=_("Open composition file"), default="Ctrl+O")
         self.save_action = create_action(self, _("&Save"),
                 icon='filesave.png', tip=_("Save current composition"),
                 triggered=self.save)
         self.register_shortcut(self.save_action, context="Composer",
-                               name="Save composition file", default="Ctrl+S")
-
+                               name=_("Save current composition"), default="Ctrl+S")
 
         self.file_menu_actions = [self.open_action, self.save_action,]
-
-
         self.main.file_menu_actions += self.file_menu_actions
-            
-        return self.file_menu_actions
+        
+        self.action_compute = create_action(self, _('Compute test case'),
+                                                      shortcut = 'F9',
+                                                      icon = 'calculator_green.png', 
+                                                      triggered = self.compute)
+        self.register_shortcut(self.action_compute, 
+                               context = 'Composer',
+                                name = _('Compute test case'), default = 'F9')
+
+        self.action_set_bareme = create_action(self, _('Varying revenues'), 
+                                      icon = 'bareme22.png', 
+                                      toggled = self.set_bareme)
+        self.action_set_single = create_action(self, _('Single test case'), 
+                                        icon = 'castype22.png', 
+                                        toggled = self.set_single)
+        
+        self.action_set_reform = create_action(self, _('Reform mode'), 
+                                                     icon = 'comparison22.png', 
+                                                     toggled = self.set_reform, 
+                                                     tip = u"Différence entre la situation simulée et la situation actuelle")
+
+        self.run_menu_actions = [self.action_compute, self.action_set_bareme, 
+                                 self.action_set_single, self.action_set_reform,
+                                 None]
+        
+        self.main.run_menu_actions += self.run_menu_actions     
+        self.main.test_case_toolbar_actions += self.run_menu_actions 
+        
+        return self.file_menu_actions + self.run_menu_actions
     
     def register_plugin(self):
         """
         Register plugin in OpenFisca's main window
         """
-        self.get_plugin_actions()
         self.main.add_dockwidget(self)
-        self.connect(self, SIGNAL('changed()'), self.main.enable_refresh_test_case)
-
+        self.action_set_bareme.trigger()
 
     def refresh_plugin(self):
         '''
