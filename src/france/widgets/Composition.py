@@ -97,6 +97,8 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         self.maxrev_box.setSuffix(u"€")
         maxrev = self.get_option('maxrev')
         self.maxrev_box.setValue(maxrev)
+
+        self.initialize_plugin()
         
         self.connect(self.open_btn, SIGNAL('clicked()'), self.load)
         self.connect(self.save_btn, SIGNAL('clicked()'), self.save)
@@ -112,7 +114,7 @@ class CompositionWidget(OpenfiscaPluginWidget, Ui_Menage):
         self.addPref()
         self.rmv_btn.setEnabled(False)
         self.emit(SIGNAL("ok()"))
-        self.initialize_plugin()
+
         
     #------ Public API ---------------------------------------------    
 
