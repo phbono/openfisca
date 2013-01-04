@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # Copyright © 2011 Clément Schaff, Mahdi Ben Jelloul
 
@@ -22,28 +21,37 @@ This file is part of openFisca.
     along with openFisca.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-
-# Common views
-
-uiList = ['graph', 'declaration', 'composition', 'logement',
-          'page01', 'page02', 'page03', 'page04', 'page05', 'page06', 'page07', 
-          'page08', 'page_isf', 'parametres', 'baremedialog']
-
-commands = []
-for ui in uiList:
-    commands.append("pyuic4 -o views/ui_" + ui +".py ui/" + ui + ".ui")
-
-country_views = {'tunisia' : ['composition']}
-
-for country in country_views.iterkeys():
-    for ui in country_views[country]:
-        commands.append("pyuic4 -o countries/" + country + "/views/ui_" + ui +".py " + country + "/ui/" + ui + ".ui")
+from src.qt.QtGui import (QDockWidget)
 
 
-commands.append("pyrcc4 -o resources_rc.py resources.qrc")
 
-for command in commands:
-    print command
-    os.system(command)
 
+from src.core.columns import IntCol, FloatCol, BoolCol, EnumCol
+
+class S:
+    name = 0
+    birth = 1
+    decnum = 2
+    decpos = 3
+    decbtn = 4
+    famnum = 5
+    fampos = 6
+
+from src.core.qthelpers import MyDoubleSpinBox, MyComboBox
+
+def BoxFromCol(col):
+    if col in [IntCol, FloatCol]:
+        MyDoubleSpinBox(prefix = col.label)
+    elif col in [EnumCol]:
+        MyComboBox(prefix= col.label, choices = col.enum._vars.keys() )
+        
+
+class InfoIndivWidget(QDockWidget):
+    def __init__(self, parent = None):
+        super(InfoIndivWidget, self).__init__(parent)
+        
+        input_cols = []
+        
+#        for var in input_cols:
+#            BoxFromCol() TODO: finish here
+        
