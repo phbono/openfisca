@@ -15,6 +15,7 @@ def check_version(actual_str, required_str):
     """
     actual = actual_str.split('.')
     required = required_str.split('.')
+
     return actual[0] < required[0] or \
            (actual[0] == required[0] and actual[1] < required[1])
 
@@ -47,7 +48,7 @@ def check_qt():
     """
     Check Qt binding requirements
     """
-    qt_infos = dict(pyqt=("PyQt4", "4.4"), pyside=("PySide", "1.1.1"))
+    qt_infos = dict(pyqt=("PyQt4", "4.04"), pyside=("PySide", "1.1.1"))
     try:
         from src.gui import qt
         package_name, required_str = qt_infos[qt.API]
