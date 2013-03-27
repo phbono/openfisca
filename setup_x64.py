@@ -29,6 +29,7 @@ import matplotlib
 import os
 import glob
 
+import scipy.sparse.csgraph._validation
 
 def find_data_files(source,target,patterns):
     """
@@ -80,8 +81,8 @@ tuples_list = []
 
 for country in countries:
     
-    model = find_data_files('countries/%s/model/' %country,
-                               '%s/model/' %country,
+    model = find_data_files('src/countries/%s/model/' %country,
+                               'countries/%s/model/' %country,
                                ['*.py'])
     print model[0]
     tuples_list.append(model[0])
@@ -91,31 +92,31 @@ for country in countries:
 #                                ['*.ofct'])
 #    tuples_list.append(castypes[0])
     
-    param = find_data_files('countries/%s/param/' %country,
-                                '%s/param/' %country,
+    param = find_data_files('src/countries/%s/param/' %country,
+                                'countries/%s/param/' %country,
                                 ['param.xml'])
     tuples_list.append(param[0])
 
-    reformes = find_data_files('countries/%s/reformes/' %country,
-                                '%s/reformes/' %country,
+    reformes = find_data_files('src/countries/%s/reformes/' %country,
+                                'countries/%s/reformes/' %country,
                                 ['*.ofp'])
     tuples_list.append(reformes[0])
-    totaux = find_data_files('countries/%s/' %country,
-                                '%s/' %country,
+    totaux = find_data_files('src/countries/%s/' %country,
+                                'countries/%s/' %country,
                                 ['totaux.xml'])
     tuples_list.append(totaux[0])
 
     if country == 'france':
-        calibrations = find_data_files('countries/france/calibrations/',
-                                       './france/calibrations/',
+        calibrations = find_data_files('src/countries/france/calibrations/',
+                                       'countries/france/calibrations/',
                                        ['*.csv'])
         tuples_list.append(calibrations[0])
-        data = find_data_files('countries/france/data/',
-                               './france/data/',
+        data = find_data_files('src/countries/france/data/',
+                               'countries/france/data/',
                                ['*.csv', 'amounts.h5', 'actualisation_groups.h5'])
         tuples_list.append(data[0])
-        data_sources = find_data_files('countries/france/data/sources/',
-                                       './france/data/sources/',
+        data_sources = find_data_files('src/countries/france/data/sources/',
+                                       'countries/france/data/sources/',
                                        ['*.xls'])
         tuples_list.append(data_sources[0])
         
@@ -124,12 +125,13 @@ for tupl in tuples_list:
 
 
 print dist_dir
-setup(windows=[{"script" : "openFisca.pyw"}], 
-      options={"py2exe" : {"includes" : ["sip", "encodings.*", "numpy.*", "spyderlib"],
+setup(windows=[{"script" : "src/openFisca.pyw"}], 
+      options={"py2exe" : {"includes" : ["sip", "encodings.*", "numpy.*", "scipy.*",
+                                         "scipy.sparse.csgraph._validation"],
                            "dist_dir": dist_dir,
-                           "packages": ["countries", "doc", "gui", "src.gui.utils", "lib",
-                                        "parametres",
-                                        "plugins", "scripts","widgets"],
+                           "packages": ["src.countries", "src.doc", "src.gui", "src.lib",
+                                        "src.parametres", "src.plugins", "src.scripts",
+                                        "src.widgets"],
                            "bundle_files":3,
                            "dll_excludes": ["MSVCP90.dll"]
                            }}, 

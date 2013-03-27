@@ -24,28 +24,28 @@ import re
 
 # Keeping a reference to the original sys.exit before patching it
 ORIGINAL_SYS_EXIT = sys.exit
-from src.gui.utils.programs import is_module_installed
+#from src.gui.utils.programs import is_module_installed
 
-if is_module_installed('IPython.frontend.qt', '>=0.13'):
-    # Importing IPython will eventually set the QT_API environment variable
-    import IPython  #@UnresolvedImport #@UnusedImport
-    if os.environ.get('QT_API', 'pyqt') == 'pyqt':
-        # If PyQt is the selected GUI toolkit (at this stage, only the
-        # bootstrap script has eventually set this option), switch to 
-        # PyQt API #2 by simply importing the IPython qt module
-        os.environ['QT_API'] = 'pyqt'
-        try:
-            from IPython.external import qt  #analysis:ignore 
-        except ImportError:
-            # Avoid raising any error here: the spyderlib.requirements module
-            # will take care of it, in a user-friendly way (Tkinter message box
-            # if no GUI toolkit is installed)
-            pass
+#if is_module_installed('IPython.frontend.qt', '>=0.13'):
+#    # Importing IPython will eventually set the QT_API environment variable
+#    import IPython  #@UnresolvedImport #@UnusedImport
+#    if os.environ.get('QT_API', 'pyqt') == 'pyqt':
+#        # If PyQt is the selected GUI toolkit (at this stage, only the
+#        # bootstrap script has eventually set this option), switch to 
+#        # PyQt API #2 by simply importing the IPython qt module
+#        os.environ['QT_API'] = 'pyqt'
+#        try:
+#            from IPython.external import qt  #analysis:ignore 
+#        except ImportError:
+#            # Avoid raising any error here: the spyderlib.requirements module
+#            # will take care of it, in a user-friendly way (Tkinter message box
+#            # if no GUI toolkit is installed)
+#            pass
         
 ## Check requirements
-from src.gui import requirements
-requirements.check_path()
-requirements.check_qt()
+#from src.gui import requirements
+#requirements.check_path()
+#requirements.check_qt()
 #
 ## Windows platforms only: support for hiding the attached console window
 set_attached_console_visible = None

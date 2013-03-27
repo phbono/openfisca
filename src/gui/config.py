@@ -229,6 +229,7 @@ if PLUGIN_PATH is not None:
 
 def get_image_path(name, default="not_found.png"):
     """Return image absolute path"""
+    global IMG_PATH
     for img_path in IMG_PATH:
         full_path = osp.join(img_path, name)
         if osp.isfile(full_path):

@@ -138,3 +138,4 @@ encoding//src/widgets/matplotlibwidget.py=utf-8
 encoding//src/widgets/pathmanager.py=utf-8
 encoding/gettext_compile.py=utf-8
 encoding/gettext_scan.py=utf-8
+encoding/setup_x64.py=utf-8
